@@ -18,8 +18,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Playfair Display", "Georgia", "serif"],
+        sans: ["GoudySansStd", "system-ui", "sans-serif"],
+        display: ["GoudySansStd", "Georgia", "serif"],
         script: ["Pacifico", "cursive"],
       },
       colors: {

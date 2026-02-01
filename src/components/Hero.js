@@ -3,8 +3,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Star, Clock, Truck, Leaf } from "lucide-react";
 import { useState, useEffect } from "react";
+import TrustedPartners from "./TrustedPartners";
 
 const heroVideo = "/assets/hero-video.mp4";
+const heroVideo2 = "/assets/hero-video-2.mp4";
 
 const services = [
   "Ironing",
@@ -26,6 +28,7 @@ const Hero = () => {
   }, []);
 
   return (
+    <>
     <section id="home" className="relative min-h-screen flex items-center pt-20">
       {/* Video Background */}
       <div className="absolute inset-0 overflow-hidden">
@@ -36,7 +39,7 @@ const Hero = () => {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src={heroVideo} type="video/mp4" />
+          <source src={heroVideo2} type="video/mp4" />
         </video>
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
@@ -52,7 +55,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-white/10"
           >
-            <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             <span className="text-white/90 text-sm font-medium">Serving High Wycombe & Surrounding Areas</span>
           </motion.div>
 
@@ -64,11 +67,11 @@ const Hero = () => {
             className="mb-6"
           >
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white leading-[1.1]">
-              We'll Handle Your
+              We&apos;ll Handle Your
             </h1>
 
             {/* Animated service text - Clean slide animation */}
-            <div className="h-20 mt-3 relative overflow-hidden">
+            <div className="h-28 mt-3 relative overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={currentIndex}
@@ -79,9 +82,9 @@ const Hero = () => {
                     duration: 0.5, 
                     ease: [0.22, 1, 0.36, 1] 
                   }}
-                  className="block font-script text-accent text-5xl md:text-6xl lg:text-7xl drop-shadow-lg"
+                  className="block font-script text-primary text-5xl md:text-6xl lg:text-7xl drop-shadow-lg"
                   style={{
-                    textShadow: "0 4px 20px rgba(0,0,0,0.5), 0 2px 10px rgba(0,0,0,0.3)"
+                    textShadow: ""
                   }}
                 >
                   {services[currentIndex]}
@@ -89,27 +92,7 @@ const Hero = () => {
               </AnimatePresence>
             </div>
 
-            {/* Progress bar */}
-            <div className="mt-6 flex gap-2">
-              {services.map((_, i) => (
-                <div
-                  key={i}
-                  className="h-1 flex-1 max-w-12 rounded-full overflow-hidden bg-white/20"
-                >
-                  <motion.div
-                    className="h-full bg-accent"
-                    initial={{ width: "0%" }}
-                    animate={{ 
-                      width: i === currentIndex ? "100%" : i < currentIndex ? "100%" : "0%" 
-                    }}
-                    transition={{ 
-                      duration: i === currentIndex ? 3 : 0.3,
-                      ease: i === currentIndex ? "linear" : "easeOut"
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+        
           </motion.div>
 
           <motion.p 
@@ -118,7 +101,7 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-xl md:text-2xl text-white/90 mb-10 max-w-xl font-light"
           >
-            Professional cleaning with <span className="text-accent font-medium">free pickup & delivery</span>. Fast 24-48 hour turnaround guaranteed.
+            Professional cleaning with <span className="text-primary font-bold">free pickup & delivery</span>. Fast 24-48 hour turnaround guaranteed.
           </motion.p>
 
           {/* Feature pills */}
@@ -138,7 +121,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
                 className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/10 cursor-default"
               >
-                <feature.icon className="w-4 h-4 text-accent" />
+                <feature.icon className="w-4 h-4 text-primary" />
                 <span className="text-white text-sm">{feature.text}</span>
               </motion.div>
             ))}
@@ -155,7 +138,7 @@ const Hero = () => {
               href="#contact" 
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              className="inline-flex items-center gap-2 bg-accent text-accent-foreground font-bold px-8 py-4 rounded-full hover:brightness-105 transition-all shadow-xl text-lg group"
+              className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-bold px-8 py-4 rounded-full transition-all shadow-xl text-lg group"
             >
               Schedule Pickup
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -203,6 +186,8 @@ const Hero = () => {
         </div>
       </div>
     </section>
+    <TrustedPartners />
+    </>
   );
 };
 

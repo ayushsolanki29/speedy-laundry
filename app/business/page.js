@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TrustedPartners from "@/components/TrustedPartners";
 
 const industries = [
   { icon: Hotel, name: "Hotels & B&Bs" },
@@ -96,6 +97,8 @@ export default function BusinessPage() {
           </div>
         </section>
 
+        <TrustedPartners />
+
         {/* Industries - Visual Grid */}
         <section className="py-20 lg:py-32 bg-foreground">
           <div className="container">
@@ -148,7 +151,7 @@ export default function BusinessPage() {
                   Commercial Excellence
                 </h2>
                 <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                  What started as a small family business has grown into Buckinghamshire's trusted commercial laundry partner. We understand the demands of running a business – that's why we've built our service around reliability, quality, and convenience.
+                  What started as a small family business has grown into Buckinghamshire&apos;s trusted commercial laundry partner. We understand the demands of running a business – that&apos;s why we&apos;ve built our service around reliability, quality, and convenience.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   From boutique hotels to busy restaurants, we handle thousands of items weekly with the same care and attention we gave our very first client.
@@ -319,7 +322,7 @@ export default function BusinessPage() {
                   <span className="text-primary">Free Quote</span>
                 </h2>
                 <p className="text-white/70 text-lg mb-10">
-                  Tell us about your business and we'll create a tailored laundry solution that fits your needs and budget.
+                  Tell us about your business and we&apos;ll create a tailored laundry solution that fits your needs and budget.
                 </p>
                 
                 <div className="space-y-6">

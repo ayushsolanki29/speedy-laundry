@@ -1,4 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-Book.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-Book.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-BookItalic.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-BookItalic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-Medium.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-MediumItalic.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-MediumItalic.woff') format('woff');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-Bold.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-BoldItalic.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-Black.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GoudySansStd';
+  src: url('/assets/fonts/GoudySansStd-BlackItalic.woff2') format('woff2'),
+       url('/assets/fonts/GoudySansStd-BlackItalic.woff') format('woff');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
 
 @tailwind base;
 @tailwind components;

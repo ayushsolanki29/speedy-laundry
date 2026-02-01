@@ -131,7 +131,7 @@ const Services = () => {
           <h3 className="text-center text-2xl font-display font-bold mb-8">
             We Also <span className="font-script text-primary">Clean</span>
           </h3>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex flex-wrap w-full justify-center gap-3">
             {additionalItems.map((item, index) => (
               <motion.span
                 key={item}

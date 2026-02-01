@@ -16,7 +16,7 @@ const Contact = () => {
           >
             <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Get In Touch</h2>
             <p className="text-muted-foreground text-lg mb-10">
-              Ready to schedule a pickup? Have questions? We're here to help!
+              Ready to schedule a pickup? Have questions? We&apos;re here to help!
             </p>
 
             <div className="space-y-6">
@@ -108,6 +108,7 @@ const Contact = () => {
                 <input
                   type="email"
                   placeholder="your@email.com"
+                  suppressHydrationWarning
                   className="w-full px-5 py-4 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                 />
               </div>

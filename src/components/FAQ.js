@@ -11,7 +11,7 @@ import {
 const faqs = [
   {
     question: "What areas do you serve?",
-    answer: "We serve High Wycombe and surrounding areas including Beaconsfield, Marlow, Amersham, and nearby locations. If you're unsure whether we cover your area, please contact us and we'll be happy to help."
+    answer: "We serve High Wycombe and surrounding areas including Beaconsfield, Marlow, Amersham, and nearby locations. If you&apos;re unsure whether we cover your area, please contact us and we&apos;ll be happy to help."
   },
   {
     question: "How long does it take to get my clothes back?",
@@ -35,7 +35,7 @@ const faqs = [
   },
   {
     question: "What if I'm not satisfied with the cleaning?",
-    answer: "Your satisfaction is our priority. If you're not happy with the results, please let us know within 24 hours of delivery and we'll re-clean the item free of charge."
+    answer: "Your satisfaction is our priority. If you&apos;re not happy with the results, please let us know within 24 hours of delivery and we&apos;ll re-clean the item free of charge."
   },
   {
     question: "Do you offer commercial laundry services?",
@@ -100,7 +100,7 @@ const FAQ = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <p className="text-muted-foreground mb-4">Still have questions? We're here to help!</p>
+          <p className="text-muted-foreground mb-4">Still have questions? We&apos;re here to help!</p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
               href="tel:01494445291"

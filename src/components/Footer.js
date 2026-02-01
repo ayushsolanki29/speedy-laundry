@@ -2,6 +2,7 @@
 
 import { Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const logo = "/assets/logo.svg";
 
@@ -25,7 +26,7 @@ const Footer = () => {
           
           {/* Brand - Larger */}
           <div className="lg:col-span-4">
-            <img src={logo} alt="Speedy Laundry" className="h-10 mb-6 brightness-0 invert" />
+            <Image src={logo} alt="Speedy Laundry" className="h-10 mb-6 brightness-0 invert w-auto" width={200} height={40} />
             <p className="text-white/60 mb-8 leading-relaxed">
               Premium laundry & dry cleaning with free pickup and delivery. Making laundry day a breeze since 2014.
             </p>

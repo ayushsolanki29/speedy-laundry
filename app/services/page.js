@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { 
   ArrowRight,
   Check,
@@ -104,10 +105,11 @@ export default function ServicesPage() {
                   className="group"
                 >
                   <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-6">
-                    <img 
+                    <Image 
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
                     <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -146,10 +148,11 @@ export default function ServicesPage() {
                 className="relative"
               >
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden">
-                  <img 
+                  <Image 
                     src="/assets/service-dryclean.jpg"
                     alt="Dry Cleaning"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 bg-primary text-white p-6 rounded-2xl shadow-2xl">
@@ -252,16 +255,16 @@ export default function ServicesPage() {
                   <h3 className="text-xl font-display font-bold text-white">
                     100% Satisfaction Guarantee
                   </h3>
-                  <p className="text-white/70">Not happy? We'll re-clean it free</p>
+                  <p className="text-white/70">Not happy? We&apos;ll re-clean it free</p>
                 </div>
               </div>
-              <a 
-                href="/#contact"
-                className="inline-flex items-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-full hover:bg-white/90 transition-all"
+              <Link 
+                href="/"
+                className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-full hover:bg-white/90 transition-all"
               >
                 <Phone className="w-5 h-5" />
                 Book Now
-              </a>
+              </Link>
             </div>
           </div>
         </section>
@@ -282,13 +285,13 @@ export default function ServicesPage() {
                 Join thousands of happy customers in High Wycombe
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
+                <Link 
                   href="/#contact"
                   className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-10 py-4 rounded-full hover:brightness-110 transition-all text-lg"
                 >
                   Get Started
                   <ArrowRight className="w-5 h-5" />
-                </a>
+                </Link>
                 <Link 
                   href="/about"
                   className="inline-flex items-center justify-center gap-2 bg-white text-foreground font-bold px-10 py-4 rounded-full hover:bg-background transition-all text-lg border border-border"

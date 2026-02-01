@@ -2,6 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import { 
   Leaf, 
@@ -18,6 +19,7 @@ import {
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import TrustedPartners from "@/components/TrustedPartners";
 
 // Animated counter component
 const Counter = ({ end, suffix = "", duration = 2 }) => {
@@ -91,10 +93,12 @@ export default function About() {
         {/* Hero - Full Screen Visual */}
         <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
           <div className="absolute inset-0">
-            <img 
+            <Image 
               src="https://images.unsplash.com/photo-1489274495757-95c7c837b101?w=1920&h=1080&fit=crop"
               alt="Premium laundry service"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              priority
             />
             <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
           </div>
@@ -113,7 +117,7 @@ export default function About() {
                 className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6"
               >
                 <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-white/90 text-sm font-medium">High Wycombe & Surrounding Areas</span>
+                <span className="text-white/90 text-sm font-medium">High Wycombe &amp; Surrounding Areas</span>
               </motion.div>
               
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-[1.1]">
@@ -127,13 +131,13 @@ export default function About() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <a 
+                <Link 
                   href="/#contact"
                   className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:brightness-110 transition-all shadow-lg"
                 >
                   <Phone className="w-5 h-5" />
                   Book Now
-                </a>
+                </Link>
               </div>
             </motion.div>
           </div>
@@ -173,6 +177,8 @@ export default function About() {
           </div>
         </section>
 
+        <TrustedPartners />
+
         {/* Visual Values Grid */}
         <section className="py-20 lg:py-32">
           <div className="container">
@@ -197,10 +203,11 @@ export default function About() {
                   transition={{ delay: index * 0.1 }}
                   className="group relative aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer"
                 >
-                  <img 
+                  <Image 
                     src={value.image}
                     alt={value.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -227,10 +234,12 @@ export default function About() {
                 className="relative"
               >
                 <div className="relative">
-                  <img 
+                  <Image 
                     src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=800&h=600&fit=crop" 
                     alt="Our team at work"
-                    className="rounded-3xl shadow-2xl w-full"
+                    width={800}
+                    height={600}
+                    className="rounded-3xl shadow-2xl w-full h-auto"
                   />
                   <div className="absolute -bottom-6 -right-6 lg:-right-12 bg-white p-6 rounded-2xl shadow-xl">
                     <div className="flex items-center gap-4">
@@ -261,7 +270,7 @@ export default function About() {
                   <span className="text-primary">Driven by Care</span>
                 </h2>
                 <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                  What started as a small family dream has grown into High Wycombe's most trusted laundry service. Every garment tells a story – and we treat yours with the care it deserves.
+                  What started as a small family dream has grown into High Wycombe&apos;s most trusted laundry service. Every garment tells a story – and we treat yours with the care it deserves.
                 </p>
                 
                 <div className="grid grid-cols-2 gap-4">
@@ -287,10 +296,11 @@ export default function About() {
         {/* Promise Section - Visual Quote */}
         <section className="relative py-32 lg:py-48 overflow-hidden">
           <div className="absolute inset-0">
-            <img 
+            <Image 
               src="https://images.unsplash.com/photo-1469504512102-900f29606341?w=1920&h=1080&fit=crop"
               alt="Fresh laundry"
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
             <div className="absolute inset-0 bg-primary/85" />
           </div>
@@ -303,9 +313,9 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <div className="text-8xl text-white/20 font-serif mb-4">"</div>
+              <div className="text-8xl text-white/20 font-serif mb-4">&quot;</div>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 leading-tight">
-                Your satisfaction isn't just our goal – it's our promise
+                Your satisfaction isn&apos;t just our goal – it&apos;s our promise
               </h2>
               <p className="text-xl text-white/80 font-script">
                 – The Speedy Laundry Team
@@ -376,13 +386,13 @@ export default function About() {
                 Join thousands of happy customers across High Wycombe
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
+                <Link 
                   href="/#contact"
                   className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-10 py-5 rounded-full hover:brightness-110 transition-all shadow-lg text-lg"
                 >
                   Get Started
                   <ArrowRight className="w-5 h-5" />
-                </a>
+                </Link>
                 <Link 
                   href="/"
                   className="inline-flex items-center justify-center gap-2 bg-white/10 text-white font-bold px-10 py-5 rounded-full hover:bg-white/20 transition-all text-lg"

@@ -58,7 +58,7 @@ const Reviews = () => {
               className="bg-card rounded-3xl p-8 border border-border shadow-lg"
             >
               <Quote className="w-10 h-10 text-primary/30 mb-6" />
-              <p className="text-foreground text-lg mb-6 leading-relaxed">"{review.text}"</p>
+              <p className="text-foreground text-lg mb-6 leading-relaxed">&quot;{review.text}&quot;</p>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-bold text-foreground">{review.name}</p>

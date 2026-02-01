@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
-import HowItWorks from "@/components/HowItWorks";
+import HowItWorksNew from "@/components/HowItWorksNew";
 import ImageGrid from "@/components/ImageGrid";
 import CTABanner from "@/components/CTABanner";
 import Reviews from "@/components/Reviews";
@@ -12,12 +12,12 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <Header />
       <main>
         <Hero />
         <Services />
-        <HowItWorks />
+        <HowItWorksNew />
         <ImageGrid />
         <CTABanner />
         <Reviews />

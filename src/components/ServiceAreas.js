@@ -117,7 +117,7 @@ const ServiceAreas = () => {
           viewport={{ once: true }}
           className="text-center mt-10"
         >
-          <p className="text-muted-foreground mb-4">Don't see your area? Contact us – we may still be able to help!</p>
+          <p className="text-muted-foreground mb-4">Don&apos;t see your area? Contact us – we may still be able to help!</p>
           <a
             href="tel:01494445291"
             className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
