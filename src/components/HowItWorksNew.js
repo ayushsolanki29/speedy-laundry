@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { Calendar, Package, Truck, Sparkles } from "lucide-react";
+import { Calendar, Package, Truck, Sparkles, ArrowRight } from "lucide-react";
 
 const steps = [
   {
@@ -109,10 +109,11 @@ const HowItWorksNew = () => {
           <div className="inline-block p-1 bg-slate-50 rounded-full border border-slate-100">
             <a
               href="#contact"
-              className="inline-flex items-center gap-3 bg-primary text-white font-bold px-10 py-5 rounded-full hover:bg-primary/90 transition-all shadow-xl shadow-primary/25 text-xl"
+              className="group inline-flex items-center gap-3 bg-primary text-white font-bold px-10 py-5 rounded-full hover:bg-primary/90 transition-all shadow-xl shadow-primary/25 text-xl"
             >
               <Calendar className="w-6 h-6" />
-              Schedule Your Pickup
+              <span>Book Now</span>
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
         </motion.div>

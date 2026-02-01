@@ -1,312 +1,156 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
-
-
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-Book.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-Book.woff') format('woff');
-
   font-weight: 400;
-
   font-style: normal;
-
   font-display: swap;
-
 }
 
-
-
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-BookItalic.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-BookItalic.woff') format('woff');
-
   font-weight: 400;
-
   font-style: italic;
-
   font-display: swap;
-
 }
 
-
-
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-Medium.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-Medium.woff') format('woff');
-
   font-weight: 500;
-
   font-style: normal;
-
   font-display: swap;
-
 }
 
-
-
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-MediumItalic.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-MediumItalic.woff') format('woff');
-
   font-weight: 500;
-
   font-style: italic;
-
   font-display: swap;
-
 }
 
-
-
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-Bold.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-Bold.woff') format('woff');
-
   font-weight: 700;
-
   font-style: normal;
-
   font-display: swap;
-
 }
 
-
-
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-BoldItalic.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-BoldItalic.woff') format('woff');
-
   font-weight: 700;
-
   font-style: italic;
-
   font-display: swap;
-
 }
 
-
-
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-Black.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-Black.woff') format('woff');
-
   font-weight: 900;
-
   font-style: normal;
-
   font-display: swap;
-
 }
-
-
 
 @font-face {
-
   font-family: 'GoudySansStd';
-
   src: url('/assets/fonts/GoudySansStd-BlackItalic.woff2') format('woff2'),
-
        url('/assets/fonts/GoudySansStd-BlackItalic.woff') format('woff');
-
   font-weight: 900;
-
   font-style: italic;
-
   font-display: swap;
-
 }
-
-
 
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
-
-
 
 /* Speedy Laundry Design System - Rinse-inspired premium look */
 
-
-
 @layer base {
-
   :root {
-
     --background: 0 0% 100%;
-
     --foreground: 220 20% 10%;
 
-
-
     --card: 0 0% 100%;
-
     --card-foreground: 220 20% 10%;
 
-
-
     --popover: 0 0% 100%;
-
     --popover-foreground: 220 20% 10%;
 
-
-
     /* Primary: #0095da - Bright blue from logo */
-
     --primary: 197 100% 43%;
-
     --primary-foreground: 0 0% 100%;
 
-
-
     /* Header dark: Dark navy like Rinse */
-
     --header: 260 30% 18%;
-
     --header-foreground: 0 0% 100%;
 
-
-
     /* Accent: Golden yellow like Rinse CTA */
-
     --accent: 40 95% 55%;
-
     --accent-foreground: 220 20% 10%;
 
-
-
     /* Secondary blue from logo */
-
     --secondary: 197 100% 96%;
-
     --secondary-foreground: 197 100% 35%;
 
-
-
     --muted: 220 15% 95%;
-
     --muted-foreground: 220 10% 45%;
 
-
-
     --destructive: 0 84% 60%;
-
     --destructive-foreground: 0 0% 100%;
 
-
-
     --border: 220 15% 90%;
-
     --input: 220 15% 90%;
-
     --ring: 197 100% 43%;
-
-
 
     --star: 45 93% 55%;
 
-
-
     --radius: 1rem;
-
   }
-
 }
-
-
 
 @layer base {
-
   * {
-
     @apply border-border;
-
   }
-
-
 
   html {
-
     scroll-behavior: smooth;
-
   }
-
-
 
   body {
-
     @apply bg-background text-foreground font-sans antialiased;
-
   }
-
-
 
   h1, h2, h3, h4, h5, h6 {
-
     @apply font-display tracking-tight;
-
   }
-
 }
-
-
 
 @layer components {
-
   .btn-accent {
-
     @apply bg-accent text-accent-foreground font-semibold rounded-full px-6 py-3 
-
            hover:brightness-105 transition-all duration-200 shadow-lg hover:shadow-xl;
-
   }
-
-
 
   .btn-primary {
-
     @apply bg-primary text-primary-foreground font-semibold rounded-full px-6 py-3 
-
            hover:brightness-110 transition-all duration-200;
-
   }
-
-
 
   .card-premium {
-
     @apply bg-card rounded-3xl shadow-xl border-0 overflow-hidden;
-
   }
-
 }
-

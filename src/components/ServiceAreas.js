@@ -6,7 +6,9 @@ import { useState } from "react";
 
 const serviceAreas = [
   {
-    region: "High Wycombe & Surrounding Areas",
+    region: "High Wycombe",
+    count: "17+ Areas",
+    image: "https://images.unsplash.com/photo-1557333610-90ee4a951ecf?w=600&h=800&fit=crop",
     areas: [
       "High Wycombe", "Hazlemere", "Holmer Green", "Hughenden", "Great Kingshill",
       "Little Kingshill", "Naphill", "Prestwood", "Penn", "Tylers Green",
@@ -15,9 +17,11 @@ const serviceAreas = [
     ]
   },
   {
-    region: "Henley & Surrounding Areas",
+    region: "Henley-on-Thames",
+    count: "25+ Areas",
+    image: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=600&h=800&fit=crop",
     areas: [
-      "Henley-on-Thames", "Henley Town", "Checkenden", "Cookley Green", "Fingest",
+      "Henley-on-Thames", "Checkenden", "Cookley Green", "Fingest",
       "Highmoor", "Maidensgrove", "Nettlebed", "Northend", "Nuffield",
       "Rotherfield Grays", "Rotherfield Peppard", "Skirmett", "Stoke Row",
       "Stonor", "Turville", "Turville Heath", "Watlington", "Peppard",
@@ -25,15 +29,19 @@ const serviceAreas = [
     ]
   },
   {
-    region: "Beaconsfield, Amersham & Chalfonts",
+    region: "Beaconsfield",
+    count: "10+ Areas",
+    image: "https://images.unsplash.com/photo-1449156003253-1422027c0067?w=600&h=800&fit=crop",
     areas: [
-      "Beaconsfield", "Beaconsfield Town", "Gerrards Cross", "Amersham",
+      "Beaconsfield", "Gerrards Cross", "Amersham",
       "Chesham", "Chalfont St Giles", "Chalfont St Peter", "Little Chalfont",
       "Seer Green", "Penn Street"
     ]
   },
   {
-    region: "Maidenhead & Thames Valley",
+    region: "Maidenhead",
+    count: "13+ Areas",
+    image: "https://images.unsplash.com/photo-1526678502577-438907f90f33?w=600&h=800&fit=crop",
     areas: [
       "Maidenhead", "Bisham", "Medmenham", "Harleyford Estate", "Marlow",
       "Cookham", "Shiplake", "Kidmore End", "Hook End", "Sonning Common",
@@ -43,87 +51,95 @@ const serviceAreas = [
 ];
 
 const ServiceAreas = () => {
-  const [activeRegion, setActiveRegion] = useState(0);
-
   return (
-    <section id="areas" className="py-24 bg-secondary">
-      <div className="container">
+    <section id="areas" className="py-24 bg-background overflow-hidden relative">
+      <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-20"
         >
-          <p className="text-primary font-semibold uppercase tracking-wider text-sm mb-3">We Deliver To</p>
+          <p className="text-primary font-semibold uppercase tracking-[0.2em] text-xs mb-4">Coverage</p>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            Our <span className="font-script text-primary">Service Areas</span>
+            Areas We <span className="font-script text-primary">Serve</span>
           </h2>
-          <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-            Free pickup & delivery across these locations
+          <p className="text-muted-foreground max-w-xl mx-auto text-lg leading-relaxed">
+            Premium laundry care delivered to your doorstep. Free pickup & delivery across these regions.
           </p>
         </motion.div>
 
-        {/* Region tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-10"
-        >
-          {serviceAreas.map((region, index) => (
-            <button
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {serviceAreas.map((region, regionIdx) => (
+            <motion.div
               key={region.region}
-              onClick={() => setActiveRegion(index)}
-              className={`px-5 py-3 rounded-full font-medium text-sm transition-all flex items-center ${
-                activeRegion === index
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-card text-foreground border border-border hover:border-primary/30"
-              }`}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: regionIdx * 0.1 }}
+              className="group relative h-[400px] rounded-[2rem] overflow-hidden cursor-pointer shadow-xl"
             >
-              <MapPin className="w-4 h-4 mr-2" />
-              {region.region}
-            </button>
+              {/* Image Background */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                style={{ backgroundImage: `url(${region.image})` }}
+              />
+              
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              
+              {/* Content */}
+              <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                <div className="inline-flex bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 text-[10px] font-bold text-white uppercase tracking-widest mb-3 w-fit">
+                  Top Local Service
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                  {region.region}
+                </h3>
+                <p className="text-white/70 text-sm font-medium">
+                  Stays in & Around {region.count}
+                </p>
+              </div>
+
+              {/* Hover Badge */}
+              <div className="absolute top-6 right-6">
+                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-lg transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <MapPin className="text-primary w-5 h-5" />
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Areas grid */}
+        {/* Not in list CTA - Reimagined */}
         <motion.div
-          key={activeRegion}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="bg-card rounded-3xl p-8 border border-border"
-        >
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-            {serviceAreas[activeRegion].areas.map((area, index) => (
-              <motion.div
-                key={area}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.02 }}
-                className="flex items-center gap-2 px-4 py-3 bg-secondary rounded-xl text-sm group hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
-              >
-                <Check className="w-4 h-4 text-primary group-hover:text-primary-foreground flex-shrink-0" />
-                <span>{area}</span>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Not in list CTA */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="text-center mt-10"
+          className="mt-24 text-center p-12 bg-secondary/30 rounded-[3rem] border border-border/50 max-w-4xl mx-auto relative overflow-hidden"
         >
-          <p className="text-muted-foreground mb-4">Don&apos;t see your area? Contact us – we may still be able to help!</p>
-          <a
-            href="tel:01494445291"
-            className="inline-flex items-center gap-2 text-primary font-semibold hover:underline"
-          >
-            Call 01494 445291
-          </a>
+          <h3 className="text-2xl font-display font-bold mb-4 relative z-10">
+            Don't see your area listed?
+          </h3>
+          <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto relative z-10 leading-relaxed">
+            We are constantly expanding our service routes. Contact us today and we'll see if we can accommodate your location!
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 relative z-10">
+            <a
+              href="tel:01494445291"
+              className="px-10 py-5 bg-primary text-white rounded-full font-bold hover:scale-105 transition-all shadow-lg flex items-center gap-3"
+            >
+              Call 01494 445291
+            </a>
+            <span className="text-muted-foreground font-medium">- OR -</span>
+            <a
+              href="#contact"
+              className="text-primary font-bold hover:underline underline-offset-8"
+            >
+              Send an Inquiry
+            </a>
+          </div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[100px] pointer-events-none" />
         </motion.div>
       </div>
     </section>

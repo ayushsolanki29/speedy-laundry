@@ -8,8 +8,8 @@ import Reviews from "@/components/Reviews";
 import ServiceAreas from "@/components/ServiceAreas";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
-import BlogSection from "@/components/BlogSection";
 import Footer from "@/components/Footer";
+import BlogSection from "@/components/BlogSection";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
         <ServiceAreas />
         <FAQ />
         <Contact />
-        <BlogSection />
+            <BlogSection />
       </main>
       <Footer />
     </div>

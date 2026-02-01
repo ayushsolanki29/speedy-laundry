@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import TrustedPartners from "./TrustedPartners";
 
 const heroVideo = "/assets/hero-video.mp4";
-// const heroVideo2 = "/assets/hero-video-2.mp4";
+const heroVideo2 = "/assets/hero-video-2.mp4";
 
 const services = [
   "Ironing",
@@ -39,7 +39,7 @@ const Hero = () => {
           playsInline
           className="w-full h-full object-cover"
         >
-          <source src={heroVideo} type="video/mp4" />
+          <source src={heroVideo2} type="video/mp4" />
         </video>
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
@@ -179,7 +179,7 @@ const Hero = () => {
               </div>
               <div className="text-white">
                 <span className="font-bold">4.9</span>
-                <span className="text-white/70 text-sm ml-1">• 37 reviews</span>
+                {/* <span className="text-white/70 text-sm ml-1">• 37 reviews</span> */}
               </div>
             </motion.div>
           </motion.div>

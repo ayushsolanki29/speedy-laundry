@@ -6,15 +6,12 @@ import Image from "next/image";
 
 const logo = "/assets/logo.svg";
 
-const serviceAreas = [
-  "High Wycombe",
-  "Henley-on-Thames", 
-  "Beaconsfield",
-  "Amersham",
-  "Marlow",
-  "Maidenhead",
-  "Gerrards Cross",
-  "Cookham"
+const deliveryAreas = [
+  { name: "High Wycombe", image: "https://images.unsplash.com/photo-1557333610-90ee4a951ecf?w=100&h=100&fit=crop" },
+  { name: "Henley", image: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=100&h=100&fit=crop" },
+  { name: "Beaconsfield", image: "https://images.unsplash.com/photo-1449156003253-1422027c0067?w=100&h=100&fit=crop" },
+  { name: "Maidenhead", image: "https://images.unsplash.com/photo-1526678502577-438907f90f33?w=100&h=100&fit=crop" },
+  { name: "Marlow", image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=100&h=100&fit=crop" }
 ];
 
 const Footer = () => {
@@ -30,10 +27,12 @@ const Footer = () => {
             <p className="text-white/60 mb-8 leading-relaxed">
               Premium laundry & dry cleaning with free pickup and delivery. Making laundry day a breeze since 2014.
             </p>
-            <Link href="/#contact" className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all">
-              Book Now
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <div className="flex gap-4">
+              <Link href="/#contact" className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all">
+                Book Now
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
 
           {/* Links Grid */}
@@ -112,20 +111,23 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Service Areas */}
+        {/* Service Areas - REIMAGINED */}
         <div className="mt-16 pt-12 border-t border-white/10">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-6">
-            <div className="flex items-center gap-2 text-white/40 text-sm font-medium shrink-0">
-              <MapPin className="w-4 h-4" /> We deliver to
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center gap-2 text-white font-bold text-sm tracking-widest uppercase">
+              <MapPin className="w-4 h-4 text-primary" /> We deliver to
             </div>
-            <div className="flex flex-wrap gap-3">
-              {serviceAreas.map((area) => (
-                <span key={area} className="text-white/60 text-sm px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors">
-                  {area}
-                </span>
+            <div className="flex flex-wrap gap-4">
+              {deliveryAreas.map((area) => (
+                <div key={area.name} className="group relative flex items-center gap-3 bg-white/5 pr-4 rounded-full overflow-hidden hover:bg-white/10 transition-all cursor-default">
+                  <div className="w-10 h-10 overflow-hidden shrink-0">
+                    <img src={area.image} alt={area.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <span className="text-white/80 text-xs font-bold uppercase tracking-wider">{area.name}</span>
+                </div>
               ))}
-              <Link href="/#areas" className="text-primary text-sm px-4 py-2 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors font-medium">
-                +60 more areas
+              <Link href="/#areas" className="flex items-center gap-2 bg-primary/10 text-primary px-5 py-2 rounded-full hover:bg-primary/20 transition-all font-bold text-xs uppercase tracking-wider border border-primary/20">
+                +60 More Areas
               </Link>
             </div>
           </div>

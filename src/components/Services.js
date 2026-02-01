@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
+import { Sparkles, UserRound, Layers, Bed, Maximize2, Snowflake, Waves, Feather, Shirt, Utensils } from "lucide-react";
 
 const serviceIron = "/assets/service-iron.jpg";
 const serviceWash = "/assets/service-wash.jpg";
@@ -58,16 +59,16 @@ const services = [
 ];
 
 const additionalItems = [
-  "Wedding Dresses",
-  "Suits & Blazers", 
-  "Leather & Suede",
-  "Duvets & Pillows",
-  "Curtains & Drapes",
-  "Fur Coats",
-  "Knitwear & Woolens",
-  "Silk & Delicates",
-  "Uniforms",
-  "Table Linens",
+  { name: "Wedding Dresses", icon: Sparkles },
+  { name: "Suits & Blazers", icon: UserRound },
+  { name: "Leather & Suede", icon: Layers },
+  { name: "Duvets & Pillows", icon: Bed },
+  { name: "Curtains & Drapes", icon: Maximize2 },
+  { name: "Fur Coats", icon: Snowflake },
+  { name: "Knitwear & Woolens", icon: Waves },
+  { name: "Silk & Delicates", icon: Feather },
+  { name: "Uniforms", icon: Shirt },
+  { name: "Table Linens", icon: Utensils },
 ];
 
 const Services = () => {
@@ -121,29 +122,50 @@ const Services = () => {
           ))}
         </div>
 
-        {/* Additional items we clean */}
+        {/* Additional items we clean - Infinite Marquee */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-20 bg-card rounded-3xl p-10 border border-border"
+          className="mt-20 overflow-hidden"
         >
-          <h3 className="text-center text-2xl font-display font-bold mb-8">
-            We Also <span className="font-script text-primary">Clean</span>
-          </h3>
-          <div className="flex flex-wrap w-full justify-center gap-3">
-            {additionalItems.map((item, index) => (
-              <motion.span
-                key={item}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.03 }}
-                className="px-5 py-2.5 bg-secondary text-secondary-foreground rounded-full text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-colors cursor-default"
+          <div className="bg-card rounded-[2.5rem] py-16 border border-border relative overflow-hidden group">
+            <h3 className="text-center text-3xl font-display font-bold mb-12">
+              We Also <span className="font-script text-primary">Clean</span>
+            </h3>
+            
+            {/* Gradient Fades for edges */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-card to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-card to-transparent z-10 pointer-events-none" />
+
+            <div className="flex overflow-hidden">
+              <motion.div 
+                className="flex gap-6 whitespace-nowrap px-6"
+                animate={{ 
+                  x: ["0%", "-50%"]
+                }}
+                transition={{ 
+                  duration: 25, 
+                  repeat: Infinity, 
+                  ease: "linear" 
+                }}
               >
-                {item}
-              </motion.span>
-            ))}
+                {/* Double items for perfectly seamless loop */}
+                {[...additionalItems, ...additionalItems].map((item, idx) => (
+                  <div 
+                    key={idx} 
+                    className="flex items-center gap-4 bg-secondary/30 backdrop-blur-sm hover:bg-primary transition-all duration-300 px-8 py-5 rounded-2xl border border-border group/item"
+                  >
+                    <div className="text-primary group-hover/item:text-white transition-colors">
+                      <item.icon size={26} strokeWidth={2.5} />
+                    </div>
+                    <span className="text-lg font-medium text-foreground group-hover/item:text-white transition-colors">
+                      {item.name}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
           </div>
         </motion.div>
       </div>
