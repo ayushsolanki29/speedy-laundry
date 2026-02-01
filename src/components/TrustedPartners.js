@@ -3,41 +3,33 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const partners = [
-  { name: "Miele Professional", width: 200, height: 80 },
-  { name: "WetCare Specialist", width: 180, height: 80 },
-  { name: "Miele Approved", width: 200, height: 80 },
-  { name: "National Laundry Group", width: 220, height: 80 },
-];
-
 const TrustedPartners = () => {
   return (
-    <section className="py-10 border-y border-border/40 bg-background">
+    <section className="py-16 border-y border-border/40 bg-background">
       <div className="container">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-70 grayscale hover:grayscale-0 transition-all duration-500"
+          className="flex flex-wrap items-center justify-center gap-8 md:gap-12"
         >
-          {partners.map((partner, index) => (
-            <div key={index} className="relative h-16 w-40 md:w-48">
-               {/* Placeholder until real logos are added */}
-               <div className="absolute inset-0 bg-muted/50 rounded-lg flex items-center justify-center border border-dashed border-muted-foreground/30">
-                 <span className="text-xs text-muted-foreground font-medium text-center px-2">
-                   {partner.name}
-                 </span>
-               </div>
-               
-                 {/* Uncomment when logos are ready: */}
-                 <Image
-                   src={`/assets/partners/${partner.name.toLowerCase().replace(/ /g, '-')}.png`}
-                   alt={partner.name}
-                   fill
-                   className="object-contain"
-                 />
-              
-            </div>
+          {[1, 2, 3, 4].map((index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              className="relative w-32 h-20 md:w-40 md:h-24"
+            >
+              <Image
+                src={`/assets/logo-${index}.jpg`}
+                alt={`Logo ${index}`}
+                fill
+                className="object-contain"
+              />
+            </motion.div>
           ))}
         </motion.div>
       </div>

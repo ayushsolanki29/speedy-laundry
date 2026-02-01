@@ -293,7 +293,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* Promise Section - Visual Quote */}
+        {/* Promise Section - Enhanced with CTABanner Inspiration */}
         <section className="relative py-32 lg:py-48 overflow-hidden">
           <div className="absolute inset-0">
             <Image 
@@ -302,25 +302,92 @@ export default function About() {
               fill
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-primary/85" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/85" />
           </div>
           
           <div className="container relative z-10">
-            <motion.div 
-              className="max-w-4xl mx-auto text-center"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="text-8xl text-white/20 font-serif mb-4">&quot;</div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-6 leading-tight">
-                Your satisfaction isn&apos;t just our goal – it&apos;s our promise
-              </h2>
-              <p className="text-xl text-white/80 font-script">
-                – The Speedy Laundry Team
-              </p>
-            </motion.div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+              {/* Left Side: Promise Statement */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="text-8xl text-white/10 font-serif mb-6 leading-none">&quot;</div>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
+                  Your satisfaction isn&apos;t just our goal –
+                  <br />
+                  <span className="text-accent">it&apos;s our promise</span>
+                </h2>
+                <p className="text-xl text-white/80 font-script mb-8">
+                  – The Speedy Laundry Team
+                </p>
+                
+                <motion.div 
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="inline-block"
+                >
+                  <Link
+                    href="/contact"
+                    className="group inline-flex items-center gap-3 bg-accent text-header font-bold px-8 py-4 rounded-full hover:brightness-110 transition-all shadow-lg text-lg"
+                  >
+                    Schedule Pickup
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </motion.div>
+              </motion.div>
+
+              {/* Right Side: Guarantee Details */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="lg:pb-4"
+              >
+                {/* Stars Rating */}
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, i) => (
+                    <div key={i} className="w-6 h-6 bg-accent rounded-full" />
+                  ))}
+                </div>
+                
+                {/* Guarantee Text */}
+                <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light max-w-xl mb-8">
+                  Every order is backed by our industry-leading satisfaction guarantee. 
+                  If you&apos;re not completely thrilled with the cleaning of your clothes, 
+                  we will re-clean them — 
+                  <span className="text-white font-medium"> free of charge.</span>
+                </p>
+
+                {/* Trust Points */}
+                <div className="space-y-3">
+                  {[
+                    { icon: Shield, text: "100% Satisfaction Guarantee" },
+                    { icon: Truck, text: "Free Redelivery if Needed" },
+                    { icon: Heart, text: "Care for Every Garment" }
+                  ].map((item, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.4 + index * 0.1 }}
+                      className="flex items-center gap-3"
+                    >
+                      <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center">
+                        <item.icon className="w-5 h-5 text-accent" />
+                      </div>
+                      <span className="text-white/90 font-medium">{item.text}</span>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 
