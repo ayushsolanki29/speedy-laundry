@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const partners = [
-  { name: "Miele Professional", width: 200, height: 80 },
+  { name: "images.jpg", width: 200, height: 80 },
   { name: "WetCare Specialist", width: 180, height: 80 },
   { name: "Miele Approved", width: 200, height: 80 },
   { name: "National Laundry Group", width: 220, height: 80 },
@@ -31,7 +31,7 @@ const TrustedPartners = () => {
                
                  {/* Uncomment when logos are ready: */}
                  <Image
-                   src={`/assets/partners/${partner.name.toLowerCase().replace(/ /g, '-')}.png`}
+                   src={`/assets/partners/${partner.name.toLowerCase().replace(/ /g, '-')}`}
                    alt={partner.name}
                    fill
                    className="object-contain"
