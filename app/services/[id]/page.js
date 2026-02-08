@@ -108,7 +108,7 @@ export default function ServiceDetailPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative"
               >
-                <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl">
+                <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden">
                   <Image 
                     src={service.image} 
                     alt={service.title} 

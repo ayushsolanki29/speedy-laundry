@@ -5,19 +5,25 @@ import { useRef } from "react";
 import Image from "next/image";
 
 const images = [
-  { url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=800&fit=crop", alt: "Neatly folded laundry" },
-  { url: "https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=600&h=800&fit=crop", alt: "Dry cleaning" },
-  { url: "https://images.unsplash.com/photo-1489274495757-95c7c837b101?w=600&h=800&fit=crop", alt: "Fresh clothes" },
-  { url: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?w=600&h=800&fit=crop", alt: "Laundry service" },
-  { url: "https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=600&h=800&fit=crop", alt: "Ironing service" },
-  { url: "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=600&h=800&fit=crop", alt: "Clean textiles" },
-  { url: "https://images.unsplash.com/photo-1469504512102-900f29606341?w=600&h=800&fit=crop", alt: "Fresh laundry" },
-  { url: "https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=600&h=800&fit=crop", alt: "Folded clothes" },
+  // Interleaved New and Old Images to separate similar styles
+  { url: "/assets/img-grid/IMG_9081.jpg", alt: "Laundry service" },
+  { url: "/assets/img-grid/20208 - Vodafone - WashCo - B-roll Cutdown.00_28_15_02.Still002.jpg", alt: "Professional cleaning" },
+  { url: "/assets/img-grid/IMG_9083.jpg", alt: "Freshly folded" },
+  { url: "/assets/img-grid/259949512_4615477651842803_5580518647924254211_n.jpg", alt: "Quality care" },
+  { url: "/assets/img-grid/IMG_9085.jpg", alt: "Steam ironing" },
+  { url: "/assets/img-grid/Firefly 20240607092950.png", alt: "Dry cleaning" },
+
+  { url: "/assets/img-grid/IMG_9084.jpg", alt: "Pickup and delivery" },
+  { url: "/assets/img-grid/20208 - Vodafone - WashCo - B-roll Cutdown.00_35_37_23.Still007.jpg", alt: "Expert laundry care" },
+  { url: "/assets/img-grid/IMG_9086.jpg", alt: "Premium cleaning" },
+  { url: "/assets/img-grid/219863733_6257125504103_5292601337594092513_n.jpg", alt: "Professional folding" },
+  { url: "/assets/img-grid/IMG_9087.jpg", alt: "Fabric care" },
+  { url: "/assets/img-grid/IMG_9082.jpg", alt: "Ironing service" },
 ];
 
 const ImageGrid = () => {
   const containerRef = useRef(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -29,21 +35,21 @@ const ImageGrid = () => {
   const xRow2 = useTransform(scrollYProgress, [0, 1], [0, -400]);
 
   // Split images for two horizontal rows
-  const row1 = images.slice(0, 4);
-  const row2 = images.slice(4, 8);
+  const row1 = images.slice(0, 6);
+  const row2 = images.slice(6, 12);
 
   return (
     <section ref={containerRef} className="py-20 bg-background overflow-hidden relative">
       <div className="flex flex-col gap-4">
         {/* Row 1: Moves Left on Scroll */}
         <div className="flex">
-          <motion.div 
+          <motion.div
             style={{ x: xRow1 }}
             className="flex gap-4 whitespace-nowrap px-4"
           >
             {row1.map((image, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="relative w-[450px] aspect-video overflow-hidden rounded-2xl shadow-xl transition-transform duration-500 hover:scale-[1.02]"
               >
                 <Image
@@ -59,13 +65,13 @@ const ImageGrid = () => {
 
         {/* Row 2: Moves Right on Scroll */}
         <div className="flex">
-          <motion.div 
+          <motion.div
             style={{ x: xRow2 }}
             className="flex gap-4 whitespace-nowrap px-4"
           >
             {row2.map((image, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className="relative w-[450px] aspect-video overflow-hidden rounded-2xl shadow-xl transition-transform duration-500 hover:scale-[1.02]"
               >
                 <Image

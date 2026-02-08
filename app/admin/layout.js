@@ -1,32 +1,58 @@
 'use client'
 
 import { useState } from 'react'
-import { 
-  LayoutDashboard, 
-  Users, 
-  ShoppingCart, 
-  DollarSign, 
-  Package, 
-  Calendar, 
+import {
+  LayoutDashboard,
+  Users,
   MessageSquare,
+  Truck,
+  ClipboardList,
+  BarChart3,
+  BookOpen,
+  Settings,
   Menu,
   X,
   LogOut,
-  Settings,
   Bell,
-  Search
+  Search,
+  ChevronRight,
+  FileText,
+  CreditCard,
+  ShoppingCart
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const navigation = [
-  { name: 'Overview', href: '/admin', icon: LayoutDashboard },
-  { name: 'Customers', href: '/admin/customers', icon: Users },
-  { name: 'Orders', href: '/admin/orders', icon: ShoppingCart },
-  { name: 'Revenue', href: '/admin/revenue', icon: DollarSign },
-  { name: 'Services', href: '/admin/services', icon: Package },
-  { name: 'Schedule', href: '/admin/schedule', icon: Calendar },
-  { name: 'Messages', href: '/admin/messages', icon: MessageSquare },
+  {
+    category: 'OVERVIEW',
+    items: [
+      { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+      { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+    ]
+  },
+  {
+    category: 'MANAGEMENT',
+    items: [
+      { name: 'Enquiries', href: '/admin/enquiries', icon: MessageSquare },
+      { name: 'Customers', href: '/admin/customers', icon: Users },
+      { name: 'Status Tracking', href: '/admin/tracking', icon: Truck },
+      { name: 'Orders', href: '/admin/orders', icon: ShoppingCart }, // Added for completeness based on likely need
+    ]
+  },
+  {
+    category: 'CONTENT',
+    items: [
+      { name: 'Notes', href: '/admin/notes', icon: ClipboardList },
+      { name: 'Blogs', href: '/admin/blogs', icon: BookOpen },
+    ]
+  },
+  {
+    category: 'SYSTEM',
+    items: [
+      { name: 'Settings', href: '/admin/settings', icon: Settings },
+    ]
+  }
 ]
 
 export default function AdminLayout({ children }) {
@@ -34,122 +60,129 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname()
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      {/* Mobile sidebar backdrop */}
+    <div className="min-h-screen bg-[#F5F7FA] flex font-sans admin-root">
+      {/* Mobile backdrop */}
       {sidebarOpen && (
-        <div 
-          className="fixed inset-0 z-40 lg:hidden bg-gray-600 bg-opacity-75"
+        <div
+          className="fixed inset-0 z-40 lg:hidden bg-gray-900/50 backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <div className={`
-        fixed lg:flex flex-col w-64 bg-white shadow-lg z-50 h-screen transform transition-transform duration-300 ease-in-out
+      <aside className={`
+        fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white shadow-xl lg:shadow-none border-r border-gray-100
+        transform transition-transform duration-300 ease-in-out flex flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
-        <div className="flex flex-col h-full">
-          {/* Logo */}
-          <div className="flex items-center justify-between h-16 px-6 border-b border-gray-200 flex-shrink-0">
-            <h1 className="text-xl font-bold text-blue-600">Speedy Admin</h1>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden text-gray-400 hover:text-gray-600"
-            >
-              <X className="w-6 h-6" />
+        {/* Logo Area */}
+        <div className="h-20 flex items-center px-8 border-b border-gray-100">
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-blue-200 shadow-lg">
+              S
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-800 leading-none">SPEEDY</h1>
+              <span className="text-[10px] font-bold text-blue-600 tracking-widest uppercase">Admin Panel</span>
+            </div>
+          </Link>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden ml-auto p-2 text-gray-400 hover:text-gray-600"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 px-4 py-6 overflow-y-auto space-y-8 custom-scrollbar">
+          {navigation.map((section, idx) => (
+            <div key={idx}>
+              <div className="px-4 mb-3 text-xs font-bold text-gray-400 uppercase tracking-widest font-sans">
+                {section.category}
+              </div>
+              <div className="space-y-1">
+                {section.items.map((item) => {
+                  const isActive = pathname === item.href
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`
+                        group flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 font-medium text-sm
+                        ${isActive
+                          ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
+                          : 'text-gray-500 hover:bg-blue-50 hover:text-blue-600'
+                        }
+                      `}
+                    >
+                      <div className="flex items-center gap-3">
+                        <item.icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-blue-600'}`} />
+                        <span>{item.name}</span>
+                      </div>
+                      {isActive && <ChevronRight className="w-4 h-4 text-white/80" />}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          ))}
+        </nav>
+
+        {/* User Profile */}
+        <div className="p-4 border-t border-gray-100">
+          <div className="bg-gray-50 rounded-2xl p-4 flex items-center gap-3 border border-gray-100">
+            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+              A
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-gray-800 truncate">Administrator</p>
+              <p className="text-xs text-gray-500 truncate">admin@speedy.com</p>
+            </div>
+            <button className="text-gray-400 hover:text-red-500 transition-colors">
+              <LogOut className="w-5 h-5" />
             </button>
           </div>
-
-          {/* Navigation */}
-          <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
-            {navigation.map((item) => {
-              const isActive = pathname === item.href
-              return (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={`
-                    flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors
-                    ${isActive 
-                      ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-700' 
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
-                    }
-                  `}
-                >
-                  <item.icon className="w-5 h-5 mr-3" />
-                  {item.name}
-                </Link>
-              )
-            })}
-          </nav>
-
-          {/* Admin User Section */}
-          <div className="p-4 border-t border-gray-200 flex-shrink-0">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-semibold">A</span>
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-gray-900">Admin User</p>
-                <p className="text-xs text-gray-500">admin@speedy.com</p>
-              </div>
-            </div>
-            <div className="mt-4 space-y-1">
-              <button className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                <Settings className="w-4 h-4 mr-2" />
-                Settings
-              </button>
-              <button className="w-full flex items-center px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
+      </aside>
 
-      {/* Main content */}
-      <div className="flex-1 lg:ml-64">
-        {/* Top bar */}
-        <header className="bg-white shadow-sm border-b border-gray-200">
-          <div className="flex items-center justify-between h-16 px-6">
-            <div className="flex items-center flex-1">
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden text-gray-400 hover:text-gray-600 mr-4"
-              >
-                <Menu className="w-6 h-6" />
-              </button>
-              
-              {/* Search Bar */}
-              <div className="relative max-w-md flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
+      {/* Main Content Wrapper */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#F5F7FA]">
+        {/* Top Header */}
+        <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-6 lg:px-10 z-10 sticky top-0">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            <h2 className="text-xl font-bold text-gray-800">
+              {navigation.flatMap(g => g.items).find(item => item.href === pathname)?.name || 'Dashboard'}
+            </h2>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <div className="hidden md:flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-2 py-1.5 shadow-sm">
+              <span className="text-xs font-bold text-gray-400 px-2 uppercase">Date Range</span>
+              <input type="date" className="text-sm font-medium text-gray-600 border-none focus:ring-0 p-0" />
             </div>
 
-            <div className="flex items-center space-x-4">
-              <button className="relative p-2 text-gray-400 hover:text-gray-600">
+            <div className="relative">
+              <button className="relative p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-colors">
                 <Bell className="w-6 h-6" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
               </button>
-              <Link 
-                href="/"
-                className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700"
-              >
-                Visit Site
-              </Link>
             </div>
           </div>
         </header>
 
-        {/* Page content */}
-        <main className="p-6">
-          {children}
+        {/* Page Content */}
+        <main className="flex-1 overflow-y-auto p-6 lg:p-8">
+          <div className="max-w-[1600px] mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>

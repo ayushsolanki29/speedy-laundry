@@ -4,7 +4,7 @@ export const servicesData = [
     slug: "iron-only",
     title: "Iron Only",
     subtitle: "Wrinkle-free perfection",
-    image: "/assets/service-iron.jpg",
+    image: "/assets/our%20services/i-1.png",
     description: "Our professional ironing service guarantees a crisp, professional finish for all your garments. We use advanced steam pressing technology to remove even the most stubborn wrinkles, ensuring you look your best every day.",
     items: ["Shirts", "Trousers", "Dresses", "Blouses", "Skirts", "Uniforms"],
     features: [
@@ -16,7 +16,7 @@ export const servicesData = [
     details: [
       {
         title: "Quality Pressing",
-        content: "We use industrial-grade steam irons that reach deep into the fibers to eliminate wrinkles without damaging the fabric."
+        content: "We use industrial-grade steam irons that reach deep into fibers to eliminate wrinkles without damaging fabric."
       },
       {
         title: "Garment Care",
@@ -33,7 +33,7 @@ export const servicesData = [
     slug: "wash-iron",
     title: "Wash + Iron",
     subtitle: "Fresh, clean & pressed",
-    image: "/assets/service-wash.jpg",
+    image: "/assets/our%20services/f-2.png",
     description: "The complete solution for your busy lifestyle. We take your laundry, wash it with premium eco-friendly detergents, dry it carefully, and then give it a professional press so it's ready to wear.",
     items: ["Everyday wear", "Work clothes", "Bedding", "Towels", "Sportswear"],
     features: [
@@ -62,8 +62,8 @@ export const servicesData = [
     slug: "wash-dry-fold",
     title: "Wash, Dry & Fold",
     subtitle: "Complete laundry care",
-    image: "/assets/service-fold.jpg",
-    description: "Perfect for families and busy individuals. We handle your bulk laundry with care, sorting by color and fabric type, drying at the optimal temperature, and folding everything neatly so it's ready to go straight into your drawers.",
+    image: "/assets/our%20services/w-2.png",
+    description: "Perfect for families and busy individuals. We handle your bulk laundry with care, sorting by color and fabric type, drying at optimal temperature, and folding everything neatly so it's ready to go straight into your drawers.",
     items: ["Family laundry", "Bulk items", "Gym clothes", "Kids clothes", "Linens"],
     features: [
       "Sorted by color/fabric",
@@ -91,27 +91,27 @@ export const servicesData = [
     slug: "dry-cleaning",
     title: "Dry Cleaning",
     subtitle: "Premium care for fine fabrics",
-    image: "/assets/service-dryclean.jpg",
+    image: "/assets/our%20services/d-2.png",
     description: "For garments that require special attention, our premium dry cleaning service uses gentle, eco-friendly solvents to remove stains and odors without the use of water. Expert care for your suits, silk, and luxury fabrics.",
     items: ["Suits", "Wedding Dresses", "Luxury Fabrics", "Outerwear", "Curtains"],
     features: [
       "Eco-friendly solvents",
       "Stain removal specialists",
-      "Hand finished",
-      "Safe for all delicates"
+      "Gentle on delicate fabrics",
+      "Professional finishing"
     ],
     details: [
       {
-        title: "Specialized Solvents",
-        content: "We use modern, non-toxic cleaning fluids that are safer for you, your clothes, and the planet."
+        title: "Advanced Technology",
+        content: "Our dry cleaning equipment uses the latest technology to clean effectively while preserving fabric integrity."
       },
       {
-        title: "Stain Expert",
-        content: "Our experts are trained in advanced spot-cleaning techniques for wine, oil, ink, and other difficult stains."
+        title: "Expert Handling",
+        content: "Each garment is individually assessed and treated according to its specific fabric requirements."
       },
       {
-        title: "Luxury Handling",
-        content: "From designer labels to heirloom wedding dresses, we treat every piece with the utmost respect and care."
+        title: "Premium Results",
+        content: "Your clothes return looking and feeling like new, with enhanced colors and restored softness."
       }
     ]
   }

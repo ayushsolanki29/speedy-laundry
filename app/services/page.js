@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { 
+import {
   ArrowRight,
   Check,
   Truck,
@@ -20,28 +20,39 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main>
         {/* Hero - Clean & Minimal */}
-        <section className="pt-28 pb-16 lg:pt-40 lg:pb-24 bg-background">
-          <div className="container px-6">
-            <motion.div 
-              className="max-w-3xl mx-auto text-center"
+        <section className="relative h-[60vh] min-h-[500px] flex items-center overflow-hidden pt-20">
+          <div className="absolute inset-0">
+            <Image
+              src="/assets/our services/ChatGPT Image Feb 6, 2026, 09_58_10 AM.png"
+              alt="Premium laundry service"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
+          </div>
+
+          <div className="container px-6 relative z-10">
+            <motion.div
+              className="max-w-3xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-foreground mb-6 tracking-tight">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 tracking-tight">
                 Our Services<span className="text-primary">.</span>
               </h1>
-              <p className="text-xl text-muted-foreground max-w-xl mx-auto">
+              <p className="text-xl text-white/80 max-w-xl">
                 Premium laundry care tailored to your specific needs, delivered right to your doorstep.
               </p>
             </motion.div>
 
             {/* Trust indicators */}
-            <motion.div 
-              className="flex flex-wrap justify-center gap-8 lg:gap-16 mt-12 pt-12 border-t border-border"
+            <motion.div
+              className="flex flex-wrap gap-8 lg:gap-16 mt-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
@@ -51,7 +62,7 @@ export default function ServicesPage() {
                 { icon: Clock, text: "24-48hr Turnaround" },
                 { icon: Leaf, text: "Eco-Friendly Processing" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 text-muted-foreground">
+                <div key={i} className="flex items-center gap-3 text-white/90">
                   <item.icon className="w-5 h-5 text-primary" />
                   <span className="font-medium text-sm lg:text-base">{item.text}</span>
                 </div>
@@ -61,7 +72,7 @@ export default function ServicesPage() {
         </section>
 
         {/* Main Services Grid */}
-        <section className="pb-24 lg:pb-32">
+        <section className="pb-24 lg:pb-32 pt-8">
           <div className="container px-6">
             <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12">
               {servicesData.map((service, index) => (
@@ -74,15 +85,17 @@ export default function ServicesPage() {
                   className="group relative"
                 >
                   <Link href={`/services/${service.id}`} className="block">
-                    <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden mb-8 border border-border shadow-xl">
-                      <Image 
+                    <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden mb-6 border border-border shadow-xl">
+                      <Image
                         src={service.image}
                         alt={service.title}
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        priority={index < 2}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                      
+
                       {/* Floating Badge on Image */}
                       <div className="absolute bottom-6 left-6 text-white">
                         <h2 className="text-3xl lg:text-4xl font-display font-bold mb-1">
@@ -99,14 +112,14 @@ export default function ServicesPage() {
                       </div>
                     </div>
                   </Link>
-                  
+
                   <div className="flex flex-col gap-4">
                     <p className="text-muted-foreground text-lg leading-relaxed line-clamp-2">
                       {service.description}
                     </p>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mb-4">
                       {service.items.slice(0, 4).map((item, i) => (
-                        <span 
+                        <span
                           key={i}
                           className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground bg-muted px-4 py-2 rounded-full border border-border"
                         >
@@ -119,9 +132,30 @@ export default function ServicesPage() {
                         </span>
                       )}
                     </div>
+                    
+                    {/* CTA Button inside card */}
+                    <Link
+                      href="/contact"
+                      onClick={(e) => e.stopPropagation()}
+                      className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:bg-primary/90 hover:scale-105 transition-all shadow-lg shadow-primary/20 w-full"
+                    >
+                      Book Now
+                      <ArrowRight className="w-5 h-5" />
+                    </Link>
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* View All Services Button */}
+            <div className="text-center mt-16">
+              <button
+                onClick={() => window.location.href = '/services'}
+                className="inline-flex items-center justify-center gap-3 bg-white text-primary font-bold px-12 py-5 rounded-full hover:bg-muted hover:scale-105 transition-all border-2 border-primary shadow-lg text-lg"
+              >
+                View All Services
+                <ArrowRight className="w-6 h-6" />
+              </button>
             </div>
           </div>
         </section>
@@ -130,7 +164,7 @@ export default function ServicesPage() {
         {/* Process Steps - Clean */}
         <section className="py-24 lg:py-32 bg-background">
           <div className="container">
-            <motion.div 
+            <motion.div
               className="text-center mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -182,7 +216,7 @@ export default function ServicesPage() {
                   <p className="text-white/70">Not happy? We&apos;ll re-clean it free</p>
                 </div>
               </div>
-              <Link 
+              <Link
                 href="/contact"
                 className="inline-flex items-center justify-center gap-2 bg-white text-primary font-bold px-8 py-4 rounded-full hover:bg-white/90 transition-all"
               >
@@ -196,7 +230,7 @@ export default function ServicesPage() {
         {/* CTA */}
         <section className="py-24 lg:py-32 bg-muted">
           <div className="container">
-            <motion.div 
+            <motion.div
               className="max-w-2xl mx-auto text-center"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -209,14 +243,14 @@ export default function ServicesPage() {
                 Join thousands of happy customers in High Wycombe
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link 
+                <Link
                   href="/contact"
                   className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-10 py-4 rounded-full hover:brightness-110 transition-all text-lg"
                 >
                   Get Started
                   <ArrowRight className="w-5 h-5" />
                 </Link>
-                <Link 
+                <Link
                   href="/about"
                   className="inline-flex items-center justify-center gap-2 bg-white text-foreground font-bold px-10 py-4 rounded-full hover:bg-background transition-all text-lg border border-border"
                 >

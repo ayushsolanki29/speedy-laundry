@@ -18,7 +18,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ["GoudySansStd", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
         display: ["GoudySansStd", "Georgia", "serif"],
         script: ["Pacifico", "cursive"],
       },

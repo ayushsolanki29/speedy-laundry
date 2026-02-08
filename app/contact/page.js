@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { 
+import Image from "next/image";
+import {
   MapPin,
   Phone,
   Mail,
@@ -15,16 +16,16 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const contactMethods = [
-  { 
-    icon: Phone, 
-    title: "Call Us", 
+  {
+    icon: Phone,
+    title: "Call Us",
     value: "01494 445291",
     href: "tel:01494445291",
     desc: "Speak directly with our team"
   },
-  { 
-    icon: Mail, 
-    title: "Email Us", 
+  {
+    icon: Mail,
+    title: "Email Us",
     value: "info@speedylaundry.co.uk",
     href: "mailto:info@speedylaundry.co.uk",
     desc: "We reply within 24 hours"
@@ -41,23 +42,54 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main>
-        {/* Hero */}
-        <section className="pt-28 pb-12 lg:pt-40 lg:pb-16">
-          <div className="container">
-            <motion.div 
-              className="max-w-2xl mx-auto text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+        {/* Hero - Full Screen Visual matching About Page */}
+        <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
+          <div className="absolute inset-0">
+            <Image
+              src="/assets/contact/contact-bg.png"
+              alt="Professional laundry service"
+              fill
+              className="object-cover"
+              priority
+            />
+            {/* Exact Gradient from About Page for perfect consistency */}
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
+          </div>
+
+          <div className="container relative z-10">
+            <motion.div
+              className="max-w-2xl"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl md:text-6xl font-display font-bold text-foreground mb-6 tracking-tight">
-                Book Your Pickup
+              {/* Site Standard Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-primary/10"
+              >
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
+                <span className="text-white/90 text-sm font-medium">Serving High Wycombe & Surrounding Areas</span>
+              </motion.div>
+
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-[1.1]">
+                Book Your
+                <br />
+                <span className="text-primary italic">Pickup</span>
               </h1>
-              <p className="text-xl text-muted-foreground">
-                Schedule a collection or get in touch with our friendly team
+
+              <p className="text-xl text-white/80 mb-8 max-w-lg font-sans">
+                Schedule a collection or get in touch with our friendly team. We treat every garment with the care it deserves.
               </p>
+
+              <div className="flex items-center gap-4">
+                <div className="h-px w-12 bg-primary" />
+                <span className="text-white/40 text-xs uppercase tracking-[0.4em] font-bold">Scroll to Begin</span>
+              </div>
             </motion.div>
           </div>
         </section>
@@ -66,9 +98,9 @@ export default function ContactPage() {
         <section className="pb-20 lg:pb-32">
           <div className="container">
             <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-              
+
               {/* Booking Form */}
-              <motion.div 
+              <motion.div
                 className="lg:col-span-3"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -91,8 +123,8 @@ export default function ContactPage() {
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Full Name *
                         </label>
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                           placeholder="Your name"
                         />
@@ -101,8 +133,8 @@ export default function ContactPage() {
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Phone Number *
                         </label>
-                        <input 
-                          type="tel" 
+                        <input
+                          type="tel"
                           className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                           placeholder="Your phone"
                         />
@@ -113,8 +145,8 @@ export default function ContactPage() {
                       <label className="block text-sm font-medium text-foreground mb-2">
                         Email Address *
                       </label>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         placeholder="your@email.com"
                       />
@@ -124,8 +156,8 @@ export default function ContactPage() {
                       <label className="block text-sm font-medium text-foreground mb-2">
                         Postcode *
                       </label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                         placeholder="e.g. HP12 3RD"
                       />
@@ -149,14 +181,14 @@ export default function ContactPage() {
                       <label className="block text-sm font-medium text-foreground mb-2">
                         Message (Optional)
                       </label>
-                      <textarea 
+                      <textarea
                         className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                         rows={4}
                         placeholder="Any special requests or details about your order..."
                       />
                     </div>
 
-                    <button 
+                    <button
                       type="submit"
                       className="w-full bg-primary text-white font-bold py-4 rounded-full hover:brightness-110 transition-all text-lg flex items-center justify-center gap-2"
                     >
@@ -179,7 +211,7 @@ export default function ContactPage() {
               </motion.div>
 
               {/* Contact Info */}
-              <motion.div 
+              <motion.div
                 className="lg:col-span-2 space-y-8"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -234,11 +266,10 @@ export default function ContactPage() {
                   </div>
                   <div className="space-y-3">
                     {openingHours.map((item, index) => (
-                      <div 
-                        key={index} 
-                        className={`flex justify-between items-center pb-3 ${
-                          index < openingHours.length - 1 ? 'border-b border-white/10' : ''
-                        }`}
+                      <div
+                        key={index}
+                        className={`flex justify-between items-center pb-3 ${index < openingHours.length - 1 ? 'border-b border-white/10' : ''
+                          }`}
                       >
                         <span className="text-white/70">{item.day}</span>
                         <span className={`font-medium ${item.hours === 'Closed' ? 'text-white/50' : 'text-white'}`}>
@@ -265,7 +296,7 @@ export default function ContactPage() {
         {/* Map Section */}
         <section className="py-16 bg-muted">
           <div className="container">
-            <motion.div 
+            <motion.div
               className="text-center mb-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -274,8 +305,8 @@ export default function ContactPage() {
               <h2 className="text-3xl font-display font-bold text-foreground mb-2">Find Us</h2>
               <p className="text-muted-foreground">Cressex Business Park, High Wycombe</p>
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="rounded-2xl overflow-hidden shadow-lg h-[400px] bg-white"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

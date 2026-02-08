@@ -6,8 +6,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import "./globals.css";
 import { useState } from "react";
+import { Inter } from "next/font/google";
 
 import Preloader from "@/components/Preloader";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export default function RootLayout({ children }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -19,7 +22,7 @@ export default function RootLayout({ children }) {
         <meta name="description" content="Professional laundry and dry cleaning service with pickup and delivery" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body>
+      <body className={`${inter.variable} font-sans`}>
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <Toaster />

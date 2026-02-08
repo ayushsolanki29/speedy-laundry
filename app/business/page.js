@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { 
   ArrowRight,
   Building2,
@@ -16,7 +17,8 @@ import {
   Truck,
   Leaf,
   Award,
-  Shield
+  Shield,
+  MapPin
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -38,36 +40,46 @@ export default function BusinessPage() {
       <Header />
       
       <main>
-        {/* Hero - Clean & Minimal */}
-        <section className="pt-28 pb-16 lg:pt-40 lg:pb-24">
-          <div className="container">
-            <motion.div 
-              className="max-w-3xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+        {/* Hero - Full Screen Visual with Background Image */}
+        <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
+          <div className="absolute inset-0">
+            <Image
+              src="/assets/business/ChatGPT Image Feb 6, 2026, 01_53_41 PM.png"
+              alt="Commercial laundry service"
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
+          </div>
+
+          <div className="container relative z-10">
+            <motion.div
+              className="max-w-2xl"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
             >
-              <span className="text-primary font-semibold text-sm tracking-widest uppercase mb-4 block">
-                Commercial Services
-              </span>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-foreground mb-6 tracking-tight leading-[1.1]">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-[1.1]">
                 Laundry Solutions<br />
                 <span className="text-primary">for Business</span>
               </h1>
-              <p className="text-xl text-muted-foreground max-w-xl mb-10">
+
+              <p className="text-xl text-white/80 mb-8 max-w-lg">
                 Reliable, high-quality commercial laundry trusted by hotels, restaurants, and businesses across Buckinghamshire.
               </p>
+
               <div className="flex flex-wrap gap-4">
                 <a 
                   href="#quote"
-                  className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-8 py-4 rounded-full hover:brightness-110 transition-all"
+                  className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:brightness-110 transition-all shadow-lg"
                 >
                   Get a Quote
                   <ArrowRight className="w-5 h-5" />
                 </a>
                 <a 
                   href="tel:01494445291"
-                  className="inline-flex items-center gap-2 bg-muted text-foreground font-semibold px-8 py-4 rounded-full hover:bg-muted/80 transition-all"
+                  className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white font-bold px-8 py-4 rounded-full hover:bg-white/30 transition-all"
                 >
                   <Phone className="w-5 h-5" />
                   01494 445291
@@ -75,9 +87,9 @@ export default function BusinessPage() {
               </div>
             </motion.div>
 
-            {/* Trust indicators */}
+            {/* Small Trust Indicators */}
             <motion.div 
-              className="flex flex-wrap gap-8 lg:gap-12 mt-16 pt-12 border-t border-border"
+              className="flex flex-wrap gap-8 lg:gap-12 mt-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -88,7 +100,7 @@ export default function BusinessPage() {
                 { icon: Leaf, text: "Eco-Friendly" },
                 { icon: Shield, text: "Quality Guaranteed" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 text-muted-foreground">
+                <div key={i} className="flex items-center gap-3 text-white/80">
                   <item.icon className="w-5 h-5 text-primary" />
                   <span className="font-medium">{item.text}</span>
                 </div>

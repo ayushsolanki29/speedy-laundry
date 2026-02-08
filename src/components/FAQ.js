@@ -18,20 +18,20 @@ const faqs = [
     answer: "Our standard turnaround time is 24-48 hours. For urgent requests, please contact us directly and we'll do our best to accommodate your needs."
   },
   {
-    question: "How do I schedule a pickup?",
-    answer: "You can schedule a pickup by filling out our contact form, calling us at 01494 445291, or emailing info@speedylaundry.co.uk."
+    question: "What services do we offer?",
+    answer: "We offer a range of domestic laundry and garment care services designed to make life easier for our customers. Our services include:\n\n- Ironing Only (charged by weight)\n- Wash & Iron\n- Wash, Dry & Fold\n- Dry Cleaning, including delicate and specialist items\n- Bedding & Household Linen, such as duvets, sheets, pillowcases, and towels\n\nAll services are available with free collection and delivery for added convenience."
   },
   {
-    question: "What items do you clean?",
-    answer: "We clean everything from everyday laundry (Wash/Iron/Fold) to specialized items like suits, wedding dresses, curtains, and duvets."
+    question: "How does our collection & delivery service work?",
+    answer: "Our collection and delivery service is simple, reliable, and designed around your schedule.\n\nOnce you place a booking:\n\n1. We collect your laundry from your address on the agreed day\n2. Items are professionally cleaned and/or ironed at our facility\n3. Your clean laundry is returned neatly packed on your delivery day\n\nYou don't need to visit a shop — everything is handled door to door."
   },
   {
-    question: "Is delivery really free?",
-    answer: "Yes! Pickup and delivery are completely free within our service areas, with no hidden charges or minimum requirements."
+    question: "What is your turnaround time?",
+    answer: "Our standard turnaround time is 24 to 48 hours from collection to delivery.\n\nThis allows us to maintain high standards of cleaning and finishing while providing a fast and dependable service."
   },
   {
-    question: "Is there a satisfaction guarantee?",
-    answer: "Absolutely! If you're not 100% happy with our work, let us know within 24 hours and we'll re-clean the item free of charge."
+    question: "Do you handle delicate items and follow care instructions?",
+    answer: "Yes. All items are handled with care and processed according to fabric type and care labels.\n\n- Delicate items are treated separately where required\n- Dry-clean-only garments are professionally assessed before cleaning\n- Any specific care instructions can be provided at the time of booking\n\nOur goal is to return your items clean, fresh, and well cared for every time."
   }
 ];
 

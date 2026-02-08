@@ -2,11 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Sparkles, UserRound, Layers, Bed, Maximize2, Snowflake, Waves, Feather, Shirt, Utensils } from "lucide-react";
-
-const serviceIron = "/assets/service-iron.jpg";
-const serviceWash = "/assets/service-wash.jpg";
-const serviceFold = "/assets/service-fold.jpg";
-const serviceDryclean = "/assets/service-dryclean.jpg";
+import Link from "next/link";
 
 const services = [
   {
@@ -18,7 +14,8 @@ const services = [
     ),
     title: "Iron Only",
     description: "Professional steam pressing for wrinkle-free perfection",
-    image: serviceIron,
+    image: "/assets/our%20services/i-1.png",
+    slug: "iron-only",
   },
   {
     icon: (
@@ -30,7 +27,8 @@ const services = [
     ),
     title: "Wash + Iron",
     description: "Complete wash and iron – fresh, clean, perfectly pressed",
-    image: serviceWash,
+    image: "/assets/our%20services/f-1.png",
+    slug: "wash-iron",
   },
   {
     icon: (
@@ -42,7 +40,8 @@ const services = [
     ),
     title: "Wash + Dry + Fold",
     description: "Full service laundry, neatly folded and ready to wear",
-    image: serviceFold,
+    image: "/assets/our%20services/w-1.png",
+    slug: "wash-dry-fold",
   },
   {
     icon: (
@@ -54,7 +53,8 @@ const services = [
     ),
     title: "Dry Cleaning",
     description: "Expert care for suits, dresses, and delicate fabrics",
-    image: serviceDryclean,
+    image: "/assets/our%20services/ChatGPT%20Image%20Feb%206,%202026,%2009_58_10%20AM.png",
+    slug: "dry-cleaning",
   },
 ];
 
@@ -92,33 +92,34 @@ const Services = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group relative bg-card rounded-3xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-2xl transition-all duration-500 h-80"
-            >
-              {/* Background image */}
-              <div 
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{ backgroundImage: `url(${service.image})` }}
-              />
+            <Link href={`/services/${service.slug}`} key={service.title}>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group relative bg-card rounded-3xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-2xl transition-all duration-500 h-80 cursor-pointer"
+              >
+                {/* Background image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                  style={{ backgroundImage: `url(${service.image})` }}
+                />
 
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
 
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 border border-white/20 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                  {service.icon}
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                  {/* Icon */}
+                  <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 border border-white/20 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{service.title}</h3>
+                  <p className="text-white/80 text-sm leading-relaxed">{service.description}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{service.description}</p>
-              </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           ))}
         </div>
 
@@ -152,9 +153,10 @@ const Services = () => {
               >
                 {/* Double items for perfectly seamless loop */}
                 {[...additionalItems, ...additionalItems].map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    className="flex items-center gap-4 bg-secondary/30 backdrop-blur-sm hover:bg-primary transition-all duration-300 px-8 py-5 rounded-2xl border border-border group/item"
+                  <button
+                    key={idx}
+                    onClick={() => window.location.href = '/contact'}
+                    className="flex items-center gap-4 bg-secondary/30 backdrop-blur-sm hover:bg-primary transition-all duration-300 px-8 py-5 rounded-2xl border border-border group/item cursor-pointer"
                   >
                     <div className="text-primary group-hover/item:text-white transition-colors">
                       <item.icon size={26} strokeWidth={2.5} />
@@ -162,7 +164,7 @@ const Services = () => {
                     <span className="text-lg font-medium text-foreground group-hover/item:text-white transition-colors">
                       {item.name}
                     </span>
-                  </div>
+                  </button>
                 ))}
               </motion.div>
             </div>

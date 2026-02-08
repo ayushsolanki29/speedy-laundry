@@ -137,6 +137,15 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight;
   }
+
+  .admin-root h1, 
+  .admin-root h2, 
+  .admin-root h3, 
+  .admin-root h4, 
+  .admin-root h5, 
+  .admin-root h6 {
+    @apply font-sans;
+  }
 }
 
 @layer components {

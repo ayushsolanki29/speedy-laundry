@@ -7,11 +7,11 @@ import Image from "next/image";
 const logo = "/assets/logo.svg";
 
 const deliveryAreas = [
-  { name: "High Wycombe", image: "https://images.unsplash.com/photo-1557333610-90ee4a951ecf?w=100&h=100&fit=crop" },
-  { name: "Henley", image: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=100&h=100&fit=crop" },
-  { name: "Beaconsfield", image: "https://images.unsplash.com/photo-1449156003253-1422027c0067?w=100&h=100&fit=crop" },
-  { name: "Maidenhead", image: "https://images.unsplash.com/photo-1526678502577-438907f90f33?w=100&h=100&fit=crop" },
-  { name: "Marlow", image: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=100&h=100&fit=crop" }
+  { name: "High Wycombe", image: "/assets/our services/High Wycombe 01.png" },
+  { name: "Henley-on-Thames", image: "/assets/our services/Henley on Thames01.png" },
+  { name: "Beaconsfield", image: "/assets/our services/Beaconsfield01.png" },
+  { name: "Maidenhead", image: "/assets/our services/Maidenhead.png" },
+  { name: "Marlow", image: "/assets/our services/Marlow01.png" }
 ];
 
 const Footer = () => {
@@ -20,7 +20,7 @@ const Footer = () => {
       {/* Main Footer */}
       <div className="container py-16 lg:py-20">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8">
-          
+
           {/* Brand - Larger */}
           <div className="lg:col-span-4">
             <Image src={logo} alt="Speedy Laundry" className="h-10 mb-6 brightness-0 invert w-auto" width={200} height={40} />
@@ -38,7 +38,7 @@ const Footer = () => {
           {/* Links Grid */}
           <div className="lg:col-span-8">
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              
+
               {/* Services */}
               <div>
                 <h4 className="text-white font-bold mb-6 text-sm tracking-wider uppercase">Services</h4>
@@ -156,8 +156,8 @@ const Footer = () => {
               </div>
               <div className="h-4 w-px bg-white/20 hidden md:block" />
               <div className="flex gap-6 text-sm">
-                <a href="#" className="text-white/40 hover:text-white transition-colors">Privacy</a>
-                <a href="#" className="text-white/40 hover:text-white transition-colors">Terms</a>
+                <Link href="/privacy" className="text-white/40 hover:text-white transition-colors">Privacy</Link>
+                <Link href="/terms" className="text-white/40 hover:text-white transition-colors">Terms</Link>
               </div>
             </div>
           </div>

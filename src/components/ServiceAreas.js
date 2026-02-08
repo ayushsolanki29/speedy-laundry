@@ -8,7 +8,7 @@ const serviceAreas = [
   {
     region: "High Wycombe",
     count: "17+ Areas",
-    image: "https://images.unsplash.com/photo-1557333610-90ee4a951ecf?w=600&h=800&fit=crop",
+    image: "/assets/our%20services/High%20Wycombe%2001.png",
     areas: [
       "High Wycombe", "Hazlemere", "Holmer Green", "Hughenden", "Great Kingshill",
       "Little Kingshill", "Naphill", "Prestwood", "Penn", "Tylers Green",
@@ -19,7 +19,7 @@ const serviceAreas = [
   {
     region: "Henley-on-Thames",
     count: "25+ Areas",
-    image: "https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=600&h=800&fit=crop",
+    image: "/assets/our%20services/Henley%20on%20Thames01.png",
     areas: [
       "Henley-on-Thames", "Checkenden", "Cookley Green", "Fingest",
       "Highmoor", "Maidensgrove", "Nettlebed", "Northend", "Nuffield",
@@ -31,7 +31,7 @@ const serviceAreas = [
   {
     region: "Beaconsfield",
     count: "10+ Areas",
-    image: "https://images.unsplash.com/photo-1449156003253-1422027c0067?w=600&h=800&fit=crop",
+    image: "/assets/our%20services/Beaconsfield01.png",
     areas: [
       "Beaconsfield", "Gerrards Cross", "Amersham",
       "Chesham", "Chalfont St Giles", "Chalfont St Peter", "Little Chalfont",
@@ -41,7 +41,7 @@ const serviceAreas = [
   {
     region: "Maidenhead",
     count: "13+ Areas",
-    image: "https://images.unsplash.com/photo-1526678502577-438907f90f33?w=600&h=800&fit=crop",
+    image: "/assets/our%20services/Maidenhead.png",
     areas: [
       "Maidenhead", "Bisham", "Medmenham", "Harleyford Estate", "Marlow",
       "Cookham", "Shiplake", "Kidmore End", "Hook End", "Sonning Common",
@@ -80,14 +80,14 @@ const ServiceAreas = () => {
               className="group relative h-[400px] rounded-[2rem] overflow-hidden cursor-pointer shadow-xl"
             >
               {/* Image Background */}
-              <div 
+              <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{ backgroundImage: `url(${region.image})` }}
+                style={{ backgroundImage: `url('${region.image}')` }}
               />
-              
+
               {/* Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-              
+
               {/* Content */}
               <div className="absolute inset-0 p-8 flex flex-col justify-end">
                 <div className="inline-flex bg-white/10 backdrop-blur-md border border-white/20 rounded-lg px-3 py-1 text-[10px] font-bold text-white uppercase tracking-widest mb-3 w-fit">
