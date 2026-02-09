@@ -81,13 +81,13 @@ const CustomerEducation = () => {
             </h2>
           </div>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Build your laundry knowledge with expert tips and comprehensive guides. 
+            Build your laundry knowledge with expert tips and comprehensive guides.
             Learn the best practices to keep your clothes looking new longer.
           </p>
         </motion.div>
 
         {/* Education Topics */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
           {educationTopics.map((topic, index) => (
             <motion.div
               key={topic.title}
@@ -95,10 +95,10 @@ const CustomerEducation = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * index }}
               viewport={{ once: true }}
-              className="card-premium overflow-hidden h-full"
+              className="card-premium overflow-hidden h-full flex flex-col"
             >
               {/* Service Image */}
-              <div className="relative h-32 overflow-hidden">
+              <div className="relative h-28 md:h-32 overflow-hidden">
                 <img
                   src={serviceImages[index % serviceImages.length]}
                   alt={`Service ${index + 1}`}
@@ -106,18 +106,18 @@ const CustomerEducation = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </div>
-              
-              <div className="p-6">
+
+              <div className="p-5 md:p-6 flex flex-col flex-grow">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="p-3 bg-primary/10 rounded-full">
-                    <topic.icon className="w-6 h-6 text-primary" />
+                  <div className="p-2.5 bg-primary/10 rounded-full">
+                    <topic.icon className="w-5 h-5 md:w-6 md:h-6 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground">{topic.title}</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-foreground leading-tight">{topic.title}</h3>
                 </div>
-                
-                <p className="text-muted-foreground mb-6">{topic.description}</p>
-                
-                <div className="space-y-3">
+
+                <p className="text-sm text-muted-foreground mb-6 line-clamp-3 md:line-clamp-none">{topic.description}</p>
+
+                <div className="space-y-3 mt-auto">
                   {topic.tips.map((tip, tipIndex) => (
                     <motion.div
                       key={tipIndex}
@@ -125,10 +125,10 @@ const CustomerEducation = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.4, delay: 0.2 + tipIndex * 0.1 }}
                       viewport={{ once: true }}
-                      className="flex items-start gap-3"
+                      className="flex items-start gap-2.5 md:gap-3"
                     >
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
-                      <span className="text-sm text-foreground">{tip}</span>
+                      <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-primary rounded-full mt-1.5 md:mt-2 flex-shrink-0" />
+                      <span className="text-xs md:text-sm text-foreground leading-relaxed">{tip}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -143,14 +143,14 @@ const CustomerEducation = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-12 md:mb-16"
         >
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl p-8">
-            <h3 className="text-2xl font-bold text-foreground mb-8 text-center">
+          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl md:rounded-3xl p-6 md:p-10 shadow-inner">
+            <h3 className="text-xl md:text-2xl font-bold text-header mb-6 md:mb-10 text-center">
               Fabric Care Guides
             </h3>
-            
-            <div className="grid md:grid-cols-3 gap-6">
+
+            <div className="grid md:grid-cols-3 gap-5 md:gap-6">
               {careGuides.map((guide, index) => (
                 <motion.div
                   key={guide.category}
@@ -158,22 +158,22 @@ const CustomerEducation = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: 0.1 * index }}
                   viewport={{ once: true }}
-                  className="bg-white rounded-2xl p-6 shadow-lg"
+                  className="bg-white rounded-xl md:rounded-2xl p-5 md:p-6 shadow-sm border border-header/5"
                 >
-                  <h4 className="text-lg font-bold text-primary mb-3">{guide.category}</h4>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <h4 className="text-base md:text-lg font-bold text-primary mb-3">{guide.category}</h4>
+
+                  <div className="flex flex-wrap gap-1.5 md:gap-2 mb-4">
                     {guide.items.map((item) => (
                       <span
                         key={item}
-                        className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-medium"
+                        className="px-2.5 py-1 bg-secondary text-secondary-foreground rounded-full text-[10px] md:text-xs font-semibold"
                       >
                         {item}
                       </span>
                     ))}
                   </div>
-                  
-                  <p className="text-sm text-muted-foreground">{guide.care}</p>
+
+                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{guide.care}</p>
                 </motion.div>
               ))}
             </div>
@@ -191,7 +191,7 @@ const CustomerEducation = () => {
             <h3 className="text-2xl font-bold text-foreground mb-8 text-center">
               Why Trust Our Expert Advice?
             </h3>
-            
+
             <div className="grid md:grid-cols-3 gap-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -210,7 +210,7 @@ const CustomerEducation = () => {
                   Our team holds professional certifications in fabric care and laundry management
                 </p>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -228,7 +228,7 @@ const CustomerEducation = () => {
                   Serving thousands of customers with expert laundry solutions since 2014
                 </p>
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -247,7 +247,7 @@ const CustomerEducation = () => {
                 </p>
               </motion.div>
             </div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}

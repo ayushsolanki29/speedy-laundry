@@ -39,18 +39,18 @@ const ImageGrid = () => {
   const row2 = images.slice(6, 12);
 
   return (
-    <section ref={containerRef} className="py-20 bg-background overflow-hidden relative">
-      <div className="flex flex-col gap-4">
-        {/* Row 1: Moves Left on Scroll */}
-        <div className="flex">
+    <section ref={containerRef} className="py-10 md:py-20 bg-background overflow-hidden relative">
+      <div className="flex flex-col gap-4 md:gap-4">
+        {/* Row 1: Moves Left on Scroll - Touch scrollable on mobile */}
+        <div className="flex overflow-x-auto md:overflow-hidden scrollbar-hide touch-pan-x">
           <motion.div
             style={{ x: xRow1 }}
-            className="flex gap-4 whitespace-nowrap px-4"
+            className="flex gap-4 whitespace-nowrap px-4 md:px-4"
           >
             {row1.map((image, idx) => (
               <div
                 key={idx}
-                className="relative w-[450px] aspect-video overflow-hidden rounded-2xl shadow-xl transition-transform duration-500 hover:scale-[1.02]"
+                className="relative flex-shrink-0 w-[250px] sm:w-[300px] md:w-[350px] lg:w-[450px] aspect-video overflow-hidden rounded-2xl shadow-xl transition-transform duration-500 hover:scale-[1.02]"
               >
                 <Image
                   src={image.url}
@@ -63,16 +63,16 @@ const ImageGrid = () => {
           </motion.div>
         </div>
 
-        {/* Row 2: Moves Right on Scroll */}
-        <div className="flex">
+        {/* Row 2: Moves Right on Scroll - Touch scrollable on mobile */}
+        <div className="flex overflow-x-auto md:overflow-hidden scrollbar-hide touch-pan-x">
           <motion.div
             style={{ x: xRow2 }}
-            className="flex gap-4 whitespace-nowrap px-4"
+            className="flex gap-4 whitespace-nowrap px-4 md:px-4"
           >
             {row2.map((image, idx) => (
               <div
                 key={idx}
-                className="relative w-[450px] aspect-video overflow-hidden rounded-2xl shadow-xl transition-transform duration-500 hover:scale-[1.02]"
+                className="relative flex-shrink-0 w-[250px] sm:w-[300px] md:w-[350px] lg:w-[450px] aspect-video overflow-hidden rounded-2xl shadow-xl transition-transform duration-500 hover:scale-[1.02]"
               >
                 <Image
                   src={image.url}
@@ -85,6 +85,17 @@ const ImageGrid = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Add custom styles for scrollbar hide */}
+      <style jsx>{`
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 };

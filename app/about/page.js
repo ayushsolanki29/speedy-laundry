@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useInView, useMotionValue, animate } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
@@ -25,7 +25,29 @@ import TrustedPartners from "@/components/TrustedPartners";
 const Counter = ({ end, suffix = "", duration = 2 }) => {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (isInView) {
@@ -125,31 +147,150 @@ const features = [
 ];
 
 export default function About() {
-  const sliderX = useMotionValue(0);
-  const [progress, setProgress] = useState(10);
-
-  const handleSliderScroll = (direction) => {
-    const currentX = sliderX.get();
-    const moveAmount = 550 + 48; // Estimate move amount
-    let newX = direction === 'next' ? currentX - moveAmount : currentX + moveAmount;
-
-    // Constrain within bounds
-    if (newX > 0) newX = 0;
-    if (newX < -3200) newX = -3200;
-
-    animate(sliderX, newX, {
-      type: "spring",
-      stiffness: 300,
-      damping: 30
-    });
-  };
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartX, setDragStartX] = useState(0);
+  const containerRef = useRef(null);
+  const autoSlideRef = useRef(null);
 
   useEffect(() => {
-    return sliderX.on("change", (latest) => {
-      const p = Math.max(10, Math.min(100, (Math.abs(latest) / 3200) * 100));
-      setProgress(p);
-    });
-  }, [sliderX]);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto slide every 3 seconds
+  useEffect(() => {
+    autoSlideRef.current = setInterval(() => {
+      if (!isDragging) {
+        if (isMobile) {
+          setCurrentSlide((prev) => (prev + 1) % values.length);
+        } else {
+          // On desktop, move by 3 cards at a time
+          setCurrentSlide((prev) => {
+            const next = prev + 3;
+            return next >= values.length ? 0 : next;
+          });
+        }
+      }
+    }, 3000);
+
+    return () => {
+      if (autoSlideRef.current) {
+        clearInterval(autoSlideRef.current);
+      }
+    };
+  }, [isDragging, isMobile]);
+
+  const nextSlide = () => {
+    if (isMobile) {
+      setCurrentSlide((prev) => (prev + 1) % values.length);
+    } else {
+      setCurrentSlide((prev) => {
+        const next = prev + 3;
+        return next >= values.length ? 0 : next;
+      });
+    }
+    resetAutoSlide();
+  };
+
+  const prevSlide = () => {
+    if (isMobile) {
+      setCurrentSlide((prev) => (prev - 1 + values.length) % values.length);
+    } else {
+      setCurrentSlide((prev) => {
+        const next = prev - 3;
+        return next < 0 ? values.length - (values.length % 3 || 3) : next;
+      });
+    }
+    resetAutoSlide();
+  };
+
+  const resetAutoSlide = () => {
+    if (autoSlideRef.current) {
+      clearInterval(autoSlideRef.current);
+      autoSlideRef.current = setInterval(() => {
+        if (!isDragging) {
+          if (isMobile) {
+            setCurrentSlide((prev) => (prev + 1) % values.length);
+          } else {
+            setCurrentSlide((prev) => {
+              const next = prev + 3;
+              return next >= values.length ? 0 : next;
+            });
+          }
+        }
+      }, 3000);
+    }
+  };
+
+  // Touch and drag handlers for mobile
+  const handleTouchStart = (e) => {
+    setIsDragging(true);
+    setDragStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!isDragging) return;
+    setIsDragging(false);
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = dragStartX - touchEndX;
+    const threshold = 50;
+
+    if (diff > threshold && currentSlide < values.length - 1) {
+      nextSlide();
+    } else if (diff < -threshold && currentSlide > 0) {
+      prevSlide();
+    }
+
+    resetAutoSlide();
+  };
+
+  // Mouse drag handlers for desktop testing
+  const handleMouseDown = (e) => {
+    if (!isMobile) return;
+    setIsDragging(true);
+    setDragStartX(e.clientX);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging || !isMobile) return;
+    e.preventDefault();
+  };
+
+  const handleMouseUp = (e) => {
+    if (!isDragging || !isMobile) return;
+    setIsDragging(false);
+
+    const mouseUpX = e.clientX;
+    const diff = dragStartX - mouseUpX;
+    const threshold = 50;
+
+    if (diff > threshold && currentSlide < values.length - 1) {
+      nextSlide();
+    } else if (diff < -threshold && currentSlide > 0) {
+      prevSlide();
+    }
+
+    resetAutoSlide();
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+    resetAutoSlide();
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -157,7 +298,7 @@ export default function About() {
 
       <main>
         {/* Hero - Full Screen Visual */}
-        <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
+        <section className="relative h-[70vh] sm:h-[80vh] md:h-[90vh] min-h-[500px] sm:min-h-[550px] md:min-h-[600px] flex items-center overflow-hidden pt-16 sm:pt-20">
           <div className="absolute inset-0">
             <Image
               src="https://images.unsplash.com/photo-1489274495757-95c7c837b101?w=1920&h=1080&fit=crop"
@@ -169,7 +310,7 @@ export default function About() {
             <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
           </div>
 
-          <div className="container relative z-10">
+          <div className="container px-4 sm:px-6 relative z-10">
             <motion.div
               className="max-w-2xl"
               initial={{ opacity: 0, x: -50 }}
@@ -180,28 +321,28 @@ export default function About() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6"
+                className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full mb-4 sm:mb-6"
               >
-                <MapPin className="w-4 h-4 text-primary" />
-                <span className="text-white/90 text-sm font-medium">High Wycombe &amp; Surrounding Areas</span>
+                <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+                <span className="text-white/90 text-xs sm:text-sm font-medium">High Wycombe &amp; Surrounding Areas</span>
               </motion.div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-[1.1]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-white mb-4 sm:mb-6 leading-[1.1]">
                 Laundry
                 <br />
                 <span className="text-primary">Reimagined</span>
               </h1>
 
-              <p className="text-xl text-white/80 mb-8 max-w-lg">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 mb-6 sm:mb-8 max-w-lg">
                 Premium care for your clothes. Eco-friendly practices. Delivered to your door.
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:brightness-110 transition-all shadow-lg"
+                  className="inline-flex items-center gap-2 bg-primary text-white font-bold px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-full hover:brightness-110 transition-all shadow-lg text-sm sm:text-base"
                 >
-                  <Phone className="w-5 h-5" />
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   Book Now
                 </Link>
               </div>
@@ -210,20 +351,20 @@ export default function About() {
 
           {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2"
+            className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2"
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <div className="w-6 h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
+            <div className="w-5 h-8 sm:w-6 sm:h-10 rounded-full border-2 border-white/30 flex items-start justify-center p-1.5 sm:p-2">
               <div className="w-1.5 h-3 bg-white/50 rounded-full" />
             </div>
           </motion.div>
         </section>
 
         {/* Stats Bar */}
-        <section className="bg-primary py-8">
-          <div className="container">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <section className="bg-primary py-6 sm:py-8">
+          <div className="container px-4 sm:px-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
               {stats.map((stat, index) => (
                 <motion.div
                   key={index}
@@ -233,10 +374,10 @@ export default function About() {
                   transition={{ delay: index * 0.1 }}
                   className="text-center"
                 >
-                  <div className="text-4xl md:text-5xl font-bold text-white mb-1">
+                  <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-1">
                     <Counter end={stat.value} suffix={stat.suffix} />
                   </div>
-                  <div className="text-white/80 text-sm font-medium">{stat.label}</div>
+                  <div className="text-white/80 text-xs sm:text-sm font-medium">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -245,135 +386,229 @@ export default function About() {
 
         <TrustedPartners />
 
-        {/* Visual Values Grid */}
-        <section className="py-20 lg:py-32">
-          <div className="container">
+        {/* Visual Values Grid - What Makes Us Different */}
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 bg-background overflow-hidden">
+          <div className="container px-4">
             <motion.div
-              className="text-center mb-16"
+              className="text-center mb-8 sm:mb-12 md:mb-16"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-4">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
                 What Makes Us <span className="text-primary">Different</span>
               </h2>
             </motion.div>
 
-            <div className="relative pb-20 overflow-hidden" style={{ perspective: "1500px" }}>
-              <div className="container relative overflow-visible">
+            {/* Desktop: Show 3 cards at once */}
+            <div className="hidden md:block">
+              <div
+                ref={containerRef}
+                className="relative"
+              >
                 <motion.div
-                  className="flex gap-12 px-[10%] items-center cursor-grab active:cursor-grabbing"
-                  drag="x"
-                  dragConstraints={{
-                    right: 0,
-                    left: -3200, // Adjusted for 12 large cards
-                  }}
-                  dragTransition={{ bounceStiffness: 400, bounceDamping: 30 }}
-                  style={{
-                    transformStyle: "preserve-3d",
-                    x: sliderX
-                  }}
-                  onDrag={(e, info) => sliderX.set(info.point.x)}
+                  className="flex justify-center gap-6 lg:gap-8"
+                  animate={{ x: `-${currentSlide * ((400 + 32) / 3)}px` }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 >
                   {values.map((value, index) => (
                     <motion.div
                       key={index}
-                      initial={{ opacity: 0, scale: 0.8, rotateY: 30 }}
-                      whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
                       whileHover={{
                         scale: 1.05,
-                        translateZ: 50,
                         transition: { duration: 0.4 }
                       }}
-                      className="flex-shrink-0 w-[320px] md:w-[550px] aspect-video relative rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] group border border-white/5 bg-foreground/5 backdrop-blur-sm"
-                      style={{
-                        transformStyle: "preserve-3d",
-                      }}
+                      className="flex-shrink-0 w-[380px] lg:w-[400px]"
                     >
-                      {/* 3D Depth Image */}
-                      <div className="absolute inset-0 overflow-hidden">
-                        <motion.div
-                          className="absolute inset-0"
-                          whileHover={{ scale: 1.1 }}
-                          transition={{ duration: 0.6 }}
-                        >
+                      <div className="relative aspect-video rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden shadow-2xl group border border-white/5 mx-2">
+                        {/* Image */}
+                        <div className="absolute inset-0 overflow-hidden">
                           <Image
                             src={value.image}
                             alt={value.title}
                             fill
                             className="object-cover object-center"
                           />
-                        </motion.div>
-                      </div>
+                        </div>
 
-                      {/* Premium Dynamic Gradient - Lightened for visibility */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:via-black/20 transition-all duration-500" />
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:via-black/20 transition-all duration-500" />
 
-                      {/* Content with 3D Pop-out effect */}
-                      <div className="absolute inset-0 p-10 flex flex-col justify-end translate-z-10">
-                        <motion.div
-                          className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-6 shadow-2xl"
-                          whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                        >
-                          <value.icon className="w-8 h-8 text-white" />
-                        </motion.div>
-                        <h3 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight drop-shadow-2xl">
-                          {value.title}
-                        </h3>
-                        <div className="h-1 w-12 bg-primary rounded-full mb-4 transform origin-left group-hover:w-24 transition-all duration-500" />
-                        <p className="text-white/70 text-base font-medium opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                          Excellence in Every Thread
-                        </p>
+                        {/* Content */}
+                        <div className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-end">
+                          <div className="w-14 h-14 lg:w-16 lg:h-16 bg-primary rounded-2xl flex items-center justify-center mb-6 shadow-xl">
+                            <value.icon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
+                          </div>
+                          <h3 className="text-2xl lg:text-3xl font-bold text-white mb-3 tracking-tight">
+                            {value.title}
+                          </h3>
+                          <div className="h-1 w-12 bg-primary rounded-full mb-4 transform origin-left group-hover:w-24 transition-all duration-500" />
+                        </div>
                       </div>
                     </motion.div>
                   ))}
                 </motion.div>
+
+                {/* Desktop Navigation */}
+                <div className="mt-16">
+                  <div className="flex flex-col items-center gap-6">
+                    <div className="flex items-center gap-6">
+                      <span className="h-px w-20 bg-gradient-to-r from-transparent to-primary/30" />
+                      <div className="flex items-center gap-3 bg-primary/5 px-6 py-3 rounded-full border border-primary/10 backdrop-blur-md">
+                        <button
+                          onClick={prevSlide}
+                          className="p-1 hover:bg-primary/20 rounded-full transition-colors group/btn"
+                          aria-label="Previous Slide"
+                        >
+                          <motion.div
+                            animate={{ x: [-3, 3] }}
+                            transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
+                          >
+                            <ArrowRight className="w-5 h-5 text-primary rotate-180 group-hover/btn:scale-120 transition-transform" />
+                          </motion.div>
+                        </button>
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/80 px-2 leading-none">
+                          Explore Our Legacy
+                        </span>
+                        <button
+                          onClick={nextSlide}
+                          className="p-1 hover:bg-primary/20 rounded-full transition-colors group/btn"
+                          aria-label="Next Slide"
+                        >
+                          <motion.div
+                            animate={{ x: [3, -3] }}
+                            transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
+                          >
+                            <ArrowRight className="w-5 h-5 text-primary group-hover/btn:scale-120 transition-transform" />
+                          </motion.div>
+                        </button>
+                      </div>
+                      <span className="h-px w-20 bg-gradient-to-l from-transparent to-primary/30" />
+                    </div>
+
+                    {/* Dots for Desktop */}
+                    <div className="flex gap-2">
+                      {Array.from({ length: Math.ceil(values.length / 3) }).map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => goToSlide(index * 3)}
+                          className={`w-2 h-2 rounded-full transition-all ${Math.floor(currentSlide / 3) === index ? 'bg-primary w-6' : 'bg-gray-300'
+                            }`}
+                          aria-label={`Go to group ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile: Touchable Slider - Show 1 card at a time */}
+            <div className="md:hidden">
+              <div
+                ref={containerRef}
+                className="relative overflow-hidden"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={() => setIsDragging(false)}
+                style={{
+                  cursor: isDragging ? 'grabbing' : 'grab'
+                }}
+              >
+                <motion.div
+                  className="flex"
+                  animate={{ x: `-${currentSlide * 100}%` }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                >
+                  {values.map((value, index) => (
+                    <div
+                      key={index}
+                      className="w-full flex-shrink-0 px-2"
+                    >
+                      <div className="relative aspect-video rounded-[1.5rem] overflow-hidden shadow-xl group border border-white/5">
+                        {/* Image */}
+                        <div className="absolute inset-0 overflow-hidden">
+                          <Image
+                            src={value.image}
+                            alt={value.title}
+                            fill
+                            className="object-cover object-center"
+                          />
+                        </div>
+
+                        {/* Gradient Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:via-black/20 transition-all duration-500" />
+
+                        {/* Content */}
+                        <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                          <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center mb-4 shadow-xl">
+                            <value.icon className="w-6 h-6 text-white" />
+                          </div>
+                          <h3 className="text-2xl font-bold text-white mb-2 tracking-tight">
+                            {value.title}
+                          </h3>
+                          <div className="h-1 w-8 bg-primary rounded-full mb-3 transform origin-left group-hover:w-16 transition-all duration-500" />
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </motion.div>
               </div>
 
-              {/* Unique Interactive Footer for Slider */}
-              <div className="container mt-20">
-                <div className="flex flex-col items-center gap-8">
-                  <div className="flex items-center gap-6">
-                    <span className="h-px w-20 bg-gradient-to-r from-transparent to-primary/30" />
-                    <div className="flex items-center gap-3 bg-primary/5 px-6 py-3 rounded-full border border-primary/10 backdrop-blur-md">
-                      <button
-                        onClick={() => handleSliderScroll('prev')}
-                        className="p-1 hover:bg-primary/20 rounded-full transition-colors group/btn"
-                        aria-label="Previous Slide"
-                      >
-                        <motion.div
-                          animate={{ x: [-3, 3] }}
-                          transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
-                        >
-                          <ArrowRight className="w-5 h-5 text-primary rotate-180 group-hover/btn:scale-120 transition-transform" />
-                        </motion.div>
-                      </button>
-                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/80 px-2 leading-none">
-                        Explore Our Legacy
-                      </span>
-                      <button
-                        onClick={() => handleSliderScroll('next')}
-                        className="p-1 hover:bg-primary/20 rounded-full transition-colors group/btn"
-                        aria-label="Next Slide"
-                      >
-                        <motion.div
-                          animate={{ x: [3, -3] }}
-                          transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
-                        >
-                          <ArrowRight className="w-5 h-5 text-primary group-hover/btn:scale-120 transition-transform" />
-                        </motion.div>
-                      </button>
+              {/* Mobile Navigation */}
+              <div className="mt-8 px-4">
+                <div className="flex flex-col items-center gap-4">
+                  <div className="flex items-center justify-between w-full max-w-sm">
+                    <button
+                      onClick={prevSlide}
+                      className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      aria-label="Previous slide"
+                      disabled={currentSlide === 0}
+                    >
+                      <ArrowRight className="w-5 h-5 text-primary rotate-180" />
+                    </button>
+
+                    {/* Dots Indicator */}
+                    <div className="flex gap-2">
+                      {values.slice(0, 5).map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => goToSlide(index)}
+                          className={`w-2 h-2 rounded-full transition-all ${index === currentSlide ? 'bg-primary w-6' : 'bg-gray-300'
+                            }`}
+                          aria-label={`Go to slide ${index + 1}`}
+                        />
+                      ))}
+                      {values.length > 5 && (
+                        <div className="flex items-center text-xs text-gray-500">
+                          +{values.length - 5} more
+                        </div>
+                      )}
                     </div>
-                    <span className="h-px w-20 bg-gradient-to-l from-transparent to-primary/30" />
+
+                    <button
+                      onClick={nextSlide}
+                      className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      aria-label="Next slide"
+                      disabled={currentSlide === values.length - 1}
+                    >
+                      <ArrowRight className="w-5 h-5 text-primary" />
+                    </button>
                   </div>
 
-                  {/* Neon Progress Bar */}
-                  <div className="w-48 h-1 bg-white/5 rounded-full relative overflow-hidden">
+                  {/* Progress Bar */}
+                  <div className="w-full max-w-sm h-1.5 bg-gray-200 rounded-full overflow-hidden">
                     <motion.div
-                      className="absolute inset-y-0 left-0 bg-primary shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]"
-                      animate={{ width: `${progress}%` }}
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                      className="h-full bg-primary"
+                      animate={{ width: `${((currentSlide + 1) / values.length) * 100}%` }}
+                      transition={{ duration: 0.3 }}
                     />
                   </div>
                 </div>
@@ -382,10 +617,11 @@ export default function About() {
           </div>
         </section>
 
-        {/* Story Section - Minimal Text, Maximum Impact */}
-        <section className="py-20 lg:py-32 bg-secondary/30 overflow-hidden">
-          <div className="container">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        {/* Rest of the sections remain exactly the same */}
+        {/* Story Section */}
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 bg-secondary/30 overflow-hidden">
+          <div className="container px-4 sm:px-6">
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -399,16 +635,16 @@ export default function About() {
                     alt="Our team at work"
                     width={800}
                     height={600}
-                    className="rounded-3xl shadow-2xl w-full h-auto"
+                    className="rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl w-full h-auto"
                   />
-                  <div className="absolute -bottom-6 -right-6 lg:-right-12 bg-white p-6 rounded-2xl shadow-xl">
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                        <Heart className="w-8 h-8 text-primary" />
+                  <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 lg:-right-12 bg-white p-4 sm:p-6 rounded-xl sm:rounded-2xl shadow-lg sm:shadow-xl">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                        <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                       </div>
                       <div>
-                        <div className="text-3xl font-bold text-foreground">Family</div>
-                        <div className="text-muted-foreground">Owned Business</div>
+                        <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Family</div>
+                        <div className="text-muted-foreground text-xs sm:text-sm">Owned Business</div>
                       </div>
                     </div>
                   </div>
@@ -421,19 +657,19 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                <span className="text-primary font-bold text-sm tracking-widest uppercase mb-4 block">
+                <span className="text-primary font-bold text-xs sm:text-sm tracking-widest uppercase mb-3 sm:mb-4 block">
                   Our Story
                 </span>
-                <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 leading-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4 sm:mb-6 leading-tight">
                   Built on Trust,
                   <br />
                   <span className="text-primary">Driven by Care</span>
                 </h2>
-                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
                   What started as a small family dream has grown into High Wycombe&apos;s most trusted laundry service. Every garment tells a story – and we treat yours with the care it deserves.
                 </p>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   {features.map((feature, index) => (
                     <motion.div
                       key={index}
@@ -441,10 +677,10 @@ export default function About() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.4 + index * 0.1 }}
-                      className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm"
+                      className="flex items-center gap-2 sm:gap-3 bg-white p-3 sm:p-4 rounded-lg sm:rounded-xl shadow-sm"
                     >
-                      <feature.icon className="w-6 h-6 text-primary" />
-                      <span className="font-semibold text-foreground">{feature.label}</span>
+                      <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-primary" />
+                      <span className="font-semibold text-foreground text-xs sm:text-sm md:text-base">{feature.label}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -453,30 +689,30 @@ export default function About() {
           </div>
         </section>
 
-        {/* Promise Section - Theme Sync Layout */}
-        <section className="py-24 bg-foreground overflow-hidden">
-          <div className="container px-6">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        {/* Promise Section */}
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-foreground overflow-hidden">
+          <div className="container px-4 sm:px-6">
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
               {/* Left Side: Brand Promise */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
               >
-                <div className="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-[0.3em] mb-6">
-                  <Shield className="w-4 h-4" />
+                <div className="inline-flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6">
+                  <Shield className="w-3 h-3 sm:w-4 sm:h-4" />
                   Quality Certified
                 </div>
-                <h2 className="text-5xl md:text-7xl font-display font-bold text-white leading-tight mb-8">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-white leading-tight mb-6 sm:mb-8">
                   The Speedy<br />
                   Promise<span className="text-primary">.</span>
                 </h2>
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center gap-3 text-white font-bold hover:text-primary transition-all text-lg"
+                  className="group inline-flex items-center gap-2 sm:gap-3 text-white font-bold hover:text-primary transition-all text-sm sm:text-base md:text-lg"
                 >
                   Book Your Experience
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform" />
                 </Link>
               </motion.div>
 
@@ -486,15 +722,15 @@ export default function About() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="relative lg:pl-12 lg:border-l border-white/10"
+                className="relative lg:pl-8 lg:border-l border-white/10"
               >
-                <div className="text-6xl text-primary font-serif absolute -top-10 -left-4 hidden lg:block">&quot;</div>
-                <p className="text-2xl md:text-3xl font-display font-bold text-white mb-8 leading-snug">
-                  Your satisfaction isn&apos;t just our goal – it&apos;s our <span className="font-script text-primary inline mt-2 text-4xl">promise.</span>
+                <div className="text-5xl md:text-6xl text-primary font-serif absolute -top-6 -left-3 hidden lg:block">&quot;</div>
+                <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-display font-bold text-white mb-6 sm:mb-8 leading-snug">
+                  Your satisfaction isn&apos;t just our goal – it&apos;s our <span className="font-script text-primary inline mt-2 text-2xl sm:text-3xl md:text-4xl">promise.</span>
                 </p>
-                <div className="flex items-center gap-4">
-                  <div className="h-px w-8 bg-primary" />
-                  <p className="text-xl text-white font-script italic">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="h-px w-6 sm:w-8 bg-primary" />
+                  <p className="text-base sm:text-lg md:text-xl text-white font-script italic">
                     The Speedy Laundry Team
                   </p>
                 </div>
@@ -503,21 +739,55 @@ export default function About() {
           </div>
         </section>
 
-        {/* Process Visual */}
-        <section className="py-20 lg:py-32">
-          <div className="container">
+        {/* Process Visual - Horizontal on Mobile */}
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32">
+          <div className="container px-4 sm:px-6">
             <motion.div
-              className="text-center mb-16"
+              className="text-center mb-8 sm:mb-12 md:mb-16"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground">
                 Simple as <span className="text-primary">1, 2, 3</span>
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8 lg:gap-12">
+            {/* Mobile: Horizontal Cards */}
+            <div className="md:hidden">
+              <div className="flex overflow-x-auto gap-4 pb-4 -mx-4 px-4 scrollbar-hide">
+                {[
+                  { step: "01", title: "We Collect", desc: "Schedule a pickup" },
+                  { step: "02", title: "We Clean", desc: "Expert care & eco-friendly" },
+                  { step: "03", title: "We Deliver", desc: "Fresh to your door" },
+                ].map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.15 }}
+                    className="min-w-[85vw] bg-white p-6 rounded-2xl shadow-lg border border-border"
+                  >
+                    <div className="relative mb-4">
+                      <div className="text-6xl font-bold text-primary/10">
+                        {item.step}
+                      </div>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-lg">
+                          <span className="text-xl font-bold text-white">{index + 1}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground mb-2">{item.title}</h3>
+                    <p className="text-muted-foreground text-sm">{item.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop: Grid Layout */}
+            <div className="hidden md:grid md:grid-cols-3 gap-6 sm:gap-8 lg:gap-12">
               {[
                 { step: "01", title: "We Collect", desc: "Schedule a pickup" },
                 { step: "02", title: "We Clean", desc: "Expert care & eco-friendly" },
@@ -532,17 +802,17 @@ export default function About() {
                   className="text-center group"
                 >
                   <div className="relative inline-block mb-6">
-                    <div className="text-8xl md:text-9xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors">
+                    <div className="text-7xl sm:text-8xl md:text-9xl font-bold text-primary/10 group-hover:text-primary/20 transition-colors">
                       {item.step}
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                         <span className="text-2xl font-bold text-white">{index + 1}</span>
                       </div>
                     </div>
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground">{item.desc}</p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-muted-foreground text-sm sm:text-base">{item.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -550,36 +820,36 @@ export default function About() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 lg:py-32 bg-foreground">
-          <div className="container">
+        <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 bg-foreground">
+          <div className="container px-4 sm:px-6">
             <motion.div
               className="max-w-3xl mx-auto text-center"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-4 sm:mb-6">
                 Ready for <span className="text-primary">Fresh</span> Clothes?
               </h2>
-              <p className="text-xl text-white/70 mb-10">
+              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white/70 mb-6 sm:mb-8 md:mb-10">
                 Join thousands of happy customers across High Wycombe
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-10 py-5 rounded-full hover:brightness-110 transition-all shadow-lg text-lg"
+                  className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full hover:brightness-110 transition-all shadow-lg text-sm sm:text-base md:text-lg w-full sm:w-auto"
                 >
                   Get Started
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
                 <Link
                   href="/services"
-                  className="inline-flex items-center justify-center gap-2 bg-white/10 text-white font-bold px-10 py-5 rounded-full hover:bg-white/20 transition-all text-lg"
+                  className="inline-flex items-center justify-center gap-2 bg-white/10 text-white font-bold px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full hover:bg-white/20 transition-all text-sm sm:text-base md:text-lg w-full sm:w-auto"
                 >
                   View Services
                 </Link>
               </div>
-              <p className="mt-10 text-2xl font-script text-primary">
+              <p className="mt-6 sm:mt-8 md:mt-10 text-lg sm:text-xl md:text-2xl font-script text-primary">
                 Making Laundry Day a Breeze!
               </p>
             </motion.div>

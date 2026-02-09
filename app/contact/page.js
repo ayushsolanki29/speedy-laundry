@@ -97,35 +97,35 @@ export default function ContactPage() {
         {/* Main Content */}
         <section className="pb-20 lg:pb-32">
           <div className="container">
-            <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
+            <div className="grid lg:grid-cols-5 gap-8 lg:gap-16">
 
-              {/* Booking Form */}
+              {/* Booking Form - Reduced padding on mobile */}
               <motion.div
                 className="lg:col-span-3"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-sm border border-border">
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Calendar className="w-6 h-6 text-primary" />
+                <div className="bg-white rounded-2xl lg:rounded-3xl p-5 sm:p-6 lg:p-10 shadow-sm border border-border">
+                  <div className="flex items-center gap-3 mb-6 lg:mb-8">
+                    <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                      <Calendar className="w-5 lg:w-6 h-5 lg:h-6 text-primary" />
                     </div>
                     <div>
-                      <h2 className="text-2xl font-display font-bold text-foreground">Schedule a Pickup</h2>
+                      <h2 className="text-xl lg:text-2xl font-display font-bold text-foreground">Schedule a Pickup</h2>
                       <p className="text-muted-foreground text-sm">Free collection & delivery</p>
                     </div>
                   </div>
 
-                  <div className="space-y-5">
-                    <div className="grid sm:grid-cols-2 gap-5">
+                  <div className="space-y-4 lg:space-y-5">
+                    <div className="grid sm:grid-cols-2 gap-4 lg:gap-5">
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">
                           Full Name *
                         </label>
                         <input
                           type="text"
-                          className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                          className="w-full px-3 lg:px-4 py-2.5 lg:py-3.5 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm lg:text-base"
                           placeholder="Your name"
                         />
                       </div>
@@ -135,7 +135,7 @@ export default function ContactPage() {
                         </label>
                         <input
                           type="tel"
-                          className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                          className="w-full px-3 lg:px-4 py-2.5 lg:py-3.5 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm lg:text-base"
                           placeholder="Your phone"
                         />
                       </div>
@@ -147,7 +147,7 @@ export default function ContactPage() {
                       </label>
                       <input
                         type="email"
-                        className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                        className="w-full px-3 lg:px-4 py-2.5 lg:py-3.5 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm lg:text-base"
                         placeholder="your@email.com"
                       />
                     </div>
@@ -158,7 +158,7 @@ export default function ContactPage() {
                       </label>
                       <input
                         type="text"
-                        className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                        className="w-full px-3 lg:px-4 py-2.5 lg:py-3.5 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm lg:text-base"
                         placeholder="e.g. HP12 3RD"
                       />
                     </div>
@@ -167,7 +167,7 @@ export default function ContactPage() {
                       <label className="block text-sm font-medium text-foreground mb-2">
                         Service Required
                       </label>
-                      <select className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                      <select className="w-full px-3 lg:px-4 py-2.5 lg:py-3.5 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm lg:text-base">
                         <option value="">Select a service</option>
                         <option value="iron">Iron Only</option>
                         <option value="wash-iron">Wash + Iron</option>
@@ -182,27 +182,27 @@ export default function ContactPage() {
                         Message (Optional)
                       </label>
                       <textarea
-                        className="w-full px-4 py-3.5 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
-                        rows={4}
+                        className="w-full px-3 lg:px-4 py-2.5 lg:py-3.5 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none text-sm lg:text-base"
+                        rows={3}
                         placeholder="Any special requests or details about your order..."
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full bg-primary text-white font-bold py-4 rounded-full hover:brightness-110 transition-all text-lg flex items-center justify-center gap-2"
+                      className="w-full bg-primary text-white font-bold py-3 lg:py-4 rounded-full hover:brightness-110 transition-all text-base lg:text-lg flex items-center justify-center gap-2"
                     >
-                      <Send className="w-5 h-5" />
+                      <Send className="w-4 lg:w-5 h-4 lg:h-5" />
                       Request Pickup
                     </button>
 
-                    <div className="flex items-center justify-center gap-6 pt-4 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap items-center justify-center gap-4 lg:gap-6 pt-3 lg:pt-4 text-xs lg:text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
-                        <Truck className="w-4 h-4 text-primary" />
+                        <Truck className="w-3 lg:w-4 h-3 lg:h-4 text-primary" />
                         Free collection
                       </div>
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="w-4 h-4 text-primary" />
+                        <CheckCircle className="w-3 lg:w-4 h-3 lg:h-4 text-primary" />
                         24-48hr turnaround
                       </div>
                     </div>
@@ -212,39 +212,39 @@ export default function ContactPage() {
 
               {/* Contact Info */}
               <motion.div
-                className="lg:col-span-2 space-y-8"
+                className="lg:col-span-2 space-y-6 lg:space-y-8"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
               >
                 {/* Quick Contact */}
-                <div className="space-y-4">
+                <div className="space-y-3 lg:space-y-4">
                   {contactMethods.map((method, index) => (
                     <a
                       key={index}
                       href={method.href}
-                      className="flex items-center gap-4 p-5 bg-white rounded-2xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
+                      className="flex items-center gap-3 lg:gap-4 p-4 lg:p-5 bg-white rounded-xl lg:rounded-2xl border border-border hover:border-primary/30 hover:shadow-md transition-all group"
                     >
-                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
-                        <method.icon className="w-6 h-6 text-primary group-hover:text-white transition-colors" />
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-lg lg:rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary transition-colors">
+                        <method.icon className="w-5 lg:w-6 h-5 lg:h-6 text-primary group-hover:text-white transition-colors" />
                       </div>
                       <div>
-                        <div className="font-bold text-foreground">{method.title}</div>
-                        <div className="text-primary font-medium">{method.value}</div>
+                        <div className="font-bold text-foreground text-sm lg:text-base">{method.title}</div>
+                        <div className="text-primary font-medium text-sm lg:text-base">{method.value}</div>
                       </div>
                     </a>
                   ))}
                 </div>
 
                 {/* Address */}
-                <div className="bg-white rounded-2xl p-6 border border-border">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <MapPin className="w-5 h-5 text-primary" />
+                <div className="bg-white rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-border">
+                  <div className="flex items-start gap-3 lg:gap-4 mb-3 lg:mb-4">
+                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <MapPin className="w-4 lg:w-5 h-4 lg:h-5 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-bold text-foreground mb-2">Visit Us</h3>
-                      <address className="text-muted-foreground not-italic leading-relaxed">
+                      <h3 className="font-bold text-foreground mb-1 lg:mb-2 text-sm lg:text-base">Visit Us</h3>
+                      <address className="text-muted-foreground not-italic leading-relaxed text-sm lg:text-base">
                         Speedy Laundry<br />
                         Abbey House, Lincoln Road<br />
                         Cressex Business Park<br />
@@ -257,22 +257,22 @@ export default function ContactPage() {
                 </div>
 
                 {/* Opening Hours */}
-                <div className="bg-foreground rounded-2xl p-6">
-                  <div className="flex items-center gap-3 mb-5">
-                    <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                      <Clock className="w-5 h-5 text-primary" />
+                <div className="bg-foreground rounded-xl lg:rounded-2xl p-4 lg:p-6">
+                  <div className="flex items-center gap-3 mb-4 lg:mb-5">
+                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-lg bg-white/10 flex items-center justify-center">
+                      <Clock className="w-4 lg:w-5 h-4 lg:h-5 text-primary" />
                     </div>
-                    <h3 className="font-bold text-white">Opening Hours</h3>
+                    <h3 className="font-bold text-white text-sm lg:text-base">Opening Hours</h3>
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-2 lg:space-y-3">
                     {openingHours.map((item, index) => (
                       <div
                         key={index}
-                        className={`flex justify-between items-center pb-3 ${index < openingHours.length - 1 ? 'border-b border-white/10' : ''
+                        className={`flex flex-col xs:flex-row xs:justify-between xs:items-center pb-2 lg:pb-3 ${index < openingHours.length - 1 ? 'border-b border-white/10' : ''
                           }`}
                       >
-                        <span className="text-white/70">{item.day}</span>
-                        <span className={`font-medium ${item.hours === 'Closed' ? 'text-white/50' : 'text-white'}`}>
+                        <span className="text-white/70 text-sm lg:text-base">{item.day}</span>
+                        <span className={`font-medium text-sm lg:text-base ${item.hours === 'Closed' ? 'text-white/50' : 'text-white'}`}>
                           {item.hours}
                         </span>
                       </div>
@@ -281,11 +281,11 @@ export default function ContactPage() {
                 </div>
 
                 {/* Walk-in Offer */}
-                <div className="bg-primary/10 rounded-2xl p-6 border border-primary/20">
+                <div className="bg-primary/10 rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-primary/20">
                   <div className="text-center">
-                    <div className="text-4xl font-display font-bold text-primary mb-2">10% OFF</div>
-                    <p className="text-foreground font-medium">Every Walk-In Order</p>
-                    <p className="text-muted-foreground text-sm mt-1">Visit us in person for an exclusive discount</p>
+                    <div className="text-2xl lg:text-4xl font-display font-bold text-primary mb-1 lg:mb-2">10% OFF</div>
+                    <p className="text-foreground font-medium text-sm lg:text-base">Every Walk-In Order</p>
+                    <p className="text-muted-foreground text-xs lg:text-sm mt-1">Visit us in person for an exclusive discount</p>
                   </div>
                 </div>
               </motion.div>
@@ -294,20 +294,20 @@ export default function ContactPage() {
         </section>
 
         {/* Map Section */}
-        <section className="py-16 bg-muted">
+        <section className="py-12 lg:py-16 bg-muted">
           <div className="container">
             <motion.div
-              className="text-center mb-10"
+              className="text-center mb-6 lg:mb-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl font-display font-bold text-foreground mb-2">Find Us</h2>
-              <p className="text-muted-foreground">Cressex Business Park, High Wycombe</p>
+              <h2 className="text-2xl lg:text-3xl font-display font-bold text-foreground mb-2">Find Us</h2>
+              <p className="text-muted-foreground text-sm lg:text-base">Cressex Business Park, High Wycombe</p>
             </motion.div>
 
             <motion.div
-              className="rounded-2xl overflow-hidden shadow-lg h-[400px] bg-white"
+              className="rounded-xl lg:rounded-2xl overflow-hidden shadow-lg h-[300px] lg:h-[400px] bg-white"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

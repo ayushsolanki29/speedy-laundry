@@ -18,16 +18,18 @@ const Footer = () => {
   return (
     <footer className="bg-foreground">
       {/* Main Footer */}
-      <div className="container py-16 lg:py-20">
-        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8">
+      <div className="container py-12 md:py-16 lg:py-20">
+        <div className="grid lg:grid-cols-12 gap-10 md:gap-12 lg:gap-8">
 
-          {/* Brand - Larger */}
-          <div className="lg:col-span-4">
-            <Image src={logo} alt="Speedy Laundry" className="h-10 mb-6 brightness-0 invert w-auto" width={200} height={40} />
-            <p className="text-white/60 mb-8 leading-relaxed">
+          {/* Brand - Centered on mobile */}
+          <div className="lg:col-span-4 text-center md:text-left">
+            <div className="flex justify-center md:justify-start mb-6">
+              <Image src={logo} alt="Speedy Laundry" className="h-10 brightness-0 invert w-auto" width={200} height={40} />
+            </div>
+            <p className="text-white/60 mb-8 leading-relaxed text-center md:text-left">
               Premium laundry & dry cleaning with free pickup and delivery. Making laundry day a breeze since 2014.
             </p>
-            <div className="flex gap-4">
+            <div className="flex justify-center md:justify-start">
               <Link href="/#contact" className="inline-flex items-center gap-2 bg-primary text-white font-semibold px-6 py-3 rounded-full hover:brightness-110 transition-all">
                 Book Now
                 <ArrowRight className="w-4 h-4" />
@@ -37,15 +39,15 @@ const Footer = () => {
 
           {/* Links Grid */}
           <div className="lg:col-span-8">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-8">
 
-              {/* Services */}
-              <div>
+              {/* Services - Centered on mobile */}
+              <div className="text-center md:text-left">
                 <h4 className="text-white font-bold mb-6 text-sm tracking-wider uppercase">Services</h4>
                 <ul className="space-y-3">
                   {["Iron Only", "Wash + Iron", "Wash, Dry & Fold", "Dry Cleaning"].map((service) => (
                     <li key={service}>
-                      <Link href="/services" className="text-white/60 hover:text-white transition-colors">
+                      <Link href="/services" className="text-white/60 hover:text-white transition-colors block">
                         {service}
                       </Link>
                     </li>
@@ -53,54 +55,62 @@ const Footer = () => {
                 </ul>
               </div>
 
-              {/* Quick Links */}
-              <div>
+              {/* Quick Links - Centered on mobile */}
+              <div className="text-center md:text-left">
                 <h4 className="text-white font-bold mb-6 text-sm tracking-wider uppercase">Company</h4>
                 <ul className="space-y-3">
                   <li>
-                    <Link href="/about" className="text-white/60 hover:text-white transition-colors">About Us</Link>
+                    <Link href="/about" className="text-white/60 hover:text-white transition-colors block">About Us</Link>
                   </li>
                   <li>
-                    <Link href="/#how-it-works" className="text-white/60 hover:text-white transition-colors">How It Works</Link>
+                    <Link href="/#how-it-works" className="text-white/60 hover:text-white transition-colors block">How It Works</Link>
                   </li>
                   <li>
-                    <Link href="/#reviews" className="text-white/60 hover:text-white transition-colors">Reviews</Link>
+                    <Link href="/#reviews" className="text-white/60 hover:text-white transition-colors block">Reviews</Link>
                   </li>
                   <li>
-                    <Link href="/#faq" className="text-white/60 hover:text-white transition-colors">FAQ</Link>
+                    <Link href="/#faq" className="text-white/60 hover:text-white transition-colors block">FAQ</Link>
                   </li>
                   <li>
-                    <Link href="/#contact" className="text-white/60 hover:text-white transition-colors">Contact</Link>
+                    <Link href="/#contact" className="text-white/60 hover:text-white transition-colors block">Contact</Link>
                   </li>
                 </ul>
               </div>
 
-              {/* Contact */}
-              <div>
+              {/* Contact - Centered on mobile */}
+              <div className="text-center md:text-left">
                 <h4 className="text-white font-bold mb-6 text-sm tracking-wider uppercase">Contact</h4>
                 <ul className="space-y-4">
-                  <li className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-white/60">
+                  <li className="flex flex-col md:flex-row md:items-start gap-2 md:gap-3">
+                    <div className="flex justify-center md:justify-start">
+                      <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
+                    </div>
+                    <span className="text-white/60 text-center md:text-left">
                       Abbey House, Lincoln Road,<br />
                       High Wycombe, HP12 3RD
                     </span>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                    <a href="tel:01494445291" className="text-white/60 hover:text-white transition-colors">
+                  <li className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                    <div className="flex justify-center md:justify-start">
+                      <Phone className="w-5 h-5 text-primary flex-shrink-0" />
+                    </div>
+                    <a href="tel:01494445291" className="text-white/60 hover:text-white transition-colors text-center md:text-left">
                       01494 445291
                     </a>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                    <a href="mailto:info@speedylaundry.co.uk" className="text-white/60 hover:text-white transition-colors text-sm">
+                  <li className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                    <div className="flex justify-center md:justify-start">
+                      <Mail className="w-5 h-5 text-primary flex-shrink-0" />
+                    </div>
+                    <a href="mailto:info@speedylaundry.co.uk" className="text-white/60 hover:text-white transition-colors text-sm text-center md:text-left">
                       info@speedylaundry.co.uk
                     </a>
                   </li>
-                  <li className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-white/60">
+                  <li className="flex flex-col md:flex-row md:items-start gap-2 md:gap-3">
+                    <div className="flex justify-center md:justify-start">
+                      <Clock className="w-5 h-5 text-primary flex-shrink-0" />
+                    </div>
+                    <span className="text-white/60 text-center md:text-left">
                       Mon-Fri: 6AM - 3PM<br />
                       Sat-Sun: Closed
                     </span>
@@ -111,22 +121,22 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Service Areas - REIMAGINED */}
-        <div className="mt-16 pt-12 border-t border-white/10">
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-2 text-white font-bold text-sm tracking-widest uppercase">
+        {/* Service Areas - In one line */}
+        <div className="mt-12 md:mt-16 pt-8 md:pt-12 border-t border-white/10">
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-center md:justify-start gap-2 text-white font-bold text-sm tracking-widest uppercase mb-4">
               <MapPin className="w-4 h-4 text-primary" /> We deliver to
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="flex items-center justify-center md:justify-start gap-3 md:gap-4 overflow-x-auto scrollbar-hide pb-2">
               {deliveryAreas.map((area) => (
-                <div key={area.name} className="group relative flex items-center gap-3 bg-white/5 pr-4 rounded-full overflow-hidden hover:bg-white/10 transition-all cursor-default">
-                  <div className="w-10 h-10 overflow-hidden shrink-0">
+                <div key={area.name} className="group relative flex items-center gap-2 md:gap-3 bg-white/5 px-3 md:px-4 py-2 rounded-full hover:bg-white/10 transition-all cursor-default flex-shrink-0">
+                  <div className="w-6 h-6 md:w-8 md:h-8 overflow-hidden shrink-0">
                     <img src={area.image} alt={area.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <span className="text-white/80 text-xs font-bold uppercase tracking-wider">{area.name}</span>
                 </div>
               ))}
-              <Link href="/#areas" className="flex items-center gap-2 bg-primary/10 text-primary px-5 py-2 rounded-full hover:bg-primary/20 transition-all font-bold text-xs uppercase tracking-wider border border-primary/20">
+              <Link href="/#areas" className="flex items-center gap-2 bg-primary/10 text-primary px-4 md:px-5 py-2 rounded-full hover:bg-primary/20 transition-all font-bold text-xs uppercase tracking-wider border border-primary/20 flex-shrink-0">
                 +60 More Areas
               </Link>
             </div>
@@ -137,11 +147,11 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="border-t border-white/10">
         <div className="container py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/40 text-sm">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+            <p className="text-white/40 text-sm order-2 md:order-1">
               © {new Date().getFullYear()} Speedy Laundry. All rights reserved.
             </p>
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 order-1 md:order-2">
               <div className="flex gap-4">
                 <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" aria-label="Facebook">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

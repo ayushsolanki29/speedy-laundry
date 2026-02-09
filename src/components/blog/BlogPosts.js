@@ -107,11 +107,11 @@ const BlogPosts = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
-            className="mb-16"
+            className="mb-12 md:mb-16"
           >
-            <div className="card-premium p-8 md:p-10">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden">
+            <div className="card-premium p-5 md:p-10">
+              <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+                <div className="relative h-56 md:h-80 rounded-xl md:rounded-2xl overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
                   <img
                     src="/assets/service-wash.jpg"
@@ -119,42 +119,42 @@ const BlogPosts = () => {
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 </div>
-                
+
                 <div>
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                  <div className="flex items-center gap-3 mb-3 md:mb-4">
+                    <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs md:sm font-medium">
                       {featuredPost.category}
                     </span>
-                    <span className="text-muted-foreground text-sm">Featured</span>
+                    <span className="text-muted-foreground text-xs md:sm">Featured</span>
                   </div>
-                  
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+
+                  <h3 className="text-xl md:text-3xl font-bold text-foreground mb-3 md:mb-4 leading-tight">
                     {featuredPost.title}
                   </h3>
-                  
-                  <p className="text-muted-foreground mb-6 leading-relaxed">
+
+                  <p className="text-sm md:text-base text-muted-foreground mb-5 md:mb-6 leading-relaxed">
                     {featuredPost.excerpt}
                   </p>
-                  
-                  <div className="flex items-center gap-6 mb-6 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
+
+                  <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-5 md:mb-6 text-xs md:text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                      <User className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       <span>{featuredPost.author}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                      <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       <span>{featuredPost.date}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
+                    <div className="flex items-center gap-1.5 md:gap-2">
+                      <Clock className="w-3.5 h-3.5 md:w-4 md:h-4" />
                       <span>{featuredPost.readTime}</span>
                     </div>
                   </div>
-                  
+
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className="btn-primary inline-flex items-center gap-2"
+                    className="btn-primary w-full md:w-auto inline-flex justify-center items-center gap-2 py-3"
                     onClick={() => router.push(`/blog/${featuredPost.slug}`)}
                   >
                     Read Full Article
@@ -167,7 +167,7 @@ const BlogPosts = () => {
         )}
 
         {/* Regular Posts Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {regularPosts.map((post, index) => (
             <motion.article
               key={post.id}
@@ -175,54 +175,56 @@ const BlogPosts = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
               viewport={{ once: true }}
-              className="card-premium overflow-hidden group cursor-pointer"
+              className="card-premium overflow-hidden group cursor-pointer flex flex-col"
             >
               {/* Image */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-44 md:h-48 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
                 <img
-                  src={index === 0 ? "/assets/service-dryclean.jpg" : 
-                       index === 1 ? "/assets/service-iron.jpg" : 
-                       "/assets/service-fold.jpg"}
+                  src={index === 0 ? "/assets/service-dryclean.jpg" :
+                    index === 1 ? "/assets/service-iron.jpg" :
+                      "/assets/service-fold.jpg"}
                   alt="Service"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary rounded-full text-xs font-medium">
+                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary rounded-full text-[10px] md:text-xs font-medium uppercase tracking-wider">
                     {post.category}
                   </span>
                 </div>
               </div>
-              
+
               {/* Content */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+              <div className="p-5 md:p-6 flex flex-col flex-grow">
+                <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 md:mb-3 group-hover:text-primary transition-colors line-clamp-2">
                   {post.title}
                 </h3>
-                
-                <p className="text-muted-foreground mb-4 line-clamp-3">
+
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
                   {post.excerpt}
                 </p>
-                
-                <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center gap-2">
-                    <User className="w-3 h-3" />
-                    <span>{post.author}</span>
+
+                <div className="mt-auto pt-4 border-t border-border/50">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
+                    <div className="flex items-center gap-2">
+                      <User className="w-3 h-3 text-primary" />
+                      <span>{post.author}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-3 h-3 text-primary" />
+                      <span>{post.readTime}</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-3 h-3" />
-                    <span>{post.readTime}</span>
-                  </div>
+
+                  <motion.div
+                    whileHover={{ x: 4 }}
+                    className="flex items-center gap-2 text-primary text-sm font-bold cursor-pointer"
+                    onClick={() => router.push(`/blog/${post.slug}`)}
+                  >
+                    <span>Read More</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </motion.div>
                 </div>
-                
-                <motion.div
-                  whileHover={{ x: 4 }}
-                  className="flex items-center gap-2 text-primary font-medium cursor-pointer"
-                  onClick={() => router.push(`/blog/${post.slug}`)}
-                >
-                  <span>Read More</span>
-                  <ArrowRight className="w-4 h-4" />
-                </motion.div>
               </div>
             </motion.article>
           ))}

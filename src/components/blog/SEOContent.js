@@ -11,7 +11,7 @@ const seoTopics = [
   },
   {
     keyword: "Wash and Fold Service",
-    searches: "800+ monthly searches", 
+    searches: "800+ monthly searches",
     description: "Convenient wash and fold laundry service with 24-48 hour turnaround time."
   },
   {
@@ -37,7 +37,7 @@ const seoTopics = [
 ];
 
 const serviceAreas = [
-  "High Wycombe", "Beaconsfield", "Marlow", "Amersham", 
+  "High Wycombe", "Beaconsfield", "Marlow", "Amersham",
   "Gerrards Cross", "Chalfont St Peter", "Slough", "Uxbridge"
 ];
 
@@ -67,12 +67,12 @@ const SEOContent = () => {
             </h2>
           </div>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            Discover why Speedy Laundry is the top-rated laundry service in High Wycombe and surrounding areas. 
+            Discover why Speedy Laundry is the top-rated laundry service in High Wycombe and surrounding areas.
             Our expert content helps you find the perfect laundry solutions for your needs.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
           {/* Keywords Section */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -80,16 +80,16 @@ const SEOContent = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <div className="bg-white rounded-3xl p-8 shadow-lg">
+            <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
-                <TrendingUp className="w-6 h-6 text-primary" />
-                <h3 className="text-2xl font-bold text-foreground">Popular Search Topics</h3>
+                <TrendingUp className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                <h3 className="text-xl md:text-2xl font-bold text-foreground">Popular Search Topics</h3>
               </div>
-              
+
               {/* Service Images */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-2 gap-3 md:gap-4 mb-6">
                 {serviceImages.slice(0, 4).map((image, index) => (
-                  <div key={index} className="relative h-24 rounded-lg overflow-hidden">
+                  <div key={index} className="relative h-20 md:h-24 rounded-lg overflow-hidden">
                     <img
                       src={image}
                       alt={`Service ${index + 1}`}
@@ -98,7 +98,7 @@ const SEOContent = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="space-y-4">
                 {seoTopics.map((topic, index) => (
                   <motion.div
@@ -107,15 +107,15 @@ const SEOContent = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: 0.1 * index }}
                     viewport={{ once: true }}
-                    className="border border-border rounded-2xl p-4 hover:shadow-md transition-shadow"
+                    className="border border-border rounded-xl md:rounded-2xl p-4 hover:shadow-md transition-shadow"
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-semibold text-foreground">{topic.keyword}</h4>
-                      <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
+                    <div className="flex items-start justify-between mb-2 gap-2">
+                      <h4 className="font-semibold text-foreground text-sm md:text-base">{topic.keyword}</h4>
+                      <span className="text-[10px] md:text-xs bg-primary/10 text-primary px-2 py-1 rounded-full whitespace-nowrap">
                         {topic.searches}
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground">{topic.description}</p>
+                    <p className="text-xs md:text-sm text-muted-foreground">{topic.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -128,20 +128,20 @@ const SEOContent = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="space-y-6 md:space-y-8"
           >
             {/* Service Areas */}
-            <div className="bg-white rounded-3xl p-8 shadow-lg">
+            <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-lg">
               <div className="flex items-center gap-3 mb-6">
-                <MapPin className="w-6 h-6 text-primary" />
-                <h3 className="text-2xl font-bold text-foreground">Service Areas</h3>
+                <MapPin className="w-5 h-5 md:w-6 md:h-6 text-primary" />
+                <h3 className="text-xl md:text-2xl font-bold text-foreground">Service Areas</h3>
               </div>
-              
-              <p className="text-muted-foreground mb-4">
+
+              <p className="text-sm md:text-base text-muted-foreground mb-4">
                 We provide professional laundry services across these locations:
               </p>
-              
-              <div className="grid grid-cols-2 gap-3">
+
+              <div className="grid grid-cols-2 gap-2 md:gap-3">
                 {serviceAreas.map((area, index) => (
                   <motion.div
                     key={area}
@@ -149,19 +149,19 @@ const SEOContent = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: 0.05 * index }}
                     viewport={{ once: true }}
-                    className="flex items-center gap-2 p-3 bg-secondary rounded-xl"
+                    className="flex items-center gap-2 p-2.5 md:p-3 bg-secondary rounded-lg md:rounded-xl"
                   >
-                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                    <span className="text-sm font-medium text-foreground">{area}</span>
+                    <CheckCircle className="w-3.5 h-3.5 md:w-4 md:h-4 text-primary flex-shrink-0" />
+                    <span className="text-xs md:text-sm font-medium text-foreground">{area}</span>
                   </motion.div>
                 ))}
               </div>
             </div>
 
             {/* SEO Benefits */}
-            <div className="bg-gradient-to-br from-primary to-primary/80 rounded-3xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-6">Why Choose Speedy Laundry?</h3>
-              
+            <div className="bg-gradient-to-br from-primary to-primary/80 rounded-2xl md:rounded-3xl p-6 md:p-8 text-white shadow-xl">
+              <h3 className="text-xl md:text-2xl font-bold mb-6">Why Choose Speedy Laundry?</h3>
+
               <div className="space-y-4">
                 {[
                   "✓ 5-Star Rated Service with 37+ Reviews",
@@ -177,14 +177,14 @@ const SEOContent = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: 0.1 * index }}
                     viewport={{ once: true }}
-                    className="flex items-center gap-3"
+                    className="flex items-start gap-3"
                   >
-                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0" />
-                    <span className="font-medium">{benefit.substring(2)}</span>
+                    <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-sm md:text-base font-medium">{benefit.substring(2)}</span>
                   </motion.div>
                 ))}
               </div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -192,13 +192,13 @@ const SEOContent = () => {
                 viewport={{ once: true }}
                 className="mt-8"
               >
-                <p className="text-white/80 text-sm mb-4">
-                  Looking for "laundry service near me" or "dry cleaning High Wycombe"? 
+                <p className="text-white/80 text-xs md:text-sm mb-4 leading-relaxed">
+                  Looking for "laundry service near me" or "dry cleaning High Wycombe"?
                   Speedy Laundry offers professional cleaning solutions with convenient pickup and delivery.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Best Laundry Service", "Professional Dry Cleaning", "Affordable Laundry", "Quick Turnaround"].map((tag) => (
-                    <span key={tag} className="px-3 py-1 bg-white/20 rounded-full text-xs">
+                  {["Best Laundry Service", "Professional Dry Cleaning", "Affordable", "Quick"].map((tag) => (
+                    <span key={tag} className="px-3 py-1 bg-white/20 rounded-full text-[10px] md:text-xs">
                       {tag}
                     </span>
                   ))}
@@ -221,9 +221,9 @@ const SEOContent = () => {
               Professional Laundry Services in High Wycombe
             </h3>
             <p className="text-muted-foreground leading-relaxed">
-              Speedy Laundry is your trusted partner for professional laundry and dry cleaning services in High Wycombe. 
-              Whether you need wash and fold services, delicate fabric care, or commercial laundry solutions, 
-              our expert team delivers exceptional results with free pickup and delivery. Contact us today to experience 
+              Speedy Laundry is your trusted partner for professional laundry and dry cleaning services in High Wycombe.
+              Whether you need wash and fold services, delicate fabric care, or commercial laundry solutions,
+              our expert team delivers exceptional results with free pickup and delivery. Contact us today to experience
               the best laundry service in the area!
             </p>
           </div>

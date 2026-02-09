@@ -40,7 +40,7 @@ export default function BusinessPage() {
       <Header />
       
       <main>
-        {/* Hero - Full Screen Visual with Background Image */}
+        {/* Hero - Mobile responsive text alignment */}
         <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
           <div className="absolute inset-0">
             <Image
@@ -55,41 +55,41 @@ export default function BusinessPage() {
 
           <div className="container relative z-10">
             <motion.div
-              className="max-w-2xl"
+              className="max-w-2xl text-center lg:text-left"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-[1.1]">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-4 lg:mb-6 leading-[1.1]">
                 Laundry Solutions<br />
                 <span className="text-primary">for Business</span>
               </h1>
 
-              <p className="text-xl text-white/80 mb-8 max-w-lg">
+              <p className="text-lg sm:text-xl text-white/80 mb-6 lg:mb-8 max-w-lg mx-auto lg:mx-0">
                 Reliable, high-quality commercial laundry trusted by hotels, restaurants, and businesses across Buckinghamshire.
               </p>
 
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <a 
                   href="#quote"
-                  className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:brightness-110 transition-all shadow-lg"
+                  className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:brightness-110 transition-all shadow-lg text-base sm:text-lg"
                 >
                   Get a Quote
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </a>
                 <a 
                   href="tel:01494445291"
-                  className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white font-bold px-8 py-4 rounded-full hover:bg-white/30 transition-all"
+                  className="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-white/30 transition-all text-base sm:text-lg"
                 >
-                  <Phone className="w-5 h-5" />
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
                   01494 445291
                 </a>
               </div>
             </motion.div>
 
-            {/* Small Trust Indicators */}
+            {/* Small Trust Indicators - Mobile responsive */}
             <motion.div 
-              className="flex flex-wrap gap-8 lg:gap-12 mt-12"
+              className="flex flex-wrap gap-4 lg:gap-12 mt-8 lg:mt-12 justify-center lg:justify-start"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -100,9 +100,9 @@ export default function BusinessPage() {
                 { icon: Leaf, text: "Eco-Friendly" },
                 { icon: Shield, text: "Quality Guaranteed" },
               ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3 text-white/80">
-                  <item.icon className="w-5 h-5 text-primary" />
-                  <span className="font-medium">{item.text}</span>
+                <div key={i} className="flex items-center gap-2 text-white/80 text-sm sm:text-base">
+                  <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                  <span className="font-medium whitespace-nowrap">{item.text}</span>
                 </div>
               ))}
             </motion.div>
@@ -111,61 +111,80 @@ export default function BusinessPage() {
 
         <TrustedPartners />
 
-        {/* Industries - Visual Grid */}
-        <section className="py-20 lg:py-32 bg-foreground">
+        {/* Industries - Mobile responsive layout */}
+        <section className="py-12 lg:py-32 bg-foreground">
           <div className="container">
             <motion.div 
-              className="text-center mb-16"
+              className="text-center mb-10 lg:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-3 lg:mb-4">
                 Who We Serve
               </h2>
-              <p className="text-white/60 text-lg">
+              <p className="text-white/60 text-sm sm:text-base lg:text-lg">
                 Tailored solutions for every industry
               </p>
             </motion.div>
 
-            <div className="flex flex-wrap justify-center gap-4">
-              {industries.map((industry, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-6 py-4 rounded-full"
-                >
-                  <industry.icon className="w-5 h-5 text-primary" />
-                  <span className="text-white font-medium">{industry.name}</span>
-                </motion.div>
-              ))}
+            {/* Mobile: Vertical layout, Desktop: Horizontal */}
+            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 sm:gap-3">
+                {industries.slice(0, 4).map((industry, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-6 sm:py-4 rounded-full w-full sm:w-auto text-sm sm:text-base"
+                  >
+                    <industry.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                    <span className="text-white font-medium text-center sm:text-left">{industry.name}</span>
+                  </motion.div>
+                ))}
+              </div>
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 sm:gap-3">
+                {industries.slice(4).map((industry, index) => (
+                  <motion.div
+                    key={index + 4}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: (index + 4) * 0.05 }}
+                    className="flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-6 sm:py-4 rounded-full w-full sm:w-auto text-sm sm:text-base"
+                  >
+                    <industry.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                    <span className="text-white font-medium text-center sm:text-left">{industry.name}</span>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* About Section */}
-        <section className="py-20 lg:py-32">
+        {/* About Section - Mobile center aligned */}
+        <section className="py-12 lg:py-32">
           <div className="container">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
+                className="text-center lg:text-left"
               >
-                <span className="text-primary font-semibold text-sm tracking-widest uppercase mb-4 block">
+                <span className="text-primary font-semibold text-xs sm:text-sm tracking-widest uppercase mb-3 lg:mb-4 block">
                   About Us
                 </span>
-                <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 leading-tight">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4 lg:mb-6 leading-tight">
                   10+ Years of<br />
                   Commercial Excellence
                 </h2>
-                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                <p className="text-base sm:text-lg text-muted-foreground mb-6 lg:mb-8 leading-relaxed">
                   What started as a small family business has grown into Buckinghamshire&apos;s trusted commercial laundry partner. We understand the demands of running a business – that&apos;s why we&apos;ve built our service around reliability, quality, and convenience.
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
                   From boutique hotels to busy restaurants, we handle thousands of items weekly with the same care and attention we gave our very first client.
                 </p>
               </motion.div>
@@ -175,7 +194,7 @@ export default function BusinessPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="grid grid-cols-2 gap-6"
+                className="grid grid-cols-2 gap-4 sm:gap-6 w-full"
               >
                 {[
                   { value: "500+", label: "Business Clients" },
@@ -185,12 +204,12 @@ export default function BusinessPage() {
                 ].map((stat, index) => (
                   <div 
                     key={index}
-                    className="bg-muted rounded-2xl p-6 text-center"
+                    className="bg-muted rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center"
                   >
-                    <div className="text-3xl md:text-4xl font-display font-bold text-primary mb-1">
+                    <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-display font-bold text-primary mb-1">
                       {stat.value}
                     </div>
-                    <div className="text-muted-foreground text-sm">{stat.label}</div>
+                    <div className="text-muted-foreground text-xs sm:text-sm">{stat.label}</div>
                   </div>
                 ))}
               </motion.div>
@@ -198,10 +217,10 @@ export default function BusinessPage() {
           </div>
         </section>
 
-        {/* Certifications */}
-        <section className="py-12 bg-muted border-y border-border">
+        {/* Certifications - Mobile vertical layout */}
+        <section className="py-8 sm:py-12 bg-muted border-y border-border">
           <div className="container">
-            <div className="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-12 xl:gap-20">
               {[
                 { icon: Award, title: "Miele Professional", subtitle: "Approved Partner" },
                 { icon: Leaf, title: "WetCare®", subtitle: "Certified Specialist" },
@@ -213,14 +232,14 @@ export default function BusinessPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-4"
+                  className="flex items-center gap-3 w-full sm:w-auto justify-center text-center sm:text-left"
                 >
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <cert.icon className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                    <cert.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                   </div>
                   <div>
-                    <div className="font-bold text-foreground">{cert.title}</div>
-                    <div className="text-sm text-muted-foreground">{cert.subtitle}</div>
+                    <div className="font-bold text-foreground text-sm sm:text-base">{cert.title}</div>
+                    <div className="text-xs sm:text-sm text-muted-foreground">{cert.subtitle}</div>
                   </div>
                 </motion.div>
               ))}
@@ -228,21 +247,21 @@ export default function BusinessPage() {
           </div>
         </section>
 
-        {/* What We Handle */}
-        <section className="py-20 lg:py-32">
+        {/* What We Handle - Mobile vertical layout */}
+        <section className="py-12 lg:py-32">
           <div className="container">
             <motion.div 
-              className="text-center mb-16"
+              className="text-center mb-10 lg:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground">
                 What We Handle
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="flex flex-col md:grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               {[
                 { 
                   title: "Linens & Bedding", 
@@ -263,14 +282,14 @@ export default function BusinessPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-2xl p-8 border border-border"
+                  className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-border text-center"
                 >
-                  <h3 className="text-xl font-bold text-foreground mb-5">{category.title}</h3>
-                  <ul className="space-y-3">
+                  <h3 className="text-lg lg:text-xl font-bold text-foreground mb-4">{category.title}</h3>
+                  <ul className="space-y-2">
                     {category.items.map((item, i) => (
-                      <li key={i} className="flex items-center gap-3 text-muted-foreground">
-                        <Check className="w-4 h-4 text-primary shrink-0" />
-                        {item}
+                      <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm lg:text-base justify-center">
+                        <Check className="w-3 h-3 lg:w-4 lg:h-4 text-primary shrink-0 mt-1" />
+                        <span className="flex-1 text-left">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -280,21 +299,22 @@ export default function BusinessPage() {
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className="py-20 lg:py-32 bg-secondary/30">
+        {/* How It Works - Mobile horizontal scroll */}
+        <section className="py-12 lg:py-32 bg-secondary/30">
           <div className="container">
             <motion.div 
-              className="text-center mb-16"
+              className="text-center mb-10 lg:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground">
                 How It Works
               </h2>
             </motion.div>
 
-            <div className="grid md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            {/* Mobile: Horizontal scroll, Desktop: Grid */}
+            <div className="flex md:grid md:grid-cols-4 gap-4 md:gap-8 max-w-4xl mx-auto overflow-x-auto pb-4 md:pb-0">
               {[
                 { num: "01", title: "Contact Us", desc: "Tell us your needs" },
                 { num: "02", title: "Get Quote", desc: "Custom pricing" },
@@ -307,57 +327,59 @@ export default function BusinessPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-center"
+                  className="text-center min-w-[200px] md:min-w-0"
                 >
-                  <div className="text-5xl font-display font-bold text-primary/20 mb-3">
+                  <div className="text-4xl lg:text-5xl font-display font-bold text-primary/20 mb-2 lg:mb-3">
                     {step.num}
                   </div>
-                  <h3 className="text-lg font-bold text-foreground mb-1">{step.title}</h3>
-                  <p className="text-muted-foreground text-sm">{step.desc}</p>
+                  <h3 className="text-base lg:text-lg font-bold text-foreground mb-1">{step.title}</h3>
+                  <p className="text-muted-foreground text-xs lg:text-sm">{step.desc}</p>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Quote Form */}
-        <section id="quote" className="py-20 lg:py-32 bg-foreground">
+        {/* Quote Form - Mobile responsive */}
+        <section id="quote" className="py-12 lg:py-32 bg-foreground">
           <div className="container">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
+                className="text-center lg:text-left"
               >
-                <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white mb-4 lg:mb-6">
                   Get Your<br />
                   <span className="text-primary">Free Quote</span>
                 </h2>
-                <p className="text-white/70 text-lg mb-10">
+                <p className="text-white/70 text-base sm:text-lg mb-8 lg:mb-10">
                   Tell us about your business and we&apos;ll create a tailored laundry solution that fits your needs and budget.
                 </p>
                 
-                <div className="space-y-6">
+                {/* List alignment - mobile centered */}
+                <div className="space-y-3 sm:space-y-4 lg:space-y-6">
                   {[
                     "No obligation quote",
                     "Custom pricing for your volume",
                     "Flexible pickup schedules",
                     "Dedicated account manager",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
+                    <div key={i} className="flex items-start gap-3 justify-center lg:justify-start">
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary flex items-center justify-center shrink-0 mt-0.5">
+                        <Check className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                       </div>
-                      <span className="text-white/80">{item}</span>
+                      <span className="text-white/80 text-sm sm:text-base text-left">{item}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-10 pt-10 border-t border-white/10">
-                  <p className="text-white/60 mb-2">Prefer to call?</p>
+                <div className="mt-8 lg:mt-10 pt-6 lg:pt-10 border-t border-white/10 text-center lg:text-left">
+                  <p className="text-white/60 mb-2 text-sm sm:text-base">Prefer to call?</p>
                   <a 
                     href="tel:01494445291" 
-                    className="text-2xl font-display font-bold text-white hover:text-primary transition-colors"
+                    className="text-xl sm:text-2xl font-display font-bold text-white hover:text-primary transition-colors"
                   >
                     01494 445291
                   </a>
@@ -370,22 +392,22 @@ export default function BusinessPage() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
               >
-                <div className="bg-white rounded-2xl p-8 lg:p-10">
-                  <div className="space-y-5">
+                <div className="bg-white rounded-xl lg:rounded-2xl p-5 sm:p-6 lg:p-8 xl:p-10">
+                  <div className="space-y-4 sm:space-y-5">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Business Name *</label>
                       <input 
                         type="text" 
-                        className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                         placeholder="Your business name"
                       />
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">Contact Name *</label>
                         <input 
                           type="text" 
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                          className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                           placeholder="Your name"
                         />
                       </div>
@@ -393,7 +415,7 @@ export default function BusinessPage() {
                         <label className="block text-sm font-medium text-foreground mb-2">Phone *</label>
                         <input 
                           type="tel" 
-                          className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                          className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                           placeholder="Phone number"
                         />
                       </div>
@@ -402,13 +424,13 @@ export default function BusinessPage() {
                       <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
                       <input 
                         type="email" 
-                        className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                         placeholder="your@email.com"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Industry</label>
-                      <select className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                      <select className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base">
                         <option value="">Select your industry</option>
                         <option value="hotel">Hotel / B&B</option>
                         <option value="restaurant">Restaurant / Cafe</option>
@@ -422,14 +444,14 @@ export default function BusinessPage() {
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Tell us about your needs</label>
                       <textarea 
-                        className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
+                        className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none text-sm sm:text-base"
                         rows={3}
                         placeholder="Approximate volumes, types of items, preferred schedule..."
                       />
                     </div>
                     <button 
                       type="submit"
-                      className="w-full bg-primary text-white font-bold py-4 rounded-full hover:brightness-110 transition-all text-lg"
+                      className="w-full bg-primary text-white font-bold py-3 sm:py-4 rounded-full hover:brightness-110 transition-all text-base sm:text-lg"
                     >
                       Request Quote
                     </button>

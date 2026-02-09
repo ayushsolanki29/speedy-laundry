@@ -5,7 +5,7 @@ import { Star, Calendar, ArrowRight } from "lucide-react";
 
 const CTABanner = () => {
   return (
-    <section className="py-24 bg-[#1a1c1e] text-white overflow-hidden">
+    <section className="py-20 md:py-24 bg-[#1a1c1e] text-white overflow-hidden">
       <div className="container px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-end">
           {/* Left Side: BRAND GUARANTEE */}
@@ -15,7 +15,7 @@ const CTABanner = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-[1] mb-12">
+            <h2 className="text-5xl md:text-6xl lg:text-8xl font-display font-bold leading-[1] mb-8 md:mb-12">
               The Speedy<br />
               Guarantee<span className="text-primary">.</span>
             </h2>
@@ -29,7 +29,7 @@ const CTABanner = () => {
             >
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-3 bg-primary text-white font-bold px-8 py-4 rounded-full hover:brightness-110 transition-all text-lg"
+                className="group inline-flex items-center gap-3 bg-primary text-white font-bold px-8 py-4 rounded-full hover:brightness-110 transition-all text-lg w-full md:w-auto justify-center md:justify-start"
               >
                 Schedule Pickup
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

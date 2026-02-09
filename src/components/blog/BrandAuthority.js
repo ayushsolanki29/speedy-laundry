@@ -45,7 +45,7 @@ const partnerships = [
   },
   {
     name: "Textile Care Alliance",
-    type: "Industry Partner", 
+    type: "Industry Partner",
     description: "Collaborating for industry best practices"
   },
   {
@@ -69,9 +69,9 @@ const BrandAuthority = () => {
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[url('/assets/pattern.svg')] bg-repeat" />
       </div>
-      
-      {/* Service Images Background */}
-      <div className="absolute inset-0">
+
+      {/* Service Images Background - Hidden on mobile to prevent clutter */}
+      <div className="absolute inset-0 hidden md:block">
         {serviceImages.map((image, index) => (
           <div
             key={index}
@@ -90,28 +90,28 @@ const BrandAuthority = () => {
           </div>
         ))}
       </div>
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-10 right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 left-20 w-48 h-48 bg-accent/10 rounded-full blur-3xl" />
 
-      <div className="container relative z-10">
+      {/* Decorative Elements */}
+      <div className="absolute top-10 right-20 w-32 h-32 md:w-64 md:h-64 bg-primary/10 rounded-full blur-3xl opacity-50" />
+      <div className="absolute bottom-10 left-20 w-32 h-32 md:w-48 md:h-48 bg-accent/10 rounded-full blur-3xl opacity-50" />
+
+      <div className="container relative z-10 py-12 md:py-20 text-center">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Award className="w-8 h-8 text-accent" />
-            <h2 className="text-3xl md:text-4xl font-display font-bold">
-              Professional Excellence & Brand Authority
+            <Award className="w-6 h-6 md:w-8 md:h-8 text-accent" />
+            <h2 className="text-2xl md:text-4xl font-display font-bold leading-tight">
+              Professional Excellence & Authority
             </h2>
           </div>
-          <p className="text-lg text-white/80 max-w-3xl mx-auto">
-            Speedy Laundry stands as a trusted leader in professional laundry services, 
+          <p className="text-base md:text-lg text-white/80 max-w-3xl mx-auto px-4">
+            Speedy Laundry stands as a trusted leader in professional laundry services,
             combining industry expertise with cutting-edge technology to deliver exceptional results.
           </p>
         </motion.div>
@@ -122,9 +122,9 @@ const BrandAuthority = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mb-16"
+          className="mb-12 md:mb-16"
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -132,17 +132,17 @@ const BrandAuthority = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.1 * index }}
                 viewport={{ once: true }}
-                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-center border border-white/20"
+                className="bg-white/10 backdrop-blur-md rounded-xl md:rounded-2xl p-4 md:p-6 text-center border border-white/20"
               >
                 <div className="flex justify-center mb-3">
-                  <div className="p-3 bg-accent/20 rounded-full">
-                    <stat.icon className="w-6 h-6 text-accent" />
+                  <div className="p-2 md:p-3 bg-accent/20 rounded-full">
+                    <stat.icon className="w-5 h-5 md:w-6 md:h-6 text-accent" />
                   </div>
                 </div>
-                <div className="text-2xl md:text-3xl font-bold text-accent mb-1">
+                <div className="text-xl md:text-3xl font-bold text-accent mb-1">
                   {stat.number}
                 </div>
-                <div className="text-sm text-white/70">
+                <div className="text-[10px] md:text-sm text-white/70 font-medium tracking-wide uppercase">
                   {stat.label}
                 </div>
               </motion.div>
@@ -151,7 +151,7 @@ const BrandAuthority = () => {
         </motion.div>
 
         {/* Achievements Section */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16">
           {achievements.map((achievement, index) => (
             <motion.div
               key={achievement.title}
@@ -159,15 +159,15 @@ const BrandAuthority = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 * index }}
               viewport={{ once: true }}
-              className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20"
+              className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 text-left h-full flex flex-col"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-accent/20 rounded-full">
-                  <achievement.icon className="w-6 h-6 text-accent" />
+                <div className="p-2.5 bg-accent/20 rounded-full flex-shrink-0">
+                  <achievement.icon className="w-5 h-5 md:w-6 md:h-6 text-accent" />
                 </div>
-                <h3 className="text-xl font-bold">{achievement.title}</h3>
+                <h3 className="text-lg md:text-xl font-bold leading-tight">{achievement.title}</h3>
               </div>
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-sm md:text-base text-white/80 leading-relaxed">
                 {achievement.description}
               </p>
             </motion.div>
@@ -175,18 +175,18 @@ const BrandAuthority = () => {
         </div>
 
         {/* Certifications & Partnerships */}
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8">
           {/* Certifications */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20"
+            className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 text-left"
           >
-            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-              <CheckCircle className="w-6 h-6 text-accent" />
-              Certifications & Standards
+            <h3 className="text-xl md:text-2xl font-bold mb-6 flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+              Certifications
             </h3>
             <div className="space-y-3">
               {certifications.map((cert, index) => (
@@ -196,10 +196,10 @@ const BrandAuthority = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.05 * index }}
                   viewport={{ once: true }}
-                  className="flex items-center gap-3 p-3 bg-white/5 rounded-xl"
+                  className="flex items-center gap-3 p-3 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors"
                 >
                   <CheckCircle className="w-4 h-4 text-accent flex-shrink-0" />
-                  <span className="text-white/90">{cert}</span>
+                  <span className="text-sm md:text-base text-white/90">{cert}</span>
                 </motion.div>
               ))}
             </div>
@@ -211,11 +211,11 @@ const BrandAuthority = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
-            className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20"
+            className="bg-white/10 backdrop-blur-md rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 text-left"
           >
-            <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-              <Building2 className="w-6 h-6 text-accent" />
-              Strategic Partnerships
+            <h3 className="text-xl md:text-2xl font-bold mb-6 flex items-center gap-3">
+              <Building2 className="w-5 h-5 md:w-6 md:h-6 text-accent" />
+              Partnerships
             </h3>
             <div className="space-y-4">
               {partnerships.map((partner, index) => (
@@ -225,15 +225,15 @@ const BrandAuthority = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.05 * index }}
                   viewport={{ once: true }}
-                  className="p-4 bg-white/5 rounded-xl"
+                  className="p-4 bg-white/5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors"
                 >
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="font-semibold text-white">{partner.name}</h4>
-                    <span className="px-2 py-1 bg-accent/20 text-accent rounded-full text-xs">
+                  <div className="flex items-start justify-between mb-2 gap-2">
+                    <h4 className="font-semibold text-white text-sm md:text-base">{partner.name}</h4>
+                    <span className="px-2 py-0.5 bg-accent/20 text-accent rounded-full text-[10px] md:text-xs">
                       {partner.type}
                     </span>
                   </div>
-                  <p className="text-sm text-white/70">{partner.description}</p>
+                  <p className="text-xs md:text-sm text-white/70 leading-relaxed">{partner.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -253,8 +253,8 @@ const BrandAuthority = () => {
               Experience Professional Excellence
             </h3>
             <p className="text-white/80 mb-6 max-w-2xl mx-auto">
-              Join thousands of satisfied customers who trust Speedy Laundry for their 
-              professional cleaning needs. Our commitment to quality and service excellence 
+              Join thousands of satisfied customers who trust Speedy Laundry for their
+              professional cleaning needs. Our commitment to quality and service excellence
               sets us apart in the industry.
             </p>
             <div className="flex flex-wrap justify-center gap-4">

@@ -32,22 +32,22 @@ const steps = [
 
 const HowItWorksNew = () => {
   return (
-    <section id="how-it-works" className="py-24 bg-white overflow-hidden">
-      <div className="container">
+    <section id="how-it-works" className="py-16 sm:py-20 md:py-24 bg-white overflow-hidden">
+      <div className="container px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-12 sm:mb-16 md:mb-20"
         >
-          <div className="inline-flex items-center gap-2 bg-primary/5 px-4 py-2 rounded-full mb-4 border border-primary/10">
+          <div className="inline-flex items-center gap-2 bg-primary/5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4 border border-primary/10">
             <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
             <span className="text-primary font-bold uppercase tracking-widest text-xs">Simple Process</span>
           </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 text-header">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-display font-bold mb-4 sm:mb-6 text-header">
             How It <span className="font-script text-primary">Works</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-xl font-light">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg md:text-xl font-light px-4">
             We&apos;ve streamlined our process to save you time. Professional laundry services in four simple steps.
           </p>
         </motion.div>
@@ -57,7 +57,7 @@ const HowItWorksNew = () => {
           {/* Subtle connecting line for desktop */}
           <div className="hidden lg:block absolute top-[100px] left-[10%] right-[10%] h-px bg-slate-100 z-0" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-8">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
@@ -68,22 +68,22 @@ const HowItWorksNew = () => {
                 className="relative z-10 group"
               >
                 {/* Icon Container */}
-                <div className="relative mb-8 text-center">
-                  <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-8xl font-display font-black text-slate-50 z-0 select-none">
+                <div className="relative mb-4 sm:mb-6 md:mb-8 text-center">
+                  <span className="absolute -top-4 sm:-top-6 left-1/2 -translate-x-1/2 text-6xl sm:text-7xl md:text-8xl font-display font-black text-slate-50 z-0 select-none">
                     {step.number}
                   </span>
-                  <div className="relative w-24 h-24 mx-auto bg-white border border-slate-100 rounded-3xl flex items-center justify-center shadow-xl shadow-slate-200/50 group-hover:border-primary/20 group-hover:shadow-primary/5 transition-all duration-300 z-10">
-                    <div className="absolute inset-2 bg-primary/5 rounded-2xl" />
-                    <step.icon className="w-10 h-10 text-primary relative z-20" strokeWidth={1.5} />
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto bg-white border border-slate-100 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-xl shadow-slate-200/50 group-hover:border-primary/20 group-hover:shadow-primary/5 transition-all duration-300 z-10">
+                    <div className="absolute inset-1.5 sm:inset-2 bg-primary/5 rounded-xl sm:rounded-2xl" />
+                    <step.icon className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-primary relative z-20" strokeWidth={1.5} />
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="text-center px-4">
-                  <h3 className="text-2xl font-bold mb-3 text-header group-hover:text-primary transition-colors duration-300">
+                <div className="text-center px-2 sm:px-4">
+                  <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-2 sm:mb-3 text-header group-hover:text-primary transition-colors duration-300">
                     {step.title}
                   </h3>
-                  <p className="text-muted-foreground text-lg leading-relaxed font-light">
+                  <p className="text-muted-foreground text-sm sm:text-base md:text-lg leading-relaxed font-light">
                     {step.description}
                   </p>
                 </div>
@@ -104,16 +104,16 @@ const HowItWorksNew = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="mt-20 text-center"
+          className="mt-12 sm:mt-16 md:mt-20 text-center"
         >
           <div className="inline-block p-1 bg-slate-50 rounded-full border border-slate-100">
             <a
               href="#contact"
-              className="group inline-flex items-center gap-3 bg-primary text-white font-bold px-10 py-5 rounded-full hover:bg-primary/90 transition-all shadow-xl shadow-primary/25 text-xl"
+              className="group inline-flex items-center gap-2 sm:gap-3 bg-primary text-white font-bold px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full hover:bg-primary/90 transition-all shadow-xl shadow-primary/25 text-base sm:text-lg md:text-xl"
             >
-              <Calendar className="w-6 h-6" />
+              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
               <span>Book Now</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
         </motion.div>
