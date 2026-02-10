@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-import { Sparkles, UserRound, Layers, Bed, Maximize2, Snowflake, Waves, Feather, Shirt, Utensils } from "lucide-react";
+import { Sparkles, UserRound, Layers, Bed, Maximize2, Snowflake, Waves, Feather, Shirt, Utensils, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const services = [
@@ -53,7 +53,7 @@ const services = [
     ),
     title: "Dry Cleaning",
     description: "Expert care for suits, dresses, and delicate fabrics",
-    image: "/assets/our%20services/ChatGPT%20Image%20Feb%206,%202025,%2009_58_10%20AM.png",
+    image: "/assets/our%20services/d-2.png",
     slug: "dry-cleaning",
   },
 ];
@@ -101,7 +101,7 @@ const Services = () => {
                 className="group relative bg-card rounded-2xl sm:rounded-3xl overflow-hidden border border-border hover:border-primary/30 hover:shadow-2xl transition-all duration-500 h-64 sm:h-72 md:h-80 cursor-pointer"
               >
                 {/* Background image */}
-                <div 
+                <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                   style={{ backgroundImage: `url(${service.image})` }}
                 />
@@ -127,6 +127,21 @@ const Services = () => {
           ))}
         </div>
 
+        {/* View All Services Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-center mt-12 md:mt-16"
+        >
+          <Link href="/services">
+            <div className="group inline-flex items-center gap-3 bg-white text-primary font-bold px-10 py-4 rounded-full border-2 border-primary hover:bg-primary hover:text-white transition-all duration-300 shadow-xl shadow-primary/10 hover:shadow-primary/20 active:scale-95 cursor-pointer">
+              <span>View All Services</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </Link>
+        </motion.div>
+
         {/* Additional items we clean - Infinite Marquee */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -138,21 +153,21 @@ const Services = () => {
             <h3 className="text-center text-2xl sm:text-3xl font-display font-bold mb-8 sm:mb-12">
               We Also <span className="font-script text-primary">Clean</span>
             </h3>
-            
+
             {/* Gradient Fades for edges */}
             <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-gradient-to-r from-card to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-gradient-to-l from-card to-transparent z-10 pointer-events-none" />
 
             <div className="flex overflow-hidden">
-              <motion.div 
+              <motion.div
                 className="flex gap-4 sm:gap-6 whitespace-nowrap px-4 sm:px-6"
-                animate={{ 
+                animate={{
                   x: ["0%", "-50%"]
                 }}
-                transition={{ 
-                  duration: 25, 
-                  repeat: Infinity, 
-                  ease: "linear" 
+                transition={{
+                  duration: 25,
+                  repeat: Infinity,
+                  ease: "linear"
                 }}
               >
                 {/* Double items for perfectly seamless loop */}

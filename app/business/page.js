@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { 
+import {
   ArrowRight,
   Building2,
   Hotel,
@@ -38,7 +38,7 @@ export default function BusinessPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main>
         {/* Hero - Mobile responsive text alignment */}
         <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
@@ -53,9 +53,9 @@ export default function BusinessPage() {
             <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
           </div>
 
-          <div className="container relative z-10">
+          <div className="container relative z-10 px-4 sm:px-6">
             <motion.div
-              className="max-w-2xl text-center lg:text-left"
+              className="max-w-2xl text-left"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -65,19 +65,19 @@ export default function BusinessPage() {
                 <span className="text-primary">for Business</span>
               </h1>
 
-              <p className="text-lg sm:text-xl text-white/80 mb-6 lg:mb-8 max-w-lg mx-auto lg:mx-0">
+              <p className="text-lg sm:text-xl text-white/80 mb-6 lg:mb-8 max-w-lg">
                 Reliable, high-quality commercial laundry trusted by hotels, restaurants, and businesses across Buckinghamshire.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
-                <a 
+              <div className="flex flex-col sm:flex-row gap-3">
+                <a
                   href="#quote"
                   className="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:brightness-110 transition-all shadow-lg text-base sm:text-lg"
                 >
                   Get a Quote
                   <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </a>
-                <a 
+                <a
                   href="tel:01494445291"
                   className="inline-flex items-center justify-center gap-2 bg-white/20 backdrop-blur-sm text-white font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-full hover:bg-white/30 transition-all text-base sm:text-lg"
                 >
@@ -88,8 +88,8 @@ export default function BusinessPage() {
             </motion.div>
 
             {/* Small Trust Indicators - Mobile responsive */}
-            <motion.div 
-              className="flex flex-wrap gap-4 lg:gap-12 mt-8 lg:mt-12 justify-center lg:justify-start"
+            <motion.div
+              className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 lg:gap-12 mt-8 lg:mt-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -114,7 +114,7 @@ export default function BusinessPage() {
         {/* Industries - Mobile responsive layout */}
         <section className="py-12 lg:py-32 bg-foreground">
           <div className="container">
-            <motion.div 
+            <motion.div
               className="text-center mb-10 lg:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -128,38 +128,21 @@ export default function BusinessPage() {
               </p>
             </motion.div>
 
-            {/* Mobile: Vertical layout, Desktop: Horizontal */}
-            <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4">
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 sm:gap-3">
-                {industries.slice(0, 4).map((industry, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    className="flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-6 sm:py-4 rounded-full w-full sm:w-auto text-sm sm:text-base"
-                  >
-                    <industry.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                    <span className="text-white font-medium text-center sm:text-left">{industry.name}</span>
-                  </motion.div>
-                ))}
-              </div>
-              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-2 sm:gap-3">
-                {industries.slice(4).map((industry, index) => (
-                  <motion.div
-                    key={index + 4}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: (index + 4) * 0.05 }}
-                    className="flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-6 sm:py-4 rounded-full w-full sm:w-auto text-sm sm:text-base"
-                  >
-                    <industry.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                    <span className="text-white font-medium text-center sm:text-left">{industry.name}</span>
-                  </motion.div>
-                ))}
-              </div>
+            {/* All items properly aligned */}
+            <div className="flex flex-col items-center sm:flex-row sm:flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4">
+              {industries.map((industry, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                  className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-6 sm:py-4 rounded-full w-full max-w-xs sm:w-auto text-sm sm:text-base"
+                >
+                  <industry.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                  <span className="text-white font-medium">{industry.name}</span>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
@@ -202,7 +185,7 @@ export default function BusinessPage() {
                   { value: "50k+", label: "Items Weekly" },
                   { value: "100%", label: "Satisfaction Rate" },
                 ].map((stat, index) => (
-                  <div 
+                  <div
                     key={index}
                     className="bg-muted rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center"
                   >
@@ -232,12 +215,12 @@ export default function BusinessPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-3 w-full sm:w-auto justify-center text-center sm:text-left"
+                  className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto text-center"
                 >
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center">
                     <cert.icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="sm:text-left">
                     <div className="font-bold text-foreground text-sm sm:text-base">{cert.title}</div>
                     <div className="text-xs sm:text-sm text-muted-foreground">{cert.subtitle}</div>
                   </div>
@@ -247,33 +230,34 @@ export default function BusinessPage() {
           </div>
         </section>
 
-        {/* What We Handle - Mobile vertical layout */}
+        {/* What We Handle - Content centered on mobile */}
+        {/* What We Handle - Content centered on mobile */}
         <section className="py-12 lg:py-32">
           <div className="container">
-            <motion.div 
+            <motion.div
               className="text-center mb-10 lg:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4">
                 What We Handle
               </h2>
             </motion.div>
 
-            <div className="flex flex-col md:grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 max-w-5xl mx-auto">
               {[
-                { 
-                  title: "Linens & Bedding", 
-                  items: ["Sheets & pillowcases", "Duvet covers", "Mattress protectors", "Blankets & throws"] 
+                {
+                  title: "Linens & Bedding",
+                  items: ["Sheets & pillowcases", "Duvet covers", "Mattress protectors", "Blankets & throws"]
                 },
-                { 
-                  title: "Towels & Textiles", 
-                  items: ["Bath & hand towels", "Face cloths", "Robes & slippers", "Spa & gym towels"] 
+                {
+                  title: "Towels & Textiles",
+                  items: ["Bath & hand towels", "Face cloths", "Robes & slippers", "Spa & gym towels"]
                 },
-                { 
-                  title: "Uniforms & Workwear", 
-                  items: ["Chef whites & aprons", "Staff uniforms", "Medical scrubs", "High-vis & PPE"] 
+                {
+                  title: "Uniforms & Workwear",
+                  items: ["Chef whites & aprons", "Staff uniforms", "Medical scrubs", "High-vis & PPE"]
                 },
               ].map((category, index) => (
                 <motion.div
@@ -282,14 +266,14 @@ export default function BusinessPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-border text-center"
+                  className="bg-white rounded-xl lg:rounded-2xl p-4 sm:p-6 lg:p-8 border border-border text-center h-full flex flex-col items-center shadow-sm"
                 >
-                  <h3 className="text-lg lg:text-xl font-bold text-foreground mb-4">{category.title}</h3>
-                  <ul className="space-y-2">
+                  <h3 className="text-[12px] leading-tight sm:text-lg lg:text-xl font-bold text-foreground mb-3 sm:mb-4">{category.title}</h3>
+                  <ul className="space-y-2 flex flex-col items-center">
                     {category.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-muted-foreground text-sm lg:text-base justify-center">
-                        <Check className="w-3 h-3 lg:w-4 lg:h-4 text-primary shrink-0 mt-1" />
-                        <span className="flex-1 text-left">{item}</span>
+                      <li key={i} className="flex items-start gap-1.5 sm:gap-2 text-muted-foreground text-[10px] sm:text-sm lg:text-base text-center">
+                        <Check className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-primary shrink-0 mt-0.5" />
+                        <span className="flex-1 text-center">{item}</span>
                       </li>
                     ))}
                   </ul>
@@ -302,7 +286,7 @@ export default function BusinessPage() {
         {/* How It Works - Mobile horizontal scroll */}
         <section className="py-12 lg:py-32 bg-secondary/30">
           <div className="container">
-            <motion.div 
+            <motion.div
               className="text-center mb-10 lg:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -342,7 +326,7 @@ export default function BusinessPage() {
 
         {/* Quote Form - Mobile responsive */}
         <section id="quote" className="py-12 lg:py-32 bg-foreground">
-          <div className="container">
+          <div className="container px-4 sm:px-6">
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -357,7 +341,7 @@ export default function BusinessPage() {
                 <p className="text-white/70 text-base sm:text-lg mb-8 lg:mb-10">
                   Tell us about your business and we&apos;ll create a tailored laundry solution that fits your needs and budget.
                 </p>
-                
+
                 {/* List alignment - mobile centered */}
                 <div className="space-y-3 sm:space-y-4 lg:space-y-6">
                   {[
@@ -377,8 +361,8 @@ export default function BusinessPage() {
 
                 <div className="mt-8 lg:mt-10 pt-6 lg:pt-10 border-t border-white/10 text-center lg:text-left">
                   <p className="text-white/60 mb-2 text-sm sm:text-base">Prefer to call?</p>
-                  <a 
-                    href="tel:01494445291" 
+                  <a
+                    href="tel:01494445291"
                     className="text-xl sm:text-2xl font-display font-bold text-white hover:text-primary transition-colors"
                   >
                     01494 445291
@@ -391,13 +375,14 @@ export default function BusinessPage() {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
+                className="w-full"
               >
-                <div className="bg-white rounded-xl lg:rounded-2xl p-5 sm:p-6 lg:p-8 xl:p-10">
+                <div className="bg-white rounded-2xl shadow-xl p-5 sm:p-10 lg:p-12 border border-border relative z-10 w-full">
                   <div className="space-y-4 sm:space-y-5">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Business Name *</label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                         placeholder="Your business name"
                       />
@@ -405,16 +390,16 @@ export default function BusinessPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">Contact Name *</label>
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                           placeholder="Your name"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-foreground mb-2">Phone *</label>
-                        <input 
-                          type="tel" 
+                        <input
+                          type="tel"
                           className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                           placeholder="Phone number"
                         />
@@ -422,8 +407,8 @@ export default function BusinessPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                         placeholder="your@email.com"
                       />
@@ -443,13 +428,13 @@ export default function BusinessPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Tell us about your needs</label>
-                      <textarea 
+                      <textarea
                         className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none text-sm sm:text-base"
                         rows={3}
                         placeholder="Approximate volumes, types of items, preferred schedule..."
                       />
                     </div>
-                    <button 
+                    <button
                       type="submit"
                       className="w-full bg-primary text-white font-bold py-3 sm:py-4 rounded-full hover:brightness-110 transition-all text-base sm:text-lg"
                     >

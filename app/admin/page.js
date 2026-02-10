@@ -3,21 +3,15 @@
 import { useState, useEffect } from 'react'
 import {
   Users,
-  ShoppingCart,
   DollarSign,
   TrendingUp,
-  ArrowUpRight,
   ExternalLink,
-  FileText,
-  CreditCard,
-  ShoppingBag,
   Activity,
-  MessageSquare,
-  Truck
+  MessageSquare
 } from 'lucide-react'
 import { motion } from 'framer-motion'
 
-// Mock Data matching the 5-card layout idea
+// Mock Data matching the 4-card layout
 const mockStats = [
   {
     label: "TOTAL REVENUE",
@@ -30,21 +24,11 @@ const mockStats = [
     badgeColor: "bg-blue-100 text-blue-600"
   },
   {
-    label: "ACTIVE ORDERS",
-    value: "45",
-    subtext: "Currently in process",
-    trend: "up",
-    icon: ShoppingBag,
-    iconBg: "bg-cyan-500",
-    badge: "LIVE",
-    badgeColor: "bg-cyan-100 text-cyan-600"
-  },
-  {
     label: "PENDING ENQUIRIES",
     value: "12",
     subtext: "Requires attention",
     trend: "neutral",
-    icon: MessageSquare, // Changed from FileText to MessageSquare for Enquiries
+    icon: MessageSquare,
     iconBg: "bg-purple-500",
     badge: "ACTION",
     badgeColor: "bg-purple-100 text-purple-600"
@@ -60,14 +44,14 @@ const mockStats = [
     badgeColor: "bg-green-100 text-green-600"
   },
   {
-    label: "DELIVERIES TODAY",
-    value: "8",
-    subtext: "Scheduled for today",
+    label: "VISITOR",
+    value: "350",
+    subtext: "Daily footfall",
     trend: "up",
-    icon: Truck, // Changed to Truck for deliveries
-    iconBg: "bg-indigo-500",
-    badge: "TODAY",
-    badgeColor: "bg-indigo-100 text-indigo-600"
+    icon: Activity,
+    iconBg: "bg-orange-500",
+    badge: "LIVE",
+    badgeColor: "bg-orange-100 text-orange-600"
   }
 ]
 
@@ -88,8 +72,8 @@ export default function DashboardPage() {
         <p className="text-gray-500">Welcome back, admin! Here's what's happening today.</p>
       </div>
 
-      {/* Stats Grid - 5 Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+      {/* Stats Grid - 4 Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {mockStats.map((stat, index) => (
           <motion.div
             key={stat.label}
@@ -124,13 +108,13 @@ export default function DashboardPage() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-8">
         {/* Sales Overview Chart */}
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5 }}
-          className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
+          className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
         >
           <div className="flex justify-between items-center mb-8">
             <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
@@ -179,28 +163,8 @@ export default function DashboardPage() {
 
             {/* X Axis Labels */}
             {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => (
-              <span key={day} className="text-xs text-gray-400 font-medium absolute -bottom-0 translate-y-full" style={{ left: `${i * 16.5}%` }}>{day}</span>
+              <span key={day} className="text-xs text-gray-400 font-medium absolute -bottom-0 translate-y-full" style={{ left: `${i * 14.3}%` }}>{day}</span>
             ))}
-          </div>
-        </motion.div>
-
-        {/* Orders Side Panel */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6 }}
-          className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100"
-        >
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-lg font-bold text-gray-800">Orders: Today</h3>
-            <button className="text-xs font-bold text-blue-600 hover:underline">MANAGE &rarr;</button>
-          </div>
-
-          <div className="flex flex-col items-center justify-center h-[200px] text-center">
-            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3">
-              <ShoppingBag className="w-6 h-6 text-gray-300" />
-            </div>
-            <p className="text-gray-400 text-sm font-medium">No orders recorded yet.</p>
           </div>
         </motion.div>
       </div>

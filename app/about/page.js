@@ -172,11 +172,8 @@ export default function About() {
         if (isMobile) {
           setCurrentSlide((prev) => (prev + 1) % values.length);
         } else {
-          // On desktop, move by 3 cards at a time
-          setCurrentSlide((prev) => {
-            const next = prev + 3;
-            return next >= values.length ? 0 : next;
-          });
+          // On desktop, move by 1 card at a time
+          setCurrentSlide((prev) => (prev + 1) % values.length);
         }
       }
     }, 3000);
@@ -192,10 +189,7 @@ export default function About() {
     if (isMobile) {
       setCurrentSlide((prev) => (prev + 1) % values.length);
     } else {
-      setCurrentSlide((prev) => {
-        const next = prev + 3;
-        return next >= values.length ? 0 : next;
-      });
+      setCurrentSlide((prev) => (prev + 1) % values.length);
     }
     resetAutoSlide();
   };
@@ -204,10 +198,7 @@ export default function About() {
     if (isMobile) {
       setCurrentSlide((prev) => (prev - 1 + values.length) % values.length);
     } else {
-      setCurrentSlide((prev) => {
-        const next = prev - 3;
-        return next < 0 ? values.length - (values.length % 3 || 3) : next;
-      });
+      setCurrentSlide((prev) => (prev - 1 + values.length) % values.length);
     }
     resetAutoSlide();
   };
@@ -220,10 +211,7 @@ export default function About() {
           if (isMobile) {
             setCurrentSlide((prev) => (prev + 1) % values.length);
           } else {
-            setCurrentSlide((prev) => {
-              const next = prev + 3;
-              return next >= values.length ? 0 : next;
-            });
+            setCurrentSlide((prev) => (prev + 1) % values.length);
           }
         }
       }, 3000);
@@ -400,106 +388,112 @@ export default function About() {
               </h2>
             </motion.div>
 
-            {/* Desktop: Show 3 cards at once */}
+            {/* Desktop: Show 3 cards at once, scroll 1 at a time */}
             <div className="hidden md:block">
               <div
                 ref={containerRef}
                 className="relative"
               >
-                <motion.div
-                  className="flex justify-center gap-6 lg:gap-8"
-                  animate={{ x: `-${currentSlide * ((400 + 32) / 3)}px` }}
-                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                >
-                  {values.map((value, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      whileHover={{
-                        scale: 1.05,
-                        transition: { duration: 0.4 }
-                      }}
-                      className="flex-shrink-0 w-[380px] lg:w-[400px]"
-                    >
-                      <div className="relative aspect-video rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden shadow-2xl group border border-white/5 mx-2">
-                        {/* Image */}
-                        <div className="absolute inset-0 overflow-hidden">
-                          <Image
-                            src={value.image}
-                            alt={value.title}
-                            fill
-                            className="object-cover object-center"
-                          />
-                        </div>
+                {/* Carousel Container */}
+                <div className="relative overflow-hidden">
+                  <motion.div
+                    className="flex"
+                    animate={{ x: `-${currentSlide * (100 / 3)}%` }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  >
+                    {values.map((value, index) => (
+                      <div
+                        key={index}
+                        className="flex-shrink-0 w-1/3 px-4"
+                      >
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          whileHover={{
+                            scale: 1.05,
+                            transition: { duration: 0.4 }
+                          }}
+                          className="w-full"
+                        >
+                          <div className="relative aspect-video rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl group border border-white/10 mx-auto max-w-[380px]">
+                            {/* Image */}
+                            <div className="absolute inset-0 overflow-hidden">
+                              <Image
+                                src={value.image}
+                                alt={value.title}
+                                fill
+                                className="object-cover object-center"
+                              />
+                            </div>
 
-                        {/* Gradient Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:via-black/20 transition-all duration-500" />
+                            {/* Gradient Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:via-black/30 transition-all duration-500" />
 
-                        {/* Content */}
-                        <div className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-end">
-                          <div className="w-14 h-14 lg:w-16 lg:h-16 bg-primary rounded-2xl flex items-center justify-center mb-6 shadow-xl">
-                            <value.icon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
+                            {/* Content */}
+                            <div className="absolute inset-0 p-6 lg:p-8 flex flex-col justify-end">
+                              <div className="w-14 h-14 lg:w-16 lg:h-16 bg-primary/90 rounded-xl flex items-center justify-center mb-4 shadow-xl backdrop-blur-sm">
+                                <value.icon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
+                              </div>
+                              <h3 className="text-xl lg:text-2xl font-bold text-white mb-2 tracking-tight">
+                                {value.title}
+                              </h3>
+                              <div className="h-1 w-10 bg-primary rounded-full transform origin-left group-hover:w-16 transition-all duration-500" />
+                            </div>
                           </div>
-                          <h3 className="text-2xl lg:text-3xl font-bold text-white mb-3 tracking-tight">
-                            {value.title}
-                          </h3>
-                          <div className="h-1 w-12 bg-primary rounded-full mb-4 transform origin-left group-hover:w-24 transition-all duration-500" />
-                        </div>
+                        </motion.div>
                       </div>
-                    </motion.div>
-                  ))}
-                </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
 
                 {/* Desktop Navigation */}
-                <div className="mt-16">
+                <div className="mt-12">
                   <div className="flex flex-col items-center gap-6">
-                    <div className="flex items-center gap-6">
-                      <span className="h-px w-20 bg-gradient-to-r from-transparent to-primary/30" />
-                      <div className="flex items-center gap-3 bg-primary/5 px-6 py-3 rounded-full border border-primary/10 backdrop-blur-md">
-                        <button
-                          onClick={prevSlide}
-                          className="p-1 hover:bg-primary/20 rounded-full transition-colors group/btn"
-                          aria-label="Previous Slide"
-                        >
-                          <motion.div
-                            animate={{ x: [-3, 3] }}
-                            transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
-                          >
-                            <ArrowRight className="w-5 h-5 text-primary rotate-180 group-hover/btn:scale-120 transition-transform" />
-                          </motion.div>
-                        </button>
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/80 px-2 leading-none">
+                    {/* Navigation Buttons */}
+                    <div className="flex items-center justify-center gap-4">
+                      <button
+                        onClick={prevSlide}
+                        className="w-12 h-12 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors flex items-center justify-center group/btn disabled:opacity-50 disabled:cursor-not-allowed"
+                        aria-label="Previous Slide"
+                        disabled={currentSlide === 0}
+                      >
+                        <ArrowRight className="w-6 h-6 text-primary rotate-180 group-hover/btn:scale-110 transition-transform" />
+                      </button>
+                      
+                      <div className="bg-primary/5 px-6 py-3 rounded-full border border-primary/10 backdrop-blur-md">
+                        <span className="text-xs font-bold uppercase tracking-widest text-primary/80 leading-none">
                           Explore Our Legacy
                         </span>
-                        <button
-                          onClick={nextSlide}
-                          className="p-1 hover:bg-primary/20 rounded-full transition-colors group/btn"
-                          aria-label="Next Slide"
-                        >
-                          <motion.div
-                            animate={{ x: [3, -3] }}
-                            transition={{ repeat: Infinity, duration: 1.5, repeatType: "reverse" }}
-                          >
-                            <ArrowRight className="w-5 h-5 text-primary group-hover/btn:scale-120 transition-transform" />
-                          </motion.div>
-                        </button>
                       </div>
-                      <span className="h-px w-20 bg-gradient-to-l from-transparent to-primary/30" />
+                      
+                      <button
+                        onClick={nextSlide}
+                        className="w-12 h-12 rounded-full bg-white shadow-lg hover:bg-gray-50 transition-colors flex items-center justify-center group/btn disabled:opacity-50 disabled:cursor-not-allowed"
+                        aria-label="Next Slide"
+                        disabled={currentSlide === values.length - 1}
+                      >
+                        <ArrowRight className="w-6 h-6 text-primary group-hover/btn:scale-110 transition-transform" />
+                      </button>
                     </div>
 
-                    {/* Dots for Desktop */}
+                    {/* Dots Indicator */}
                     <div className="flex gap-2">
-                      {Array.from({ length: Math.ceil(values.length / 3) }).map((_, index) => (
+                      {values.map((_, index) => (
                         <button
                           key={index}
-                          onClick={() => goToSlide(index * 3)}
-                          className={`w-2 h-2 rounded-full transition-all ${Math.floor(currentSlide / 3) === index ? 'bg-primary w-6' : 'bg-gray-300'
-                            }`}
-                          aria-label={`Go to group ${index + 1}`}
+                          onClick={() => goToSlide(index)}
+                          className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-primary w-6' : 'bg-gray-300 hover:bg-gray-400'}`}
+                          aria-label={`Go to slide ${index + 1}`}
                         />
                       ))}
+                    </div>
+
+                    {/* Slide Counter */}
+                    <div className="text-sm text-muted-foreground font-medium">
+                      <span className="text-primary">{currentSlide + 1}</span>
+                      <span className="mx-1">/</span>
+                      <span>{values.length}</span>
                     </div>
                   </div>
                 </div>
@@ -617,7 +611,6 @@ export default function About() {
           </div>
         </section>
 
-        {/* Rest of the sections remain exactly the same */}
         {/* Story Section */}
         <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 bg-secondary/30 overflow-hidden">
           <div className="container px-4 sm:px-6">

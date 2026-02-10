@@ -24,6 +24,7 @@ export default function ServicesPage() {
   const [isMobile, setIsMobile] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
+  const [dragStartY, setDragStartY] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const containerRef = useRef(null);
   const autoSlideRef = useRef(null);
@@ -33,23 +34,23 @@ export default function ServicesPage() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   // Auto slide every 3 seconds on mobile
   useEffect(() => {
     if (!isMobile) return;
-    
+
     autoSlideRef.current = setInterval(() => {
       if (!isDragging) {
         setCurrentSlide((prev) => (prev + 1) % servicesData.length);
       }
     }, 3000);
-    
+
     return () => {
       if (autoSlideRef.current) {
         clearInterval(autoSlideRef.current);
@@ -87,12 +88,26 @@ export default function ServicesPage() {
   const handleTouchStart = (e) => {
     setIsDragging(true);
     setDragStartX(e.touches[0].clientX);
+    setDragStartY(e.touches[0].clientY);
     setDragOffset(0);
   };
 
   const handleTouchMove = (e) => {
     if (!isDragging) return;
     const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+
+    // Calculate difference
+    const diffX = Math.abs(dragStartX - currentX);
+    const diffY = Math.abs(dragStartY - currentY);
+
+    // If moving more vertically than horizontally, stop the slider dragging 
+    // to allow the browser to handle page scrolling
+    if (diffY > diffX && diffY > 5) {
+      setIsDragging(false);
+      return;
+    }
+
     const diff = dragStartX - currentX;
     setDragOffset(diff);
   };
@@ -100,9 +115,9 @@ export default function ServicesPage() {
   const handleTouchEnd = () => {
     if (!isDragging) return;
     setIsDragging(false);
-    
+
     const threshold = 50; // Minimum drag distance to trigger slide change
-    
+
     if (dragOffset > threshold && currentSlide < servicesData.length - 1) {
       // Swiped left - go to next
       nextSlide();
@@ -110,7 +125,7 @@ export default function ServicesPage() {
       // Swiped right - go to previous
       prevSlide();
     }
-    
+
     setDragOffset(0);
     resetAutoSlide();
   };
@@ -132,15 +147,15 @@ export default function ServicesPage() {
   const handleMouseUp = () => {
     if (!isDragging) return;
     setIsDragging(false);
-    
+
     const threshold = 50;
-    
+
     if (dragOffset > threshold && currentSlide < servicesData.length - 1) {
       nextSlide();
     } else if (dragOffset < -threshold && currentSlide > 0) {
       prevSlide();
     }
-    
+
     setDragOffset(0);
     resetAutoSlide();
   };
@@ -207,7 +222,7 @@ export default function ServicesPage() {
         {/* Main Services Grid - Desktop 2 columns, Mobile Slider */}
         <section className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-32 pt-6 sm:pt-8">
           <div className="container px-4 sm:px-6">
-            
+
             {/* Desktop: 2 Column Grid */}
             <div className="hidden md:grid md:grid-cols-2 gap-8 lg:gap-12">
               {servicesData.map((service, index) => (
@@ -267,7 +282,7 @@ export default function ServicesPage() {
                         </span>
                       )}
                     </div>
-                    
+
                     {/* CTA Button inside card */}
                     <Link
                       href="/contact"
@@ -284,7 +299,7 @@ export default function ServicesPage() {
 
             {/* Mobile: Touchable and Draggable Slider */}
             <div className="md:hidden">
-              <div 
+              <div
                 ref={containerRef}
                 className="relative overflow-hidden"
                 onTouchStart={handleTouchStart}
@@ -297,15 +312,15 @@ export default function ServicesPage() {
                 onDragStart={handleDragStart}
                 style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
               >
-                <motion.div 
-                  className="flex touch-pan-x"
-                  animate={{ 
+                <motion.div
+                  className="flex touch-auto"
+                  animate={{
                     x: `calc(-${currentSlide * 100}% + ${isDragging ? -dragOffset : 0}px)`
                   }}
-                  transition={{ 
-                    type: "spring", 
-                    stiffness: isDragging ? 100 : 300, 
-                    damping: 30 
+                  transition={{
+                    type: "spring",
+                    stiffness: isDragging ? 100 : 300,
+                    damping: 30
                   }}
                 >
                   {servicesData.map((service, index) => (
@@ -362,7 +377,7 @@ export default function ServicesPage() {
                               </span>
                             )}
                           </div>
-                          
+
                           {/* CTA Button inside card */}
                           <Link
                             href="/contact"
@@ -381,7 +396,7 @@ export default function ServicesPage() {
                 {/* Drag Indicator (optional) */}
                 {isDragging && (
                   <div className="absolute top-0 right-0 left-0 h-1 bg-primary/20 z-10">
-                    <motion.div 
+                    <motion.div
                       className="h-full bg-primary"
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min(Math.abs(dragOffset) / 2, 100)}%` }}
@@ -399,21 +414,20 @@ export default function ServicesPage() {
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
-                
+
                 {/* Dots Indicator */}
                 <div className="flex gap-2">
                   {servicesData.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => goToSlide(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        index === currentSlide ? 'bg-primary w-6' : 'bg-gray-300'
-                      }`}
+                      className={`w-2 h-2 rounded-full transition-all ${index === currentSlide ? 'bg-primary w-6' : 'bg-gray-300'
+                        }`}
                       aria-label={`Go to service ${index + 1}`}
                     />
                   ))}
                 </div>
-                
+
                 <button
                   onClick={nextSlide}
                   className="w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors"
@@ -425,15 +439,7 @@ export default function ServicesPage() {
             </div>
 
             {/* View All Services Button */}
-            <div className="text-center mt-12 sm:mt-16">
-              <button
-                onClick={() => window.location.href = '/services'}
-                className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-white text-primary font-bold px-6 sm:px-8 md:px-10 lg:px-12 py-3 sm:py-4 md:py-5 rounded-full hover:bg-muted hover:scale-105 transition-all border-2 border-primary shadow-lg text-sm sm:text-base md:text-lg"
-              >
-                View All Services
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
-              </button>
-            </div>
+
           </div>
         </section>
 

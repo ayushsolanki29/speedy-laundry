@@ -42,7 +42,7 @@ const ImageGrid = () => {
     <section ref={containerRef} className="py-10 md:py-20 bg-background overflow-hidden relative">
       <div className="flex flex-col gap-4 md:gap-4">
         {/* Row 1: Moves Left on Scroll - Touch scrollable on mobile */}
-        <div className="flex overflow-x-auto md:overflow-hidden scrollbar-hide touch-pan-x">
+        <div className="flex overflow-x-auto md:overflow-hidden scrollbar-hide touch-auto">
           <motion.div
             style={{ x: xRow1 }}
             className="flex gap-4 whitespace-nowrap px-4 md:px-4"
@@ -64,7 +64,7 @@ const ImageGrid = () => {
         </div>
 
         {/* Row 2: Moves Right on Scroll - Touch scrollable on mobile */}
-        <div className="flex overflow-x-auto md:overflow-hidden scrollbar-hide touch-pan-x">
+        <div className="flex overflow-x-auto md:overflow-hidden scrollbar-hide touch-auto">
           <motion.div
             style={{ x: xRow2 }}
             className="flex gap-4 whitespace-nowrap px-4 md:px-4"

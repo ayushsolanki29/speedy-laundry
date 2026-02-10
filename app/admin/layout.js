@@ -5,7 +5,6 @@ import {
   LayoutDashboard,
   Users,
   MessageSquare,
-  Truck,
   ClipboardList,
   BarChart3,
   BookOpen,
@@ -14,11 +13,8 @@ import {
   X,
   LogOut,
   Bell,
-  Search,
   ChevronRight,
-  FileText,
-  CreditCard,
-  ShoppingCart
+  Activity
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -29,6 +25,7 @@ const navigation = [
     items: [
       { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
       { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
+      { name: 'Footfall', href: '/admin/footfall', icon: Activity },
     ]
   },
   {
@@ -36,8 +33,6 @@ const navigation = [
     items: [
       { name: 'Enquiries', href: '/admin/enquiries', icon: MessageSquare },
       { name: 'Customers', href: '/admin/customers', icon: Users },
-      { name: 'Status Tracking', href: '/admin/tracking', icon: Truck },
-      { name: 'Orders', href: '/admin/orders', icon: ShoppingCart }, // Added for completeness based on likely need
     ]
   },
   {
@@ -76,19 +71,25 @@ export default function AdminLayout({ children }) {
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         {/* Logo Area */}
-        <div className="h-20 flex items-center px-8 border-b border-gray-100">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-blue-200 shadow-lg">
-              S
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-800 leading-none">SPEEDY</h1>
-              <span className="text-[10px] font-bold text-blue-600 tracking-widest uppercase">Admin Panel</span>
+        <div className="h-20 flex items-center px-8 border-b border-gray-100 relative">
+          <Link href="/" className="relative flex items-center">
+            <div className="relative">
+              <img
+                src="/assets/logo.svg"
+                alt="Speedy Laundry Logo"
+                className="h-9 w-auto object-contain"
+              />
+              <span
+                className="absolute -bottom-5 -right-6 text-xl text-blue-600 select-none whitespace-nowrap"
+                style={{ fontFamily: 'Pacifico, cursive', transform: 'rotate(-5deg)' }}
+              >
+                Admin Console
+              </span>
             </div>
           </Link>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden ml-auto p-2 text-gray-400 hover:text-gray-600"
+            className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 p-2 text-gray-400 hover:text-gray-600"
           >
             <X className="w-5 h-5" />
           </button>

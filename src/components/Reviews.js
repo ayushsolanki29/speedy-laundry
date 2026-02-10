@@ -110,7 +110,9 @@ const Reviews = () => {
           className="text-center"
         >
           <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            What our customers <span className="font-script text-primary">have to say</span>
+            <span className="block md:hidden">What our customers</span>
+            <span className="block md:hidden"><span className="font-script text-primary">have to say</span></span>
+            <span className="hidden md:block">What our customers <span className="font-script text-primary">have to say</span></span>
           </h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-1">
             <div className="flex items-center gap-1">
