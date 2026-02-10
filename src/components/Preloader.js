@@ -5,13 +5,26 @@ import { motion, AnimatePresence } from "framer-motion";
 import { WashingMachine, Shirt } from "lucide-react";
 
 const Preloader = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [bubbleProps, setBubbleProps] = useState([]);
 
   useEffect(() => {
     setIsMounted(true);
-    
+
+    // Only show preloader on first visit of the session
+    const hasLoaded = sessionStorage.getItem("hasLoaded");
+    if (hasLoaded) return;
+
+    // If the page is already fully loaded (e.g. very fast or cached), skip it
+    if (document.readyState === "complete") {
+      sessionStorage.setItem("hasLoaded", "true");
+      return;
+    }
+
+    // It's the first visit and page is still loading, so show it
+    setIsLoading(true);
+
     // Generate stable random properties only on the client
     const props = [...Array(8)].map((_, i) => ({
       width: Math.random() * 15 + 5,
@@ -23,29 +36,28 @@ const Preloader = ({ children }) => {
     }));
     setBubbleProps(props);
 
-    // Simulate initial loading time or wait for window load
     const handleLoad = () => {
-      setTimeout(() => setIsLoading(false), 1500);
+      // Minimal timeout to allow one cycle of animation for a premium feel
+      setTimeout(() => {
+        setIsLoading(false);
+        sessionStorage.setItem("hasLoaded", "true");
+      }, 500);
     };
 
-    if (document.readyState === "complete") {
-      handleLoad();
-    } else {
-      window.addEventListener("load", handleLoad);
-      return () => window.removeEventListener("load", handleLoad);
-    }
+    window.addEventListener("load", handleLoad);
+    return () => window.removeEventListener("load", handleLoad);
   }, []);
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isLoading && (
           <motion.div
             key="preloader"
             initial={{ opacity: 1 }}
-            exit={{ 
+            exit={{
               opacity: 0,
-              transition: { duration: 0.8, ease: "easeInOut" }
+              transition: { duration: 0.4, ease: "easeInOut" }
             }}
             className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white dark:bg-slate-950"
           >
@@ -59,13 +71,13 @@ const Preloader = ({ children }) => {
               >
                 <div className="p-8 rounded-[2rem] bg-blue-50/50 dark:bg-[#0095da]/10 backdrop-blur-md border border-blue-100 dark:border-[#0095da]/20 shadow-2xl shadow-[#0095da]/10">
                   <motion.div
-                    animate={{ 
+                    animate={{
                       rotate: [0, 4, -4, 4, 0],
                     }}
-                    transition={{ 
-                      duration: 2.5, 
+                    transition={{
+                      duration: 2.5,
                       repeat: Infinity,
-                      ease: "easeInOut" 
+                      ease: "easeInOut"
                     }}
                   >
                     <WashingMachine size={84} className="text-[#0095da]" />
@@ -83,7 +95,7 @@ const Preloader = ({ children }) => {
               {/* Floating Icons */}
               <motion.div
                 className="absolute -top-10 -right-10"
-                animate={{ 
+                animate={{
                   y: [-8, 8, -8],
                   rotate: [0, 10, 0],
                   scale: [1, 1.1, 1]
@@ -104,13 +116,13 @@ const Preloader = ({ children }) => {
                 transition={{ delay: 0.2 }}
                 className="flex justify-center"
               >
-                <img 
-                  src="/assets/logo.svg" 
-                  alt="Speedy Laundry Logo" 
+                <img
+                  src="/assets/logo.svg"
+                  alt="Speedy Laundry Logo"
                   className="h-14 w-auto object-contain"
                 />
               </motion.div>
-              
+
               <div className="mt-8 w-56 h-1.5 bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-[#0095da]"
@@ -119,7 +131,7 @@ const Preloader = ({ children }) => {
                   transition={{ duration: 1.8, ease: "easeInOut" }}
                 />
               </div>
-              
+
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 0.5, 1, 0] }}
@@ -135,19 +147,19 @@ const Preloader = ({ children }) => {
               <motion.div
                 key={i}
                 className="absolute rounded-full bg-[#0095da]/10 backdrop-blur-[2px]"
-                initial={{ 
+                initial={{
                   width: bubble.width,
                   height: bubble.height,
                   x: bubble.x,
                   y: 500,
-                  opacity: 0 
+                  opacity: 0
                 }}
-                animate={{ 
+                animate={{
                   y: -500,
                   opacity: [0, 0.6, 0],
                   x: bubble.animateX
                 }}
-                transition={{ 
+                transition={{
                   duration: bubble.duration,
                   repeat: Infinity,
                   delay: bubble.delay,
@@ -158,7 +170,7 @@ const Preloader = ({ children }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      <div className={isLoading ? "hidden" : "block"}>
+      <div className="contents">
         {children}
       </div>
     </>
