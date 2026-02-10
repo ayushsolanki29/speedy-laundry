@@ -1,77 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-Book.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-Book.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-BookItalic.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-BookItalic.woff') format('woff');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-Medium.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-Medium.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-MediumItalic.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-MediumItalic.woff') format('woff');
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-Bold.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-BoldItalic.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-BoldItalic.woff') format('woff');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-Black.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-Black.woff') format('woff');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'GoudySansStd';
-  src: url('/assets/fonts/GoudySansStd-BlackItalic.woff2') format('woff2'),
-       url('/assets/fonts/GoudySansStd-BlackItalic.woff') format('woff');
-  font-weight: 900;
-  font-style: italic;
-  font-display: swap;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -90,7 +16,7 @@
     --popover-foreground: 220 20% 10%;
 
     /* Primary: #0095da - Bright blue from logo */
-    --primary: 197 100% 43%;
+    --primary: 197 100% 34%;
     --primary-foreground: 0 0% 100%;
 
     /* Header dark: Dark navy like Rinse */
@@ -113,11 +39,19 @@
 
     --border: 220 15% 90%;
     --input: 220 15% 90%;
-    --ring: 197 100% 43%;
+    --ring: 197 100% 34%;
 
     --star: 45 93% 55%;
 
     --radius: 1rem;
+
+    /* Main font variable - defaults to local display font */
+    --font-main: var(--font-display);
+  }
+
+  .admin-root {
+    /* Override for admin panel - use standard inter */
+    --font-main: var(--font-inter);
   }
 }
 
@@ -134,15 +68,20 @@
     @apply bg-background text-foreground font-sans antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display tracking-tight;
   }
 
-  .admin-root h1, 
-  .admin-root h2, 
-  .admin-root h3, 
-  .admin-root h4, 
-  .admin-root h5, 
+  .admin-root h1,
+  .admin-root h2,
+  .admin-root h3,
+  .admin-root h4,
+  .admin-root h5,
   .admin-root h6 {
     @apply font-sans;
   }
@@ -150,13 +89,11 @@
 
 @layer components {
   .btn-accent {
-    @apply bg-accent text-accent-foreground font-semibold rounded-full px-6 py-3 
-           hover:brightness-105 transition-all duration-200 shadow-lg hover:shadow-xl;
+    @apply bg-accent text-accent-foreground font-semibold rounded-full px-6 py-3 hover:brightness-105 transition-all duration-200 shadow-lg hover:shadow-xl;
   }
 
   .btn-primary {
-    @apply bg-primary text-primary-foreground font-semibold rounded-full px-6 py-3 
-           hover:brightness-110 transition-all duration-200;
+    @apply bg-primary text-primary-foreground font-semibold rounded-full px-6 py-3 hover:brightness-110 transition-all duration-200;
   }
 
   .card-premium {

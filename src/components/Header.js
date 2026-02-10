@@ -122,6 +122,8 @@ const Header = () => {
             className={`lg:hidden p-2 transition-colors ${scrolled ? "text-header" : "text-white"
               }`}
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close Menu" : "Open Menu"}
+            aria-expanded={isOpen}
           >
             {isOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
           </motion.button>

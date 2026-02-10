@@ -26,7 +26,7 @@ const Contact = () => {
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 </div>
                 <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-foreground mb-1 text-sm md:text-base">Address</h4>
+                  <h3 className="font-bold text-header mb-1 text-sm md:text-base">Address</h3>
                   <p className="text-muted-foreground text-sm">
                     Abbey House, Lincoln Road<br />
                     Cressex Business Park, High Wycombe<br />
@@ -40,7 +40,7 @@ const Contact = () => {
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 </div>
                 <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-foreground mb-1 text-sm md:text-base">Phone</h4>
+                  <h3 className="font-bold text-header mb-1 text-sm md:text-base">Phone</h3>
                   <a href="tel:01494445291" className="text-primary hover:underline text-sm md:text-base font-medium">
                     01494 445291
                   </a>
@@ -52,7 +52,7 @@ const Contact = () => {
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 </div>
                 <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-foreground mb-1 text-sm md:text-base">Email</h4>
+                  <h3 className="font-bold text-header mb-1 text-sm md:text-base">Email</h3>
                   <a href="mailto:info@speedylaundry.co.uk" className="text-primary hover:underline text-sm">
                     info@speedylaundry.co.uk
                   </a>
@@ -64,7 +64,7 @@ const Contact = () => {
                   <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
                 </div>
                 <div className="text-center sm:text-left">
-                  <h4 className="font-bold text-foreground mb-1 text-sm md:text-base">Opening Hours</h4>
+                  <h3 className="font-bold text-header mb-1 text-sm md:text-base">Opening Hours</h3>
                   <p className="text-muted-foreground text-sm">
                     Mon – Thu: 6:00 AM – 3:00 PM<br />
                     Friday: 6:00 AM – 2:00 PM<br />
@@ -124,8 +124,8 @@ const Contact = () => {
               </div>
 
               <div>
-                <label className="block text-xs md:text-sm font-medium text-foreground mb-1">Service</label>
-                <select className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm">
+                <label htmlFor="service-select" className="block text-xs md:text-sm font-medium text-foreground mb-1">Service</label>
+                <select id="service-select" className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-sm">
                   <option value="">Select a service</option>
                   <option value="iron">Iron Only</option>
                   <option value="wash-iron">Wash + Iron</option>

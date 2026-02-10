@@ -37,9 +37,13 @@ const Hero = () => {
             loop
             muted
             playsInline
+            poster="/assets/img-grid/IMG_9083.jpg"
             className="w-full h-full object-cover"
+            aria-label="Background video showing professional laundry services"
+            title="Speedy Laundry Service Video"
           >
             <source src={heroVideo2} type="video/mp4" />
+            <track kind="captions" srcLang="en" label="No captions provided" src="" />
           </video>
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
@@ -50,9 +54,9 @@ const Hero = () => {
           <div className="max-w-3xl">
             {/* Badge */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.4 }}
               className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 sm:px-4 py-2 rounded-full mb-4 sm:mb-6 border border-white/10"
             >
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
@@ -61,9 +65,9 @@ const Hero = () => {
 
             {/* Main Heading */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
               className="mb-4 sm:mb-6"
             >
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold text-white leading-[1.1]">
@@ -75,17 +79,14 @@ const Hero = () => {
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={currentIndex}
-                    initial={{ y: 60, opacity: 0 }}
+                    initial={{ y: 30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -60, opacity: 0 }}
+                    exit={{ y: -30, opacity: 0 }}
                     transition={{
-                      duration: 0.5,
+                      duration: 0.4,
                       ease: [0.22, 1, 0.36, 1]
                     }}
                     className="block font-script text-primary text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl drop-shadow-lg"
-                    style={{
-                      textShadow: ""
-                    }}
                   >
                     {services[currentIndex]}
                   </motion.span>
@@ -94,9 +95,9 @@ const Hero = () => {
             </motion.div>
 
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 md:mb-10 max-w-xl font-light"
             >
               Professional cleaning with <span className="text-primary font-bold">free pickup & delivery</span>. Fast 24-48 hour turnaround guaranteed.
@@ -104,9 +105,9 @@ const Hero = () => {
 
             {/* Feature pills */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8"
             >
               {[
@@ -114,22 +115,21 @@ const Hero = () => {
                 { icon: Clock, text: "24-48 Hour Turnaround" },
                 { icon: Leaf, text: "Eco-Friendly" },
               ].map((feature) => (
-                <motion.div
+                <div
                   key={feature.text}
-                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
                   className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 sm:px-4 py-2 rounded-full border border-white/10 cursor-default"
                 >
                   <feature.icon className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
                   <span className="text-white text-xs sm:text-sm whitespace-nowrap">{feature.text}</span>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
 
             {/* CTA Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               <motion.a

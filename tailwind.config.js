@@ -18,9 +18,9 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["GoudySansStd", "Georgia", "serif"],
-        script: ["Pacifico", "cursive"],
+        sans: ["var(--font-main)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "Georgia", "serif"],
+        script: ["var(--font-pacifico)", "Pacifico", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",

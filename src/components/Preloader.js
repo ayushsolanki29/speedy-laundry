@@ -80,13 +80,13 @@ const Preloader = ({ children }) => {
                       ease: "easeInOut"
                     }}
                   >
-                    <WashingMachine size={84} className="text-[#0095da]" />
+                    <WashingMachine size={84} className="text-[#007daf]" />
                   </motion.div>
                 </div>
 
                 {/* Rotating Drum effect inside machine */}
                 <motion.div
-                  className="absolute top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 border-2 border-[#0095da]/40 rounded-full border-t-[#0095da]"
+                  className="absolute top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 border-2 border-[#007daf]/40 rounded-full border-t-[#007daf]"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
                 />
@@ -103,7 +103,7 @@ const Preloader = ({ children }) => {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
                 <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 shadow-lg border border-slate-100 dark:border-slate-800">
-                  <Shirt size={28} className="text-[#0095da]/60" />
+                  <Shirt size={28} className="text-[#007daf]/60" />
                 </div>
               </motion.div>
             </div>
@@ -125,7 +125,7 @@ const Preloader = ({ children }) => {
 
               <div className="mt-8 w-56 h-1.5 bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
                 <motion.div
-                  className="h-full bg-[#0095da]"
+                  className="h-full bg-[#007daf]"
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 1.8, ease: "easeInOut" }}
@@ -136,7 +136,7 @@ const Preloader = ({ children }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0, 1, 0.5, 1, 0] }}
                 transition={{ duration: 2.5, repeat: Infinity }}
-                className="mt-4 text-[#0095da] dark:text-blue-400 text-sm font-medium tracking-wide uppercase"
+                className="mt-4 text-[#007daf] dark:text-blue-400 text-sm font-medium tracking-wide uppercase"
               >
                 Preparing Your Service...
               </motion.p>
@@ -146,7 +146,7 @@ const Preloader = ({ children }) => {
             {isMounted && bubbleProps.map((bubble, i) => (
               <motion.div
                 key={i}
-                className="absolute rounded-full bg-[#0095da]/10 backdrop-blur-[2px]"
+                className="absolute rounded-full bg-[#007daf]/10 backdrop-blur-[2px]"
                 initial={{
                   width: bubble.width,
                   height: bubble.height,
