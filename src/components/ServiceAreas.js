@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Check } from "lucide-react";
 import { useState } from "react";
+import Image from "next/image";
 
 const serviceAreas = [
   {
@@ -51,6 +52,8 @@ const serviceAreas = [
 ];
 
 const ServiceAreas = () => {
+  const [activeRegion, setActiveRegion] = useState(0);
+
   return (
     <section id="areas" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background overflow-hidden relative">
       <div className="container px-4">
@@ -79,10 +82,15 @@ const ServiceAreas = () => {
               transition={{ delay: regionIdx * 0.1 }}
               className="group relative h-[280px] sm:h-[320px] md:h-[350px] lg:h-[400px] rounded-xl sm:rounded-2xl md:rounded-[2rem] overflow-hidden cursor-pointer shadow-lg sm:shadow-xl"
             >
-              {/* Image Background */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                style={{ backgroundImage: `url('${region.image}')` }}
+              {/* Image Background - Optimized */}
+              <Image
+                src={region.image}
+                alt={`${region.region} service area`}
+                fill
+                sizes="(max-width: 1024px) 50vw, 25vw"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                priority={regionIdx < 2} // Prioritize first 2 images
+                quality={85}
               />
 
               {/* Overlay Gradient */}
@@ -110,6 +118,70 @@ const ServiceAreas = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* Interactive Area List Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 sm:mt-16 md:mt-20 lg:mt-24 max-w-7xl mx-auto"
+        >
+          {/* Heading */}
+          <div className="text-center mb-6 sm:mb-8">
+            <p className="text-muted-foreground text-sm sm:text-base">
+              Free pickup & delivery across these locations
+            </p>
+          </div>
+
+          {/* Region Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10">
+            {serviceAreas.map((region, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveRegion(idx)}
+                className={`
+                  flex items-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium text-sm sm:text-base
+                  transition-all duration-300 border-2
+                  ${activeRegion === idx
+                    ? 'bg-primary text-white border-primary shadow-lg scale-105'
+                    : 'bg-white text-foreground border-border hover:border-primary/50 hover:bg-primary/5'
+                  }
+                `}
+              >
+                <MapPin className={`w-4 h-4 ${activeRegion === idx ? 'text-white' : 'text-primary'}`} />
+                <span>{region.region} & Surrounding Areas</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Areas Grid */}
+          <motion.div
+            key={activeRegion}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 border border-border/50"
+          >
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+              {serviceAreas[activeRegion].areas.map((area, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: idx * 0.03 }}
+                  className="group/area flex items-center gap-2 sm:gap-3 bg-white rounded-lg sm:rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 shadow-sm hover:shadow-lg hover:scale-105 hover:bg-primary transition-all duration-300 border border-border/30 hover:border-primary cursor-pointer"
+                >
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary/10 group-hover/area:bg-white flex items-center justify-center shrink-0 transition-colors duration-300">
+                    <Check className="w-3 h-3 sm:w-4 sm:h-4 text-primary group-hover/area:text-primary" strokeWidth={3} />
+                  </div>
+                  <span className="text-xs sm:text-sm font-medium text-foreground group-hover/area:text-white transition-colors duration-300">
+                    {area}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
 
         {/* Not in list CTA - Reimagined */}
         <motion.div

@@ -44,8 +44,8 @@ export default function ContactPage() {
       <Header />
 
       <main>
-        {/* Hero - Full Screen Visual matching About Page */}
-        <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
+        {/* Hero - Premium Design matching About & Services */}
+        <section className="relative h-[55vh] sm:h-[65vh] min-h-[450px] sm:min-h-[550px] flex items-center overflow-hidden pt-16 sm:pt-20">
           <div className="absolute inset-0">
             <Image
               src="/assets/contact/contact-bg.png"
@@ -54,48 +54,54 @@ export default function ContactPage() {
               className="object-cover"
               priority
             />
-            {/* Exact Gradient from About Page for perfect consistency */}
-            <div className="absolute inset-0 bg-gradient-to-r from-foreground/90 via-foreground/70 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-foreground/95 via-foreground/80 to-transparent" />
           </div>
 
-          <div className="container relative z-10">
+          <div className="container relative z-10 px-4 sm:px-6">
             <motion.div
-              className="max-w-2xl"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
+              className="max-w-3xl"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              {/* Site Standard Badge */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6 border border-primary/10"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-md px-4 py-2 rounded-full mb-6 border border-primary/20"
               >
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-                <span className="text-white/90 text-sm font-medium">Serving High Wycombe & Surrounding Areas</span>
+                <span className="text-white font-medium text-xs sm:text-sm">Ready to Care for Your Garments</span>
               </motion.div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-[1.1]">
-                Book Your
-                <br />
-                <span className="text-primary italic">Pickup</span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
+                Book Your <br />
+                <span className="text-primary italic">Pickup.</span>
               </h1>
 
-              <p className="text-xl text-white/80 mb-8 max-w-lg font-sans">
+              <p className="text-base sm:text-lg md:text-xl text-white/70 mb-8 max-w-xl">
                 Schedule a collection or get in touch with our friendly team. We treat every garment with the care it deserves.
               </p>
 
-              <div className="flex items-center gap-4">
-                <div className="h-px w-12 bg-primary" />
-                <span className="text-white/40 text-xs uppercase tracking-[0.4em] font-bold">Scroll to Begin</span>
+              {/* Trust indicators for site-wide consistency */}
+              <div className="flex flex-wrap gap-4 sm:gap-8">
+                {[
+                  { icon: Truck, text: "Free Collections" },
+                  { icon: CheckCircle, text: "Quality Certified" },
+                  { icon: Phone, text: "Live Assistance" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2.5 text-white/90 bg-white/5 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/10">
+                    <item.icon className="w-4 h-4 text-primary" />
+                    <span className="font-semibold text-[10px] sm:text-xs uppercase tracking-wider">{item.text}</span>
+                  </div>
+                ))}
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* Main Content */}
-        <section className="pb-20 lg:pb-32">
+        {/* Main Content - Perfected spacing */}
+        <section className="py-12 sm:py-16 md:py-20">
           <div className="container">
             <div className="grid lg:grid-cols-5 gap-8 lg:gap-16">
 
@@ -280,13 +286,19 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Walk-in Offer */}
-                <div className="bg-primary/10 rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-primary/20">
-                  <div className="text-center">
-                    <div className="text-2xl lg:text-4xl font-display font-bold text-primary mb-1 lg:mb-2">10% OFF</div>
-                    <p className="text-foreground font-medium text-sm lg:text-base">Every Walk-In Order</p>
-                    <p className="text-muted-foreground text-xs lg:text-sm mt-1">Visit us in person for an exclusive discount</p>
+                {/* New Related Quote */}
+                <div className="bg-primary/5 rounded-2xl p-6 lg:p-8 border border-primary/10 relative overflow-hidden group">
+                  <div className="relative z-10">
+                    <p className="text-foreground italic text-base lg:text-lg leading-relaxed mb-4">
+                      &ldquo;Great service starts with a simple conversation. We treat every garment with the precision and care it deserves.&rdquo;
+                    </p>
+                    <div className="flex items-center gap-3">
+                      <div className="h-px w-8 bg-primary" />
+                      <span className="font-script text-primary text-xl lg:text-2xl">The Speedy Laundry Team</span>
+                    </div>
                   </div>
+                  {/* Decorative background element */}
+                  <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-all duration-500" />
                 </div>
               </motion.div>
             </div>
@@ -313,7 +325,7 @@ export default function ContactPage() {
               viewport={{ once: true }}
             >
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2474.5!2d-0.7834!3d51.6234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDM3JzI0LjIiTiAwwrA0Nyczmi4yIlc!5e0!3m2!1sen!2suk!4v1234567890"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1611.06198871445!2d-0.7723896769905402!3d51.62617703354082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48768a6e2e0602d9%3A0x9e4b79a6c2514294!2sSpeedy%20Laundry!5e1!3m2!1sen!2suk!4v1770908455969!5m2!1sen!2suk"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

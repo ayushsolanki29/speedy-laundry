@@ -44,7 +44,7 @@ export default function BusinessPage() {
         <section className="relative h-[90vh] min-h-[600px] flex items-center overflow-hidden pt-20">
           <div className="absolute inset-0">
             <Image
-              src="/assets/business/ChatGPT Image Feb 6, 2026, 01_53_41 PM.png"
+              src="/assets/business/business-hero.png"
               alt="Commercial laundry service"
               fill
               className="object-cover"
@@ -112,38 +112,61 @@ export default function BusinessPage() {
         <TrustedPartners />
 
         {/* Industries - Mobile responsive layout */}
-        <section className="py-12 lg:py-32 bg-foreground">
-          <div className="container">
+        <section className="py-10 sm:py-14 md:py-16 bg-background overflow-hidden">
+          <div className="container px-4">
             <motion.div
-              className="text-center mb-10 lg:mb-16"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              className="text-center mb-4"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white mb-3 lg:mb-4">
-                Who We Serve
+              <p className="text-primary font-semibold uppercase tracking-[0.2em] text-xs mb-4">Our Clients</p>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold">
+                What We <span className="font-script text-primary">Serve</span>
               </h2>
-              <p className="text-white/60 text-sm sm:text-base lg:text-lg">
-                Tailored solutions for every industry
-              </p>
             </motion.div>
 
-            {/* All items properly aligned */}
-            <div className="flex flex-col items-center sm:flex-row sm:flex-wrap justify-center gap-2 sm:gap-3 lg:gap-4">
-              {industries.map((industry, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-3 sm:px-6 sm:py-4 rounded-full w-full max-w-xs sm:w-auto text-sm sm:text-base"
-                >
-                  <industry.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                  <span className="text-white font-medium">{industry.name}</span>
-                </motion.div>
-              ))}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="overflow-hidden"
+            >
+              <div className="bg-card rounded-[2rem] sm:rounded-[2.5rem] py-8 sm:py-10 md:py-12 relative overflow-hidden group">
+                {/* Gradient Fades for edges */}
+                <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-gradient-to-r from-card to-transparent z-10 pointer-events-none" />
+                <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-24 md:w-32 bg-gradient-to-l from-card to-transparent z-10 pointer-events-none" />
+
+                <div className="flex overflow-hidden">
+                  <motion.div
+                    className="flex gap-4 sm:gap-6 whitespace-nowrap px-4 sm:px-6"
+                    animate={{
+                      x: ["0%", "-50%"]
+                    }}
+                    transition={{
+                      duration: 30,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    {/* Double items for perfectly seamless loop */}
+                    {[...industries, ...industries].map((industry, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center gap-2 sm:gap-4 bg-secondary/30 backdrop-blur-sm hover:bg-primary transition-all duration-300 px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-5 rounded-xl sm:rounded-2xl group/item cursor-default"
+                      >
+                        <div className="text-primary group-hover/item:text-white transition-colors">
+                          <industry.icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" strokeWidth={2.5} />
+                        </div>
+                        <span className="text-sm sm:text-base md:text-lg font-medium text-foreground group-hover/item:text-white transition-colors">
+                          {industry.name}
+                        </span>
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 
@@ -161,7 +184,7 @@ export default function BusinessPage() {
                   About Us
                 </span>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-foreground mb-4 lg:mb-6 leading-tight">
-                  10+ Years of<br />
+                  30+ Years of<br />
                   Commercial Excellence
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground mb-6 lg:mb-8 leading-relaxed">
@@ -181,7 +204,7 @@ export default function BusinessPage() {
               >
                 {[
                   { value: "500+", label: "Business Clients" },
-                  { value: "10+", label: "Years Experience" },
+                  { value: "30+", label: "Years Experience" },
                   { value: "50k+", label: "Items Weekly" },
                   { value: "100%", label: "Satisfaction Rate" },
                 ].map((stat, index) => (

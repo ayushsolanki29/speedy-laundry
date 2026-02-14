@@ -43,7 +43,7 @@ const Hero = () => {
             title="Speedy Laundry Service Video"
           >
             <source src={heroVideo2} type="video/mp4" />
-            <track kind="captions" srcLang="en" label="No captions provided" src="" />
+            <track kind="captions" srcLang="en" label="No captions provided" src={null} />
           </video>
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/30" />
@@ -170,14 +170,15 @@ const Hero = () => {
                     <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                   </svg>
                 </div>
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-star fill-star" />
-                  ))}
-                </div>
-                <div className="text-white">
-                  <span className="font-bold">4.9</span>
-                  {/* <span className="text-white/70 text-xs sm:text-sm ml-1">• 37 reviews</span> */}
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="flex">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 text-star fill-star" />
+                    ))}
+                  </div>
+                  <div className="text-white">
+                    <span className="font-bold">/5</span>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

@@ -22,7 +22,7 @@ const achievements = [
 ];
 
 const stats = [
-  { number: "10+", label: "Years in Business", icon: TrendingUp },
+  { number: "30+", label: "Years in Business", icon: TrendingUp },
   { number: "5,000+", label: "Happy Customers", icon: Users },
   { number: "4.9/5", label: "Average Rating", icon: Star },
   { number: "24-48h", label: "Turnaround Time", icon: Clock }

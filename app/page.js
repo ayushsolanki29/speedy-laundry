@@ -20,12 +20,12 @@ export default function Home() {
         <Services />
         <HowItWorksNew />
         <ImageGrid />
+        <ServiceAreas />
         <CTABanner />
         <Reviews />
-        <ServiceAreas />
         <FAQ />
         <Contact />
-            <BlogSection />
+        <BlogSection />
       </main>
       <Footer />
     </div>
