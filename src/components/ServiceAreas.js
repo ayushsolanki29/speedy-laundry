@@ -126,12 +126,7 @@ const ServiceAreas = () => {
           viewport={{ once: true }}
           className="mt-12 sm:mt-16 md:mt-20 lg:mt-24 max-w-7xl mx-auto"
         >
-          {/* Heading */}
-          <div className="text-center mb-6 sm:mb-8">
-            <p className="text-muted-foreground text-sm sm:text-base">
-              Free pickup & delivery across these locations
-            </p>
-          </div>
+
 
           {/* Region Tabs */}
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10">

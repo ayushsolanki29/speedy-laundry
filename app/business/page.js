@@ -18,11 +18,14 @@ import {
   Leaf,
   Award,
   Shield,
-  MapPin
+  MapPin,
+  Loader2
 } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import TrustedPartners from "@/components/TrustedPartners";
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 const industries = [
   { icon: Hotel, name: "Hotels & B&Bs" },
@@ -35,6 +38,67 @@ const industries = [
 ];
 
 export default function BusinessPage() {
+  const [formData, setFormData] = useState({
+    business_name: '',
+    full_name: '',
+    phone: '',
+    email: '',
+    industry: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Client-side validation
+    if (formData.phone.length > 30) {
+      toast.error('Phone number is too long (max 30 characters)');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/business-enquiry.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        toast.success(data.message);
+        setFormData({
+          business_name: '',
+          full_name: '',
+          phone: '',
+          email: '',
+          industry: '',
+          message: ''
+        });
+      } else {
+        toast.error(data.message || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      toast.error('Failed to connect to the server. Please check your connection.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -401,11 +465,15 @@ export default function BusinessPage() {
                 className="w-full"
               >
                 <div className="bg-white rounded-2xl shadow-xl p-5 sm:p-10 lg:p-12 border border-border relative z-10 w-full">
-                  <div className="space-y-4 sm:space-y-5">
+                  <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Business Name *</label>
                       <input
                         type="text"
+                        name="business_name"
+                        value={formData.business_name}
+                        onChange={handleInputChange}
+                        required
                         className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                         placeholder="Your business name"
                       />
@@ -415,6 +483,10 @@ export default function BusinessPage() {
                         <label className="block text-sm font-medium text-foreground mb-2">Contact Name *</label>
                         <input
                           type="text"
+                          name="full_name"
+                          value={formData.full_name}
+                          onChange={handleInputChange}
+                          required
                           className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                           placeholder="Your name"
                         />
@@ -423,6 +495,10 @@ export default function BusinessPage() {
                         <label className="block text-sm font-medium text-foreground mb-2">Phone *</label>
                         <input
                           type="tel"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleInputChange}
+                          required
                           className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                           placeholder="Phone number"
                         />
@@ -432,13 +508,22 @@ export default function BusinessPage() {
                       <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
                       <input
                         type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
                         className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
                         placeholder="your@email.com"
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Industry</label>
-                      <select className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base">
+                      <select
+                        name="industry"
+                        value={formData.industry}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm sm:text-base"
+                      >
                         <option value="">Select your industry</option>
                         <option value="hotel">Hotel / B&B</option>
                         <option value="restaurant">Restaurant / Cafe</option>
@@ -452,6 +537,9 @@ export default function BusinessPage() {
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">Tell us about your needs</label>
                       <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
                         className="w-full px-4 py-3 rounded-lg lg:rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none text-sm sm:text-base"
                         rows={3}
                         placeholder="Approximate volumes, types of items, preferred schedule..."
@@ -459,11 +547,19 @@ export default function BusinessPage() {
                     </div>
                     <button
                       type="submit"
-                      className="w-full bg-primary text-white font-bold py-3 sm:py-4 rounded-full hover:brightness-110 transition-all text-base sm:text-lg"
+                      disabled={isSubmitting}
+                      className="w-full bg-primary text-white font-bold py-3 sm:py-4 rounded-full hover:brightness-110 transition-all text-base sm:text-lg disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      Request Quote
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Processing...
+                        </>
+                      ) : (
+                        'Request Quote'
+                      )}
                     </button>
-                  </div>
+                  </form>
                 </div>
               </motion.div>
             </div>

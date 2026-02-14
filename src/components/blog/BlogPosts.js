@@ -1,251 +1,252 @@
 'use client';
 
-import { motion } from "framer-motion";
-import { Clock, User, ArrowRight, Calendar } from "lucide-react";
-import Image from "next/image";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
+import { Clock, User, ArrowRight, Calendar, Loader2, SearchX } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const blogPosts = [
-  {
-    id: 1,
-    title: "10 Common Laundry Mistakes You're Probably Making",
-    excerpt: "Discover the most frequent laundry errors that damage your clothes and how to avoid them for longer-lasting garments.",
-    author: "Sarah Johnson",
-    date: "January 15, 2024",
-    readTime: "5 min read",
-    category: "Laundry Tips",
-    image: "/assets/blog/laundry-mistakes.jpg",
-    featured: true,
-    slug: "10-common-laundry-mistakes"
-  },
-  {
-    id: 2,
-    title: "The Ultimate Guide to Removing Tough Stains",
-    excerpt: "Professional techniques for removing wine, coffee, grass, and oil stains from all types of fabrics.",
-    author: "Mike Chen",
-    date: "January 12, 2024",
-    readTime: "8 min read",
-    category: "Stain Removal",
-    image: "/assets/blog/stain-removal.jpg",
-    slug: "ultimate-stain-removal-guide"
-  },
-  {
-    id: 3,
-    title: "Fabric Care 101: Understanding Clothing Labels",
-    excerpt: "Decode those mysterious laundry symbols and learn the right way to care for different fabric types.",
-    author: "Emma Davis",
-    date: "January 10, 2024",
-    readTime: "6 min read",
-    category: "Fabric Care",
-    image: "/assets/blog/fabric-care.jpg",
-    slug: "fabric-care-101"
-  },
-  {
-    id: 4,
-    title: "Eco-Friendly Laundry: Save Money and the Planet",
-    excerpt: "Simple switches to make your laundry routine more sustainable without compromising on cleanliness.",
-    author: "Green Team",
-    date: "January 8, 2024",
-    readTime: "7 min read",
-    category: "Sustainability",
-    image: "/assets/blog/eco-laundry.jpg",
-    slug: "eco-friendly-laundry"
-  },
-  {
-    id: 5,
-    title: "Winter Wardrobe Care: Sweater Storage & Maintenance",
-    excerpt: "Keep your winter knits looking new season after season with these expert care tips.",
-    author: "Lisa Park",
-    date: "January 5, 2024",
-    readTime: "5 min read",
-    category: "Seasonal Care",
-    image: "/assets/blog/winter-care.jpg",
-    slug: "winter-wardrobe-care"
-  },
-  {
-    id: 6,
-    title: "The Science of Detergent: What Really Works",
-    excerpt: "Understanding different detergent types and how to choose the right one for your needs.",
-    author: "Dr. James Wilson",
-    date: "January 3, 2024",
-    readTime: "9 min read",
-    category: "Products",
-    image: "/assets/blog/detergent-science.jpg",
-    slug: "science-of-detergent"
-  }
-];
-
-const BlogPosts = () => {
+const BlogPosts = ({ searchQuery }) => {
   const router = useRouter();
-  const featuredPost = blogPosts.find(post => post.featured);
-  const regularPosts = blogPosts.filter(post => !post.featured);
+  const [blogs, setBlogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFetchingMore, setIsFetchingMore] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const observer = useRef();
+
+  const limit = 9;
+
+  const fetchBlogs = useCallback(async (currentOffset, query = "", isAppend = false) => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/blogs.php?limit=${limit}&offset=${currentOffset}${query ? `&search=${encodeURIComponent(query)}` : ''}`;
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.status === 'success') {
+        const fetchedBlogs = data.data.blogs;
+        if (isAppend) {
+          setBlogs(prev => [...prev, ...fetchedBlogs]);
+        } else {
+          setBlogs(fetchedBlogs);
+        }
+        setHasMore(fetchedBlogs.length === limit);
+      }
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    } finally {
+      setIsLoading(false);
+      setIsFetchingMore(false);
+    }
+  }, []);
+
+  // Initial load / search load
+  useEffect(() => {
+    setIsLoading(true);
+    setOffset(0);
+    fetchBlogs(0, searchQuery, false);
+  }, [searchQuery, fetchBlogs]);
+
+  // Infinite Scroll Observer
+  const lastElementRef = useCallback(node => {
+    if (isLoading || isFetchingMore) return;
+    if (observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setIsFetchingMore(true);
+        const nextOffset = offset + limit;
+        setOffset(nextOffset);
+        fetchBlogs(nextOffset, searchQuery, true);
+      }
+    });
+
+    if (node) observer.current.observe(node);
+  }, [isLoading, isFetchingMore, hasMore, offset, searchQuery, fetchBlogs]);
+
+  if (isLoading && offset === 0) {
+    return (
+      <div className="py-32 flex flex-col items-center justify-center min-h-[400px]">
+        <Loader2 className="w-12 h-12 text-primary animate-spin mb-6" />
+        <p className="text-muted-foreground font-bold uppercase tracking-[0.2em] text-[10px]">Filtering Wisdom...</p>
+      </div>
+    );
+  }
+
+  const featuredBlog = blogs.length > 0 && !searchQuery ? blogs[0] : null;
+  const gridBlogs = featuredBlog ? blogs.slice(1) : blogs;
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-24 bg-white min-h-screen">
       <div className="container">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-4">
-            Latest Laundry Tips & Insights
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Expert advice to help you achieve perfect results every time
-          </p>
-        </motion.div>
-
-        {/* Featured Post */}
-        {featuredPost && (
+        {/* Search Results Header */}
+        {searchQuery && (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-            className="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-12"
           >
-            <div className="card-premium p-5 md:p-10">
-              <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
-                <div className="relative h-56 md:h-80 rounded-xl md:rounded-2xl overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
+            <h2 className="text-2xl font-display font-bold text-header">
+              {blogs.length > 0 ? `Found ${blogs.length} articles for "${searchQuery}"` : `No results for "${searchQuery}"`}
+            </h2>
+            <div className="h-1 w-20 bg-primary mt-4 rounded-full" />
+          </motion.div>
+        )}
+
+        {/* Featured Blog - Horizontal Design */}
+        {featuredBlog && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-20"
+          >
+            <div
+              className="bg-slate-50/50 rounded-[2.5rem] overflow-hidden border border-slate-100 group cursor-pointer lg:flex h-auto lg:h-[450px]"
+              onClick={() => router.push(`/blog/${featuredBlog.slug}`)}
+            >
+              {/* Featured Image */}
+              <div className="lg:w-1/2 relative h-64 lg:h-full overflow-hidden">
+                {featuredBlog.image_url ? (
                   <img
-                    src="/assets/service-wash.jpg"
-                    alt="Washing Service"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    src={featuredBlog.image_url}
+                    alt={featuredBlog.title}
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
+                ) : (
+                  <div className="absolute inset-0 bg-slate-100 flex items-center justify-center text-slate-300">
+                    <Calendar className="w-20 h-20" />
+                  </div>
+                )}
+                <div className="absolute top-6 left-6 flex gap-2">
+                  <span className="px-5 py-2 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">
+                    {featuredBlog.category || 'Featured'}
+                  </span>
+                  <span className="px-5 py-2 bg-white/90 backdrop-blur-md text-header rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl">
+                    Must Read
+                  </span>
+                </div>
+              </div>
+
+              {/* Featured Content */}
+              <div className="lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center">
+                <div className="flex items-center gap-6 mb-8 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                  <span className="flex items-center gap-2"><Clock className="w-4 h-4 text-primary" /> {Math.ceil((featuredBlog.content?.length || 0) / 1000) + 2} min read</span>
+                  <span className="flex items-center gap-2"><Calendar className="w-4 h-4 text-primary" /> {new Date(featuredBlog.published_at || featuredBlog.created_at).toLocaleDateString()}</span>
                 </div>
 
-                <div>
-                  <div className="flex items-center gap-3 mb-3 md:mb-4">
-                    <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs md:sm font-medium">
-                      {featuredPost.category}
-                    </span>
-                    <span className="text-muted-foreground text-xs md:sm">Featured</span>
+                <h3 className="text-3xl lg:text-5xl font-display font-bold text-header mb-6 leading-tight group-hover:text-primary transition-colors">
+                  {featuredBlog.title}
+                </h3>
+
+                <p className="text-slate-500 text-lg mb-10 line-clamp-3 leading-relaxed">
+                  {featuredBlog.excerpt}
+                </p>
+
+                <div className="flex items-center justify-between items-center mt-auto">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl overflow-hidden border border-primary/10">
+                      <img src={`https://ui-avatars.com/api/?name=${featuredBlog.author_name || 'Admin'}&background=00AEEF&color=fff`} alt="" />
+                    </div>
+                    <span className="text-sm font-bold text-header">{featuredBlog.author_name || 'Admin'}</span>
                   </div>
-
-                  <h3 className="text-xl md:text-3xl font-bold text-foreground mb-3 md:mb-4 leading-tight">
-                    {featuredPost.title}
-                  </h3>
-
-                  <p className="text-sm md:text-base text-muted-foreground mb-5 md:mb-6 leading-relaxed">
-                    {featuredPost.excerpt}
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-4 md:gap-6 mb-5 md:mb-6 text-xs md:text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1.5 md:gap-2">
-                      <User className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                      <span>{featuredPost.author}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 md:gap-2">
-                      <Calendar className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                      <span>{featuredPost.date}</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 md:gap-2">
-                      <Clock className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                      <span>{featuredPost.readTime}</span>
-                    </div>
-                  </div>
-
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="btn-primary w-full md:w-auto inline-flex justify-center items-center gap-2 py-3"
-                    onClick={() => router.push(`/blog/${featuredPost.slug}`)}
-                  >
+                  <button className="bg-primary text-white px-8 py-4 rounded-full font-bold shadow-xl shadow-primary/20 hover:scale-105 transition-all">
                     Read Full Article
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.button>
+                  </button>
                 </div>
               </div>
             </div>
           </motion.div>
         )}
 
-        {/* Regular Posts Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {regularPosts.map((post, index) => (
-            <motion.article
-              key={post.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
-              viewport={{ once: true }}
-              className="card-premium overflow-hidden group cursor-pointer flex flex-col"
-            >
-              {/* Image */}
-              <div className="relative h-44 md:h-48 overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-accent/10" />
-                <img
-                  src={index === 0 ? "/assets/service-dryclean.jpg" :
-                    index === 1 ? "/assets/service-iron.jpg" :
-                      "/assets/service-fold.jpg"}
-                  alt="Service"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-primary rounded-full text-[10px] md:text-xs font-medium uppercase tracking-wider">
-                    {post.category}
-                  </span>
+        {/* Blog Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+          <AnimatePresence>
+            {gridBlogs.map((post, index) => (
+              <motion.article
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.5, delay: index % 3 * 0.1 }}
+                className="flex flex-col group cursor-pointer"
+                onClick={() => router.push(`/blog/${post.slug}`)}
+              >
+                {/* Card Image */}
+                <div className="relative h-64 md:h-72 rounded-[2rem] overflow-hidden mb-6 border border-slate-100 shadow-sm group-hover:shadow-xl transition-all duration-500">
+                  {post.image_url ? (
+                    <img
+                      src={post.image_url}
+                      alt={post.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-slate-50 flex items-center justify-center text-slate-200">
+                      <Calendar className="w-12 h-12" />
+                    </div>
+                  )}
+                  <div className="absolute top-4 left-4">
+                    <span className="px-4 py-1.5 bg-white/90 backdrop-blur-sm text-primary rounded-full text-[9px] font-black uppercase tracking-widest shadow-lg">
+                      {post.category || 'Insights'}
+                    </span>
+                  </div>
                 </div>
-              </div>
 
-              {/* Content */}
-              <div className="p-5 md:p-6 flex flex-col flex-grow">
-                <h3 className="text-lg md:text-xl font-bold text-foreground mb-2 md:mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                  {post.title}
-                </h3>
-
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
-                  {post.excerpt}
-                </p>
-
-                <div className="mt-auto pt-4 border-t border-border/50">
-                  <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
-                    <div className="flex items-center gap-2">
-                      <User className="w-3 h-3 text-primary" />
-                      <span>{post.author}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-3 h-3 text-primary" />
-                      <span>{post.readTime}</span>
-                    </div>
+                {/* Card Content */}
+                <div className="px-2">
+                  <div className="flex items-center gap-4 text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-4">
+                    <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-primary" /> {Math.ceil((post.content?.length || 0) / 1000) + 1} min read</span>
+                    <span>•</span>
+                    <span>{new Date(post.published_at || post.created_at).toLocaleDateString()}</span>
                   </div>
 
-                  <motion.div
-                    whileHover={{ x: 4 }}
-                    className="flex items-center gap-2 text-primary text-sm font-bold cursor-pointer"
-                    onClick={() => router.push(`/blog/${post.slug}`)}
-                  >
-                    <span>Read More</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.div>
+                  <h3 className="text-xl font-display font-bold text-header mb-4 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+                    {post.title}
+                  </h3>
+
+                  <p className="text-slate-500 text-sm mb-6 line-clamp-3 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg overflow-hidden border border-slate-100">
+                        <img src={`https://ui-avatars.com/api/?name=${post.author_name || 'Admin'}&background=0F172A&color=fff`} alt="" />
+                      </div>
+                      <span className="text-xs font-bold text-header">{post.author_name || 'Admin'}</span>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-primary transform group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
-              </div>
-            </motion.article>
-          ))}
+              </motion.article>
+            ))}
+          </AnimatePresence>
         </div>
 
-        {/* Load More Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="btn-accent"
+        {/* Empty State */}
+        {blogs.length === 0 && !isLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="py-20 text-center"
           >
-            Load More Articles
-          </motion.button>
-        </motion.div>
+            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <SearchX className="w-10 h-10 text-slate-300" />
+            </div>
+            <h3 className="text-2xl font-display font-bold text-header mb-2">No Laundry Secrets Found</h3>
+            <p className="text-slate-500">Try adjusting your search terms or exploring a different category.</p>
+          </motion.div>
+        )}
+
+        {/* Sentinel for Infinite Scroll */}
+        <div ref={lastElementRef} className="h-10 mt-10" />
+
+        {/* Loading More State */}
+        {isFetchingMore && (
+          <div className="py-10 flex justify-center">
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          </div>
+        )}
       </div>
     </section>
   );

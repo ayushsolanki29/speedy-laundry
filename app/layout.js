@@ -71,12 +71,21 @@ const goudySans = localFont({
 export const metadata = {
   title: "Speedy Laundry - Professional Laundry Service",
   description: "Professional laundry and dry cleaning service with pickup and delivery",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Speedy Laundry",
+  },
+  other: {
+    "apple-mobile-web-app-title": "Speedy Laundry",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} ${goudySans.variable} ${pacifico.variable}`}>
-      <body className="font-sans antialiased">
+    <html lang="en" className={`${inter.variable} ${goudySans.variable} ${pacifico.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased" suppressHydrationWarning>
         <ClientLayout>
           <Preloader>
             {children}

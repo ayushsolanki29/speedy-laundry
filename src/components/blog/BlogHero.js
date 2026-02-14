@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { BookOpen, Search, TrendingUp } from "lucide-react";
 
-const BlogHero = () => {
+const BlogHero = ({ searchQuery, setSearchQuery }) => {
   const serviceImages = [
     "/assets/service-wash.jpg",
     "/assets/service-dryclean.jpg",
@@ -111,15 +111,18 @@ const BlogHero = () => {
             transition={{ duration: 0.8, delay: 0.7 }}
             className="max-w-2xl mx-auto px-4"
           >
-            <div className="relative">
+            <div className="relative group">
               <input
                 type="text"
-                placeholder="Search for laundry tips..."
-                className="w-full px-5 md:px-6 py-3.5 md:py-4 pl-12 md:pl-14 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white placeholder-white/60 focus:outline-none focus:border-primary focus:bg-white/15 transition-all text-sm md:text-base"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search articles & laundry tips..."
+                className="w-full px-5 md:px-6 py-4 md:py-5 pl-12 md:pl-16 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder-white/40 focus:outline-none focus:border-primary focus:bg-white/15 transition-all text-sm md:text-base shadow-2xl"
               />
-              <Search className="absolute left-4 md:left-5 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-primary" />
+              <Search className="absolute left-4 md:left-6 top-1/2 transform -translate-y-1/2 w-5 h-5 md:w-6 md:h-6 text-primary group-focus-within:scale-110 transition-transform" />
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

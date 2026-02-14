@@ -1,0 +1,13 @@
+{
+  "name": "Speedy Laundry",
+  "short_name": "Speedy Laundry",
+  "description": "Professional laundry and dry cleaning with free pickup and delivery",
+  "icons": [
+    {"src": "/web-app-manifest-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "/web-app-manifest-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "theme_color": "#0095da",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/"
+}

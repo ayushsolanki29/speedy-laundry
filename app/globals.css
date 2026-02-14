@@ -99,4 +99,12 @@
   .card-premium {
     @apply bg-card rounded-3xl shadow-xl border-0 overflow-hidden;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

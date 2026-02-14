@@ -34,28 +34,27 @@ const Header = () => {
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
-        ? "bg-white shadow-lg"
-        : "bg-gradient-to-b from-black/40 to-transparent"
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isOpen
+        ? "bg-white/10 backdrop-blur-lg border-b border-white/10 shadow-lg"
+        : scrolled
+          ? "bg-white shadow-lg border-b border-transparent"
+          : "bg-gradient-to-b from-black/40 to-transparent"
         }`}
     >
       <nav className="container">
         <div className="flex items-center justify-between h-20 lg:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center h-full">
+          <Link href="/" className="flex items-center gap-3 group">
             <motion.div
-              className=" p-3 lg:p-4 rounded-b-3xl "
+              className="flex items-center transition-all duration-300"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
-              <Image
+              <img
                 src={logo}
                 alt="Speedy Laundry"
                 className={`h-8 lg:h-12 w-auto object-contain transition-all duration-300 ${scrolled ? "" : "brightness-0 invert"}`}
-                width={200}
-                height={48}
-                priority
+                onError={(e) => e.target.style.display = 'none'}
               />
             </motion.div>
           </Link>
@@ -171,9 +170,9 @@ const Header = () => {
                 >
                   <Link
                     href="/contact"
-                    className={`block w-full text-center py-3 rounded-full font-bold text-lg shadow-md ${scrolled
+                    className={`block w-full text-center py-3 rounded-full font-bold text-lg shadow-md transition-all ${isOpen
                       ? "bg-primary text-white"
-                      : "bg-white text-primary"
+                      : (scrolled ? "bg-primary text-white" : "bg-white text-primary")
                       }`}
                     onClick={() => setIsOpen(false)}
                   >

@@ -2,8 +2,19 @@
 
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { useSettings } from "@/context/SettingsContext";
+
+const DEFAULT_ADDRESS = "Abbey House, Lincoln Road\nCressex Business Park, High Wycombe\nBuckinghamshire, HP12 3RD";
+const DEFAULT_PHONE = "01494 445291";
+const DEFAULT_EMAIL = "info@speedylaundry.co.uk";
+const DEFAULT_HOURS = "Mon – Thu: 6:00 AM – 3:00 PM\nFriday: 6:00 AM – 2:00 PM\nWeekends: Closed";
 
 const Contact = () => {
+  const settings = useSettings();
+  const address = settings.contact_address || DEFAULT_ADDRESS;
+  const phone = settings.contact_phone || DEFAULT_PHONE;
+  const email = settings.contact_email || DEFAULT_EMAIL;
+  const hours = settings.contact_hours || DEFAULT_HOURS;
   return (
     <section id="contact" className="py-12 md:py-20 bg-muted">
       <div className="container px-4 md:px-6">
@@ -27,11 +38,7 @@ const Contact = () => {
                 </div>
                 <div className="text-center sm:text-left">
                   <h3 className="font-bold text-header mb-1 text-sm md:text-base">Address</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Abbey House, Lincoln Road<br />
-                    Cressex Business Park, High Wycombe<br />
-                    Buckinghamshire, HP12 3RD
-                  </p>
+                  <p className="text-muted-foreground text-sm whitespace-pre-line">{address}</p>
                 </div>
               </div>
 
@@ -41,8 +48,8 @@ const Contact = () => {
                 </div>
                 <div className="text-center sm:text-left">
                   <h3 className="font-bold text-header mb-1 text-sm md:text-base">Phone</h3>
-                  <a href="tel:01494445291" className="text-primary hover:underline text-sm md:text-base font-medium">
-                    01494 445291
+                  <a href={`tel:${phone.replace(/\s/g, '')}`} className="text-primary hover:underline text-sm md:text-base font-medium">
+                    {phone}
                   </a>
                 </div>
               </div>
@@ -53,8 +60,8 @@ const Contact = () => {
                 </div>
                 <div className="text-center sm:text-left">
                   <h3 className="font-bold text-header mb-1 text-sm md:text-base">Email</h3>
-                  <a href="mailto:info@speedylaundry.co.uk" className="text-primary hover:underline text-sm">
-                    info@speedylaundry.co.uk
+                  <a href={`mailto:${email}`} className="text-primary hover:underline text-sm">
+                    {email}
                   </a>
                 </div>
               </div>
@@ -65,11 +72,7 @@ const Contact = () => {
                 </div>
                 <div className="text-center sm:text-left">
                   <h3 className="font-bold text-header mb-1 text-sm md:text-base">Opening Hours</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Mon – Thu: 6:00 AM – 3:00 PM<br />
-                    Friday: 6:00 AM – 2:00 PM<br />
-                    Weekends: Closed
-                  </p>
+                  <p className="text-muted-foreground text-sm whitespace-pre-line">{hours}</p>
                 </div>
               </div>
             </div>
